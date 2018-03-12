@@ -3,7 +3,7 @@ import React from 'react';
 export default class Input extends React.Component {
     handleChange(e) {
         const title = e.target.value;
-        this.props.changingState(this.props.value, title)
+        this.props.changingState(this.props.category, title)
     }
     render() {
         console.log("props", this.props)
