@@ -3,10 +3,10 @@ import React from 'react';
 export default class Input extends React.Component {
     handleChange(e) {
         const title = e.target.value;
-        this.props.changingState(this.props.category, title)
+        var hint = this.props.category;
+        this.props.changingState(hint, title)
     }
     render() {
-        console.log("props", this.props)
         return (
             <div>
                 <input onChange={this.handleChange.bind(this)} />
