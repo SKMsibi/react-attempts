@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDom from 'react-dom';
-import MarkConvertor from './mark-down-project/mainPage';
+import MainLayout from './Camper-Leaderboard/mainLayout';
 
 const app = document.getElementById("app")
-ReactDom.render(<MarkConvertor />, app);
+ReactDom.render(<MainLayout />, app);
