@@ -9,7 +9,7 @@ export default class TextBox extends React.Component {
         return (
             <div>
                 <h3>Your mark down text</h3>
-                <textarea placeholder="Your text here..." style={{ width: 500 }} onChange={this.handleChange.bind(this)}></textarea>
+                <textarea placeholder="Your text here..." style={{ width: 500, height: 150 }} onChange={this.handleChange.bind(this)}></textarea>
             </div>
         )
     }

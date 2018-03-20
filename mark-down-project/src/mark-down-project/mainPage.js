@@ -19,8 +19,12 @@ export default class MarkConvertor extends React.Component {
         return (
             <div>
                 <Heading />
-                <TextBox mark={this.changingState.bind(this)} />
-                <MarkedText text={this.markedConvertor.bind(this)} />
+                <div id="boxes">
+                    <TextBox mark={this.changingState.bind(this)} />
+                </div>
+                <div id="boxes">
+                    <MarkedText text={this.markedConvertor.bind(this)} />
+                </div>
             </div >
         )
     }
