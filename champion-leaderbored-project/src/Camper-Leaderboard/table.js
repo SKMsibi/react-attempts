@@ -5,10 +5,7 @@ export default class Table extends React.Component {
     render() {
         return (
             <table>
-                <tr>
-                    <td>{this.props.data.username}</td>
-                    <td>{this.props.data.points}</td>
-                </tr>
+                <TableRow data={this.props} />
             </table>
         )
     }

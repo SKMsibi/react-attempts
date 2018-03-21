@@ -5,20 +5,20 @@ import TableRow from './table-row';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-export default class MainLayout extends React.Component {
+export default class AllTimeData extends React.Component {
     constructor() {
         super();
         this.state = { all: [] };
         this.all = [];
     }
     componentWillMount() {
-        axios.get(`https://fcctop100.herokuapp.com/api/fccusers/top/recent`)
+        axios.get(`https://fcctop100.herokuapp.com/api/fccusers/top/alltime`)
             .then(res => {
                 this.setState({ all: res.data });
             })
     }
     render() {
-        console.log(this.state.all)
+        console.log("ALL", this.state.all)
         return (
             <div>
                 <Heading />
