@@ -1,4 +1,5 @@
 import React from "react";
+import './index.css';
 import ReactDom from 'react-dom';
 import MainLayout from './Camper-Leaderboard/mainLayout';
 import AllTimeData from './Camper-Leaderboard/allTimeData'
@@ -11,6 +12,7 @@ ReactDom.render(
         <div>
             <Route exact path="/" component={MainLayout} />
             <Route exact path="/AllTimeData" component={AllTimeData} />
+            <Route exact path="/MainLayout" component={MainLayout} />
         </div>
     </Router>,
     app);

@@ -3,6 +3,7 @@ import Heading from './heading';
 import Table from './table';
 import TableRow from './table-row';
 import { Link } from 'react-router-dom';
+import '../index.css';
 import axios from 'axios';
 
 export default class AllTimeData extends React.Component {
@@ -11,7 +12,7 @@ export default class AllTimeData extends React.Component {
         this.state = { all: [] };
         this.all = [];
     }
-    componentWillMount() {
+    componentDidMount() {
         axios.get(`https://fcctop100.herokuapp.com/api/fccusers/top/alltime`)
             .then(res => {
                 this.setState({ all: res.data });
@@ -22,7 +23,7 @@ export default class AllTimeData extends React.Component {
         return (
             <div>
                 <Heading />
-                <Link to="allTimeData">allTime</Link>
+                <Link to="/"><button>last 30 days (sorted)</button></Link>
                 <table border="3">
                     <thead>
                         <tr>

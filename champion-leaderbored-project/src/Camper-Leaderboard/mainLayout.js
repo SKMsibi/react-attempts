@@ -3,26 +3,25 @@ import Heading from './heading';
 import Table from './table';
 import TableRow from './table-row';
 import { Link } from 'react-router-dom';
+import '../index.css';
 import axios from 'axios';
 
 export default class MainLayout extends React.Component {
     constructor() {
         super();
         this.state = { all: [] };
-        this.all = [];
     }
-    componentWillMount() {
+    componentDidMount() {
         axios.get(`https://fcctop100.herokuapp.com/api/fccusers/top/recent`)
             .then(res => {
                 this.setState({ all: res.data });
             })
     }
     render() {
-        console.log(this.state.all)
         return (
             <div>
                 <Heading />
-                <Link to="allTimeData">allTime</Link>
+                <Link to="allTimeData"><button>All time data (sorted)</button></Link>
                 <table border="3">
                     <thead>
                         <tr>
