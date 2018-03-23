@@ -27,7 +27,7 @@ export default class Form extends React.Component {
                 <p>Email:</p>
                 <Input changingState={this.changingStateEmail.bind(this)} category="Email" />
                 <br />
-                <Table data={this.state} int="hello" pum="lkfsjflkdja"/>
+                <Table data={this.state} />
             </div>
         )
     }
