@@ -19,7 +19,7 @@ export default class Layout extends React.Component {
         this.state.allItems.push(this.singleItem)
         this.singleItem = {};
         this.display()
-        console.log(this.state)
+        localStorage.setItem("allData", this.state.allItems)
     }
     display() {
         this.setState({
@@ -29,6 +29,10 @@ export default class Layout extends React.Component {
         })
     }
     render() {
+        var data = localStorage.getItem("allData");
+        if (data) {
+            console.log(data)
+        }
         return (
             <div>
                 <h1>This is the main page</h1>
