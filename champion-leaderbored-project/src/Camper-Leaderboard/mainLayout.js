@@ -10,6 +10,7 @@ export default class MainLayout extends React.Component {
     constructor() {
         super();
         this.state = { all: [] };
+        this
     }
     componentDidMount() {
         axios.get(`https://fcctop100.herokuapp.com/api/fccusers/top/recent`)

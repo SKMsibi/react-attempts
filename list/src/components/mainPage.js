@@ -1,34 +1,47 @@
 import React from 'react';
-
+import Item from './item'
 export default class Layout extends React.Component {
     constructor() {
         super();
-        this.state = { login: "false" }
+        this.state = { allItems: [], buttons: [] };
+        this.singleItem = {}
     }
-    lifeCycle(status) {
-        if (status === "true") {
-            return <h2>it works</h2>
-        } else {
-            return <div></div>
-        }
+    eventHandler(e) {
+        var words = e.target.value;
+        this.singleItem.item = words;
     }
-    changing(hint) {
-        if (hint === "true") {
-            this.setState({ login: "false" })
-        } else {
-            this.setState({ login: "true" })
-        }
+    eventHandlerT(e) {
+        var words = e.target.value;
+        this.singleItem.product = words.split(",");
+        this.singleItem.status = "false";
     }
-    handleEvent() {
-        this.changing(this.state.login);
+    handleButton() {
+        this.state.allItems.push(this.singleItem)
+        this.singleItem = {};
+        this.display()
+        console.log(this.state)
+    }
+    display() {
+        this.setState({
+            buttons: this.state.allItems.map(element => {
+                return <Item item={element.item} product={element.product} status={element.status} />
+            })
+        })
     }
     render() {
         return (
             <div>
                 <h1>This is the main page</h1>
-                <button onClick={this.handleEvent.bind(this)}>hide/show</button>
-                {this.lifeCycle(this.state.login)}
-            </div>
+                <div>
+                    <input type="text" placeholder="final Product e.g Cake" onChange={this.eventHandler.bind(this)} />
+                    <input type="text" placeholder="Ingredients e.g milk,eggs" onChange={this.eventHandlerT.bind(this)} /><br />
+
+                    <button onClick={this.handleButton.bind(this)}>Add</button><br />
+                </div>
+                <div>
+                    {this.state.buttons}
+                </div>
+            </div >
         )
     }
 }
