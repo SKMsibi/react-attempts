@@ -3,7 +3,7 @@ import Item from './item'
 export default class Layout extends React.Component {
     constructor() {
         super();
-        this.state = { allItems: [], buttons: [] };
+        this.state = { allItems: [], buttons: [], int: ["this works", "this doesnt work"] };
         this.singleItem = {}
     }
     eventHandler(e) {
@@ -18,8 +18,9 @@ export default class Layout extends React.Component {
     handleButton() {
         this.state.allItems.push(this.singleItem)
         this.singleItem = {};
-        this.display()
-        localStorage.setItem("allData", this.state.allItems)
+        this.display();
+        var data = localStorage.getItem("allData");
+        console.log("data", data)
     }
     display() {
         this.setState({
@@ -29,10 +30,11 @@ export default class Layout extends React.Component {
         })
     }
     render() {
-        var data = localStorage.getItem("allData");
-        if (data) {
-            console.log(data)
-        }
+        // if (data) {
+
+        // console.log({ hits: JSON.parse(cachedHits) })
+        // this.setState({ allItems: data })
+        // }
         return (
             <div>
                 <h1>This is the main page</h1>
