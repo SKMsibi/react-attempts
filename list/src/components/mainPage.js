@@ -14,7 +14,6 @@ export default class Layout extends React.Component {
     eventHandlerT(e) {
         var words = e.target.value;
         this.singleItem.product = words.split(",");
-        this.singleItem.status = "false";
     }
     handleButton() {
         this.state.buttons.push(this.singleItem)
@@ -27,7 +26,6 @@ export default class Layout extends React.Component {
             localStorage.setItem("data", JSON.stringify(this.state.buttons));
         }
         this.setState({ allItems: this.state.buttons });
-
     }
     getLocalStorage() {
         var item = localStorage.getItem("data");
@@ -39,7 +37,6 @@ export default class Layout extends React.Component {
                 });
             }
         } catch (error) {
-            this.state.allItems.push({ item: "e.g Cake", product: ["eggs", "milk", "butter"] })
         }
     }
     render() {
@@ -49,7 +46,6 @@ export default class Layout extends React.Component {
                 <div>
                     <input type="text" placeholder="final Product e.g Cake" onChange={this.eventHandler.bind(this)} /> |||
                     <input type="text" placeholder="Ingredients e.g milk,eggs" onChange={this.eventHandlerT.bind(this)} /><br />
-
                     <button onClick={this.handleButton.bind(this)}>Add</button><br />
                 </div>
                 <div>
