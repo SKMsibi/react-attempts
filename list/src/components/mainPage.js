@@ -1,10 +1,11 @@
 import React from 'react';
-import Item from './item'
+import Item from './item';
+import '../index.css'
 export default class Layout extends React.Component {
     constructor() {
         super();
-        this.state = { allItems: [], buttons: [], int: ["this works", "this doesnt work"] };
-        this.singleItem = {}
+        this.state = { allItems: [], buttons: [] };
+        this.singleItem = {};
     }
     eventHandler(e) {
         var words = e.target.value;
@@ -16,36 +17,46 @@ export default class Layout extends React.Component {
         this.singleItem.status = "false";
     }
     handleButton() {
-        this.state.allItems.push(this.singleItem)
+        this.state.buttons.push(this.singleItem)
         this.singleItem = {};
         this.display();
-        var data = localStorage.getItem("allData");
-        console.log("data", data)
     }
     display() {
-        this.setState({
-            buttons: this.state.allItems.map(element => {
-                return <Item item={element.item} product={element.product} status={element.status} />
-            })
-        })
+        if (this.state.allItems.length > 0) {
+            this.state.allItems.forEach(element => { this.state.buttons.push(element) })
+            localStorage.setItem("data", JSON.stringify(this.state.buttons));
+        }
+        this.setState({ allItems: this.state.buttons });
+
+    }
+    getLocalStorage() {
+        var item = localStorage.getItem("data");
+        var hint = JSON.parse(item);
+        try {
+            if (this.state.buttons.length <= 0) {
+                hint.forEach(element => {
+                    this.state.allItems.push(element)
+                });
+            }
+        } catch (error) {
+            this.state.allItems.push({ item: "e.g Cake", product: ["eggs", "milk", "butter"] })
+        }
     }
     render() {
-        // if (data) {
-
-        // console.log({ hits: JSON.parse(cachedHits) })
-        // this.setState({ allItems: data })
-        // }
         return (
             <div>
                 <h1>This is the main page</h1>
                 <div>
-                    <input type="text" placeholder="final Product e.g Cake" onChange={this.eventHandler.bind(this)} />
+                    <input type="text" placeholder="final Product e.g Cake" onChange={this.eventHandler.bind(this)} /> |||
                     <input type="text" placeholder="Ingredients e.g milk,eggs" onChange={this.eventHandlerT.bind(this)} /><br />
 
                     <button onClick={this.handleButton.bind(this)}>Add</button><br />
                 </div>
                 <div>
-                    {this.state.buttons}
+                    {this.getLocalStorage()}
+                    {this.state.allItems.map(element => {
+                        return <Item item={element.item} product={element.product} status={element.status} />
+                    })}
                 </div>
             </div >
         )
