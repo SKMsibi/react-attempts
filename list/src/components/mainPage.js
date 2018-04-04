@@ -1,6 +1,6 @@
 import React from 'react';
 import Item from './item';
-import '../index.css'
+import '../index.css';
 export default class Layout extends React.Component {
     constructor() {
         super();
@@ -16,28 +16,36 @@ export default class Layout extends React.Component {
         this.singleItem.product = words.split(",");
     }
     handleButton() {
-        this.state.buttons.push(this.singleItem)
-        this.singleItem = {};
-        this.display();
-    }
-    display() {
-        if (this.state.allItems.length > 0) {
-            this.state.allItems.forEach(element => { this.state.buttons.push(element) })
-            localStorage.setItem("data", JSON.stringify(this.state.buttons));
+        if (this.singleItem.item === undefined) {
+            alert("unable to add empty product")
+        } else {
+            this.state.allItems.push(this.singleItem);
+            this.setState({ allItems: this.state.allItems })
+            this.singleItem = {};
+            localStorage.setItem("data", JSON.stringify(this.state.allItems));
         }
-        this.setState({ allItems: this.state.buttons });
     }
-    getLocalStorage() {
+    componentDidMount() {
         var item = localStorage.getItem("data");
         var hint = JSON.parse(item);
+        var list = [];
         try {
-            if (this.state.buttons.length <= 0) {
-                hint.forEach(element => {
-                    this.state.allItems.push(element)
-                });
-            }
+            hint.forEach(element => {
+                this.setState()
+                list.push(element)
+                this.setState({ allItems: list })
+            });
         } catch (error) {
         }
+    }
+    deleteItem(itemName) {
+        this.state.allItems.forEach(element => {
+            if (element.item === itemName) {
+                this.state.allItems.splice(this.state.allItems.indexOf(element), this.state.allItems.indexOf(element) + 1)
+                this.setState({ allItems: this.state.allItems })
+                localStorage.setItem("data", JSON.stringify(this.state.allItems));
+            }
+        })
     }
     render() {
         return (
@@ -49,9 +57,11 @@ export default class Layout extends React.Component {
                     <button onClick={this.handleButton.bind(this)}>Add</button><br />
                 </div>
                 <div>
-                    {this.getLocalStorage()}
                     {this.state.allItems.map(element => {
-                        return <Item item={element.item} product={element.product} status={element.status} />
+                        return <div>
+                            <Item item={element.item} product={element.product} status={element.status} />
+                            <button onClick={() => this.deleteItem(element.item)}>Delete {element.item}</button>
+                        </div>
                     })}
                 </div>
             </div >

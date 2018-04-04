@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class Item extends React.Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = { list: [] };
         this.hideOrShow = "true";
@@ -22,6 +22,7 @@ export default class Item extends React.Component {
         return (
             <div>
                 <button onClick={this.handleButter.bind(this)}>{this.props.item}</button>
+
                 {this.state.list}
             </div>
         )
