@@ -1,4 +1,5 @@
 .container {
     align-self: center;
-    padding: 5ex;
+    margin: 5ex;
+    background-color: lightgray;
 }

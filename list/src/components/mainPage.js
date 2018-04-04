@@ -6,6 +6,7 @@ export default class Layout extends React.Component {
         super();
         this.state = { allItems: [], buttons: [] };
         this.singleItem = {};
+        this.deleteItem.bind(this);
     }
     eventHandler(e) {
         var words = e.target.value;
@@ -58,9 +59,8 @@ export default class Layout extends React.Component {
                 </div>
                 <div>
                     {this.state.allItems.map(element => {
-                        return <div>
-                            <Item item={element.item} product={element.product} status={element.status} />
-                            <button onClick={() => this.deleteItem(element.item)}>Delete {element.item}</button>
+                        return <div class="container">
+                            <Item item={element.item} product={element.product} status={element.status} deleteButton={this.deleteItem.bind(this)} />
                         </div>
                     })}
                 </div>
