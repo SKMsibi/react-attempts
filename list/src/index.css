@@ -1,5 +1,38 @@
-.container {
+.container-fluid {
     align-self: center;
     margin: 5ex;
-    background-color: lightgray;
+    background-color: blue;
+    border-radius: 1ex;
+}
+
+.container {
+    background-color: white;
+    border-radius: 3ex;
+}
+
+#inputText {
+    width: 30ex;
+}
+
+textarea {
+    width: 30ex;
+    height: 10ex;
+}
+
+#editButton {
+    background-color: black;
+    color: white;
+    border-radius: 1ex;
+}
+
+#deleteButton {
+    background-color: black;
+    color: white;
+    border-radius: 1ex;
+}
+
+#ItemButton {
+    background-color: blue;
+    color: white;
+    width: 100%;
 }
