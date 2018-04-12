@@ -20,7 +20,7 @@ export default class Item extends React.Component {
                 this.hideOrShow = "false";
             } catch (error) {
                 this.setState({ list: "this list is empty" });
-                this.setState({ del: <button id="deleteButton" onClick={() => this.deleteItem()}>Delete</button> });
+                this.setState({ del: <button  id="deleteButton" onClick={() => this.deleteItem()}>Delete</button> });
                 this.setState({ edit: <button id="editButton" onClick={() => this.editItem()}>Edit Items</button> })
 
             }

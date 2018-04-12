@@ -1,7 +1,7 @@
 .container-fluid {
     align-self: center;
     margin: 5ex;
-    background-color: blue;
+    background-color: #007bff;
     border-radius: 1ex;
 }
 
@@ -20,19 +20,22 @@ textarea {
 }
 
 #editButton {
-    background-color: black;
     color: white;
     border-radius: 1ex;
+    background-color: #dc3545;
+    border-color: #dc3545
 }
 
 #deleteButton {
-    background-color: black;
     color: white;
     border-radius: 1ex;
+    background-color: #dc3545;
+    border-color: #dc3545
 }
 
 #ItemButton {
-    background-color: blue;
+    background-color: #007bff;
+    ;
     color: white;
     width: 100%;
 }
