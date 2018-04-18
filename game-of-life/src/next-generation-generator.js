@@ -1,29 +1,32 @@
 function generateNextGeneration(currentGeneration) {
-    var WorkedOnCurrentGeneration = currentGeneration
+    var newGeneration = [];
+    var WorkedOnCurrentGeneration = currentGeneration;
     var bored = [];
     if (WorkedOnCurrentGeneration === undefined) {
         bored = [{ xAxes: 0, yAxes: 0, status: false },
         { xAxes: 0, yAxes: 1, status: false },
-        { xAxes: 0, yAxes: 2, status: true },
+        { xAxes: 0, yAxes: 2, status: false },
         { xAxes: 0, yAxes: 3, status: false },
-        { xAxes: 0, yAxes: 4, status: true },
+        { xAxes: 0, yAxes: 4, status: false },
         { xAxes: 0, yAxes: 5, status: false },
-        { xAxes: 1, yAxes: 0, status: true },
-        { xAxes: 1, yAxes: 1, status: false },
+        { xAxes: 1, yAxes: 0, status: false },
+        { xAxes: 1, yAxes: 1, status: true },
         { xAxes: 1, yAxes: 2, status: true },
-        { xAxes: 1, yAxes: 3, status: false },
+        { xAxes: 1, yAxes: 3, status: true },
         { xAxes: 1, yAxes: 4, status: false },
-        { xAxes: 1, yAxes: 5, status: true },
-        { xAxes: 2, yAxes: 0, status: true },
-        { xAxes: 2, yAxes: 1, status: true },
+        { xAxes: 1, yAxes: 5, status: false },
+        { xAxes: 2, yAxes: 0, status: false },
+        { xAxes: 2, yAxes: 1, status: false },
         { xAxes: 2, yAxes: 2, status: false },
         { xAxes: 2, yAxes: 3, status: false },
-        { xAxes: 2, yAxes: 4, status: true },
+        { xAxes: 2, yAxes: 4, status: false },
         { xAxes: 2, yAxes: 5, status: false }];
     } else {
         bored = currentGeneration;
     }
+    console.log("starting gen", bored)
     bored.forEach(element => {
+        var changedElement = element;
         var elementNeighbors = getAllNeighbors(element);
         var aliveNeighbors = [];
         var deadNeighbors = [];
@@ -38,8 +41,12 @@ function generateNextGeneration(currentGeneration) {
                 }
             }
         })
+        if (element.status === false && aliveNeighbors.length == 3) {
+            changedElement.status = true;
+            newGeneration.push(changedElement);
+        }
     })
-    return "allItsNeighbors";
+    return newGeneration;
 }
 function getAllNeighbors(object) {
     var validItems = [];
@@ -53,14 +60,8 @@ function getAllNeighbors(object) {
         [object.xAxes, object.yAxes - 1],
         [object.xAxes, object.yAxes + 1],
     ];
-    allItsNeighbors.forEach(element => {
-        if (element[0] >= 0 && element[1] >= 0) {
-            validItems.push(element)
-        }
-    })
-    return validItems;
+    return allItsNeighbors;
 }
-function hasKeyAndValue(obj, key, value) {
-    return obj.hasOwnProperty(key) && obj[key] == value;
-}
-console.log(generateNextGeneration())
+
+var firstGeneration = generateNextGeneration();
+console.log("firstGeneration", firstGeneration)
