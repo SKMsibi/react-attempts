@@ -44,6 +44,12 @@ function generateNextGeneration(currentGeneration) {
         if (element.status === false && aliveNeighbors.length == 3) {
             changedElement.status = true;
             newGeneration.push(changedElement);
+        } else if (element.status === true && aliveNeighbors.length < 2) {
+            changedElement.status = false;
+            newGeneration.push(changedElement);
+        } else if (element.status == true && aliveNeighbors.length > 3) {
+            changedElement.status = false;
+            newGeneration.push(changedElement);
         }
     })
     return newGeneration;
