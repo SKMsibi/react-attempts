@@ -23,7 +23,22 @@ function generateNextGeneration(currentGeneration) {
     } else {
         bored = currentGeneration;
     }
-
+    bored.forEach(element => {
+        var elementNeighbors = getAllNeighbors(element);
+        var aliveNeighbors = [];
+        var deadNeighbors = [];
+        elementNeighbors.forEach(eachItem => {
+            for (var i = 0; i < bored.length; i++) {
+                if (bored[i].xAxes === eachItem[0] && bored[i].yAxes === eachItem[1]) {
+                    if (bored[i].status) {
+                        aliveNeighbors.push(bored[i])
+                    } else {
+                        deadNeighbors.push(bored[i])
+                    }
+                }
+            }
+        })
+    })
     return "allItsNeighbors";
 }
 function getAllNeighbors(object) {
@@ -44,5 +59,8 @@ function getAllNeighbors(object) {
         }
     })
     return validItems;
+}
+function hasKeyAndValue(obj, key, value) {
+    return obj.hasOwnProperty(key) && obj[key] == value;
 }
 console.log(generateNextGeneration())
