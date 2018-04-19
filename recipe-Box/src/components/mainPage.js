@@ -4,64 +4,67 @@ import '../index.css';
 export default class Layout extends React.Component {
     constructor() {
         super();
-        this.state = { allItems: [], buttons: [] };
-        this.singleItem = {};
+        this.state = { allRecipes: [], recipeName: "", recipeIngredients: "" };
         this.deleteItem.bind(this);
+        this.editList.bind(this)
+        this.deleteItem.bind(this)
+        this.addRecipeToList.bind(this)
+        this.recipeNameRetriever.bind(this)
+        this.recipeIngredientsRetriever.bind(this)
     }
     recipeNameRetriever(e) {
         var words = e.target.value;
-        this.singleItem.item = words;
+        this.setState({ recipeName: words })
     }
     recipeIngredientsRetriever(e) {
         var words = e.target.value;
-        this.singleItem.product = words.split(",");
+        this.setState({ recipeIngredients: words })
     }
-    handleButton() {
-        if (this.singleItem.item === undefined) {
+    addRecipeToList() {
+        if (this.state.recipeName === undefined) {
             alert("unable to add empty product")
         } else {
-            this.state.allItems.push(this.singleItem);
-            this.setState({ allItems: this.state.allItems })
-            this.singleItem = {};
-            localStorage.setItem("valuedRecipes", JSON.stringify(this.state.allItems));
+            var listWithNewRecipe = this.state.allRecipes;
+            listWithNewRecipe.push({ recipeName: this.state.recipeName, recipeIngredients: this.state.recipeIngredients.split(",") })
+            this.setState({ allRecipes: listWithNewRecipe, recipeName: "", recipeIngredients: "" })
+            localStorage.setItem("valuedRecipes", JSON.stringify(this.state.allRecipes));
         }
     }
-    componentDidMount() {
-        var item = localStorage.getItem("valuedRecipes");
-        var hint = JSON.parse(item);
-        var list = [];
-        try {
-            hint.forEach(element => {
-                list.push(element)
-                this.setState({ allItems: list })
-            });
-        } catch (error) {
-        }
-    }
-    deleteItem(itemName) {
-        this.state.allItems.forEach(element => {
-            if (element.item === itemName) {
-                this.state.allItems.splice(this.state.allItems.indexOf(element), this.state.allItems.indexOf(element) + 1)
-                this.setState({ allItems: this.state.allItems })
-                localStorage.setItem("valuedRecipes", JSON.stringify(this.state.allItems));
+    deleteItem(recipeTitle) {
+        this.state.allRecipes.forEach(element => {
+            if (element.recipeName === recipeTitle) {
+                var positionOfTheRecipe = this.state.allRecipes.indexOf(element);
+                this.state.allRecipes.splice(positionOfTheRecipe, positionOfTheRecipe + 1)
+                this.setState({ allRecipes: this.state.allRecipes })
+                localStorage.setItem("valuedRecipes", JSON.stringify(this.state.allRecipes));
             }
         })
     }
-    editList(itemList, item) {
-        var newItems = prompt("You can change you Item", itemList);
-        this.state.allItems.forEach(element => {
-            if (element.item === item) {
+    editList(recipeList, recipeTitle) {
+        var newrecipeIngredients = prompt("You can change you Item", recipeList);
+        this.state.allRecipes.forEach(element => {
+            if (element.recipeName === recipeTitle) {
                 try {
-                    var index = this.state.allItems.indexOf(element);
-                    this.state.allItems.splice(index, index + 1);
-                    this.singleItem = this.state.allItems.splice(index, index, { "item": item, product: newItems.split(",") });
-                    localStorage.setItem("valuedRecipes", JSON.stringify(this.state.allItems));
+                    var positionOfRecipe = this.state.allRecipes.indexOf(element);
+                    this.state.allRecipes.splice(positionOfRecipe, positionOfRecipe + 1);
+                    this.singleRecipe = this.state.allRecipes.splice(positionOfRecipe, positionOfRecipe, { "recipeName": recipeTitle, recipeIngredients: newrecipeIngredients.split(",") });
+                    localStorage.setItem("valuedRecipes", JSON.stringify(this.state.allRecipes));
                     window.location.reload(true)
                 } catch (error) {
-
                 }
             }
         })
+    }
+    componentDidMount() {
+        var hint = JSON.parse(localStorage.getItem("valuedRecipes"));
+        var listWithPreviousRecipes = [];
+        try {
+            hint.forEach(element => {
+                listWithPreviousRecipes.push(element)
+                this.setState({ allRecipes: listWithPreviousRecipes })
+            });
+        } catch (error) {
+        }
     }
     render() {
         return (
@@ -70,14 +73,14 @@ export default class Layout extends React.Component {
                 <div>
                     <h4>Recipe name</h4>
                     <input type="text" id="inputText" placeholder="e.g chocolate Cake" onChange={this.recipeNameRetriever.bind(this)} /> <br /><br />
-                    <h4>Recipe items</h4>
+                    <h4>Recipe recipeIngredients</h4>
                     <textarea placeholder="e.g baking Powder,chocolate flavouring,milk" onChange={this.recipeIngredientsRetriever.bind(this)} ></textarea><br />
-                    <button class="btn btn-primary" onClick={this.handleButton.bind(this)}>Add</button><br />
+                    <button className="btn btn-primary" onClick={this.addRecipeToList.bind(this)}>Add</button><br />
                 </div>
                 <div>
-                    {this.state.allItems.map(element => {
-                        return <div className="container-fluid">
-                            <Item key={this.state.allItems.indexOf(element)} item={element.item} test="this is a test" product={element.product} status={element.status} deleteButton={this.deleteItem.bind(this)} editButton={this.editList.bind(this)} />
+                    {this.state.allRecipes.map(element => {
+                        return <div className="container-fluid" key={this.state.allRecipes.indexOf(element)}>
+                            <Item key={this.state.allRecipes.indexOf(element)} name={element.recipeName} ingredients={element.recipeIngredients} deleteButton={this.deleteItem.bind(this)} editButton={this.editList.bind(this)} />
                         </div>
                     })}
                 </div>
