@@ -13,12 +13,10 @@ export default class Layout extends React.Component {
         this.recipeIngredientsRetriever.bind(this)
     }
     recipeNameRetriever(e) {
-        var words = e.target.value;
-        this.setState({ recipeName: words })
+        this.setState({ recipeName: e.target.value })
     }
     recipeIngredientsRetriever(e) {
-        var words = e.target.value;
-        this.setState({ recipeIngredients: words })
+        this.setState({ recipeIngredients: e.target.value })
     }
     addRecipeToList() {
         if (this.state.recipeName === undefined) {
@@ -41,15 +39,16 @@ export default class Layout extends React.Component {
         })
     }
     editList(recipeList, recipeTitle) {
-        var newrecipeIngredients = prompt("You can change you Item", recipeList);
+        var newRecipeIngredients = prompt("You can change you Item", recipeList);
         this.state.allRecipes.forEach(element => {
             if (element.recipeName === recipeTitle) {
                 try {
                     var positionOfRecipe = this.state.allRecipes.indexOf(element);
                     this.state.allRecipes.splice(positionOfRecipe, positionOfRecipe + 1);
-                    this.singleRecipe = this.state.allRecipes.splice(positionOfRecipe, positionOfRecipe, { "recipeName": recipeTitle, recipeIngredients: newrecipeIngredients.split(",") });
+                    var newListWithUpdatedIngredients = this.state.allRecipes;
+                    newListWithUpdatedIngredients.splice(positionOfRecipe, positionOfRecipe, { "recipeName": recipeTitle, recipeIngredients: newRecipeIngredients.split(",") });
+                    this.setState({ allRecipes: newListWithUpdatedIngredients });
                     localStorage.setItem("valuedRecipes", JSON.stringify(this.state.allRecipes));
-                    window.location.reload(true)
                 } catch (error) {
                 }
             }
