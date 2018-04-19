@@ -1,5 +1,5 @@
 import React from 'react';
-import Item from './item';
+import Recipe from './recipe';
 import '../index.css';
 export default class Layout extends React.Component {
     constructor() {
@@ -79,7 +79,7 @@ export default class Layout extends React.Component {
                 <div>
                     {this.state.allRecipes.map(element => {
                         return <div className="container-fluid" key={this.state.allRecipes.indexOf(element)}>
-                            <Item key={this.state.allRecipes.indexOf(element)} name={element.recipeName} ingredients={element.recipeIngredients} deleteButton={this.deleteItem.bind(this)} editButton={this.editList.bind(this)} />
+                            <Recipe key={this.state.allRecipes.indexOf(element)} name={element.recipeName} ingredients={element.recipeIngredients} deleteButton={this.deleteItem.bind(this)} editButton={this.editList.bind(this)} />
                         </div>
                     })}
                 </div>

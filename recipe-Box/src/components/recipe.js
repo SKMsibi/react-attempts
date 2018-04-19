@@ -1,7 +1,7 @@
 import React from 'react';
 import '../index.css';
 
-export default class Item extends React.Component {
+export default class Recipe extends React.Component {
     constructor(props) {
         super();
         this.state = { list: [], del: [], edit: [], hideOrShow: true };
