@@ -8,11 +8,11 @@ export default class Layout extends React.Component {
         this.singleItem = {};
         this.deleteItem.bind(this);
     }
-    eventHandler(e) {
+    recipeNameRetriever(e) {
         var words = e.target.value;
         this.singleItem.item = words;
     }
-    eventHandlerT(e) {
+    recipeIngredientsRetriever(e) {
         var words = e.target.value;
         this.singleItem.product = words.split(",");
     }
@@ -69,9 +69,9 @@ export default class Layout extends React.Component {
                 <h1>Recipe Box</h1>
                 <div>
                     <h4>Recipe name</h4>
-                    <input type="text" id="inputText" placeholder="e.g chocolate Cake" onChange={this.eventHandler.bind(this)} /> <br /><br />
+                    <input type="text" id="inputText" placeholder="e.g chocolate Cake" onChange={this.recipeNameRetriever.bind(this)} /> <br /><br />
                     <h4>Recipe items</h4>
-                    <textarea placeholder="e.g baking Powder,chocolate flavouring,milk" onChange={this.eventHandlerT.bind(this)} ></textarea><br />
+                    <textarea placeholder="e.g baking Powder,chocolate flavouring,milk" onChange={this.recipeIngredientsRetriever.bind(this)} ></textarea><br />
                     <button class="btn btn-primary" onClick={this.handleButton.bind(this)}>Add</button><br />
                 </div>
                 <div>
