@@ -133,7 +133,23 @@ function generateNextGeneration(currentGeneration) {
             newGeneration.push(changedElement);
         }
     })
+
     return newGeneration;
+}
+function recursiveGenerationGenerator() {
+    var generationNumber = 0;
+    var workedOnGeneration = [];
+    var generatorLoop = setInterval(() => {
+        if (generationNumber === 0) {
+            workedOnGeneration = generateNextGeneration();
+        } else {
+            workedOnGeneration = generateNextGeneration(workedOnGeneration)
+        }
+        generationNumber++;
+    }, 2000);
+    if (generationNumber === 5) {
+        clearTimeout(generatorLoop);
+    }
 }
 function getAllNeighbors(object) {
     var validItems = [];
@@ -149,4 +165,4 @@ function getAllNeighbors(object) {
     ];
     return allItsNeighbors;
 }
-module.exports = { generateNextGeneration, getAllNeighbors }
+module.exports = { generateNextGeneration, getAllNeighbors, recursiveGenerationGenerator }
