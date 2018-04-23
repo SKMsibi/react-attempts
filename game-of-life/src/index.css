@@ -1,5 +1,19 @@
-button{
-height: 3em;
-width: 3em;
-border-radius: 1em;
+button {
+    height: 3em;
+    width: 3em;
+    background-color: black;
+    border-color: #337ab7;
+}
+
+button:hover {
+    background-color: #EEEEEE;
+}
+
+#true {
+    background-color: #339ab7;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
 }
