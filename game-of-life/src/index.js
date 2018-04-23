@@ -10,9 +10,9 @@ class Cell extends React.Component {
         this.recursiveGenerationGenerator = this.recursiveGenerationGenerator.bind(this);
     }
     componentDidMount() {
-        this.setState({ grid: generateNextGeneration(), generationNumber: 0 })
+        this.setState({ grid: generateNextGeneration() })
     }
-    bringToLife(cell) {
+    bringToLifeOrTakeAwayLIfe(cell) {
         var positionOfCell = this.state.grid.indexOf(cell);
         if (cell.status) {
             this.state.grid[positionOfCell].status = false;
@@ -23,16 +23,26 @@ class Cell extends React.Component {
         console.log("positionOfCell", positionOfCell, cell);
     }
 
-
+    recursiveGenerationGenerator() {
+        var generationNumber = 0;
+        var workedOnGeneration = [];
+        var generatorLoop = setInterval(() => {
+            workedOnGeneration = generateNextGeneration(this.state.grid);
+            this.setState({ grid: workedOnGeneration })
+            generationNumber++;
+        }, 3000);
+        if (generationNumber === 5) {
+            clearTimeout(generatorLoop);
+        }
+    }
     render() {
         return (
             <div>
                 <button className='btn btn-primary' onClick={() => this.recursiveGenerationGenerator()}>Start</button>
-
                 <div id="grid">
                     {
                         this.state.grid.map(gridCell => {
-                            return <button key={this.state.grid.indexOf(gridCell)} id={`${gridCell.status}`} ></button>
+                            return <button key={this.state.grid.indexOf(gridCell)} id={`${gridCell.status}`} onClick={() => this.bringToLifeOrTakeAwayLIfe(gridCell)}></button>
                         })
                     }
                 </div>
