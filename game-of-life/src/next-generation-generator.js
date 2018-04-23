@@ -1,6 +1,7 @@
 
 function generateNextGeneration(currentGeneration) {
     var newGeneration = [];
+    var bored = [];
     if (currentGeneration === undefined) {
         bored = [{ xAxes: 0, yAxes: 0, status: false },
         { xAxes: 0, yAxes: 1, status: false },
@@ -118,14 +119,14 @@ function generateNextGeneration(currentGeneration) {
                 }
             }
         })
-        if (element.status === false && aliveNeighbors.length == 3) {
+        if (element.status === false && aliveNeighbors.length === 3) {
             changedElement.status = true;
             newGeneration.push(changedElement);
         }
         else if (element.status === true && aliveNeighbors.length < 2) {
             changedElement.status = false;
             newGeneration.push(changedElement);
-        } else if (element.status == true && aliveNeighbors.length > 3) {
+        } else if (element.status === true && aliveNeighbors.length > 3) {
             changedElement.status = false;
             newGeneration.push(changedElement);
         }
@@ -152,7 +153,6 @@ function recursiveGenerationGenerator() {
     }
 }
 function getAllNeighbors(object) {
-    var validItems = [];
     var allItsNeighbors = [
         [object.xAxes - 1, object.yAxes - 1],
         [object.xAxes - 1, object.yAxes + 1],

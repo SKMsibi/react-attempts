@@ -1,25 +1,42 @@
 import React from "react";
 import ReactDom from 'react-dom';
 import './index.css';
+import { generateNextGeneration, getAllNeighbors } from './next-generation-generator';
 
 class Cell extends React.Component {
     constructor(props) {
-        super(props)
-        this.cells = [];
+        super(props);
+        this.state = { grid: [] }
+        this.recursiveGenerationGenerator = this.recursiveGenerationGenerator.bind(this);
+    }
+    componentDidMount() {
+        this.setState({ grid: generateNextGeneration(), generationNumber: 0 })
+    }
+    bringToLife(cell) {
+        var positionOfCell = this.state.grid.indexOf(cell);
+        if (cell.status) {
+            this.state.grid[positionOfCell].status = false;
+        } else {
+            this.state.grid[positionOfCell].status = true;
+        }
+        this.setState({ grid: this.state.grid })
+        console.log("positionOfCell", positionOfCell, cell);
     }
 
-    makeCells() {
-        var i = 0;
-        while (i <= 50) {
-            this.cells.push(<button></button>);
-            i++;
-        }
-    }
+
     render() {
-        this.makeCells()
-        var items = this.cells;
         return (
-            { items }
+            <div>
+                <button className='btn btn-primary' onClick={() => this.recursiveGenerationGenerator()}>Start</button>
+
+                <div id="grid">
+                    {
+                        this.state.grid.map(gridCell => {
+                            return <button key={this.state.grid.indexOf(gridCell)} id={`${gridCell.status}`} ></button>
+                        })
+                    }
+                </div>
+            </div>
         )
     }
 }
