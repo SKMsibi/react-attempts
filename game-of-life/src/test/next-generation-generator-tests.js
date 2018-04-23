@@ -1,4 +1,4 @@
-var generator = require('../next-generation-generator');
+var generator = require('../next-generation-generator').default;
 var expect = require('chai').expect;
 var assert = require('assert');
 
