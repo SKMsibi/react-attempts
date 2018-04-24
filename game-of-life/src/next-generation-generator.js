@@ -152,6 +152,7 @@ function recursiveGenerationGenerator() {
         clearTimeout(generatorLoop);
     }
 }
+
 function getAllNeighbors(object) {
     var allItsNeighbors = [
         [object.xAxes - 1, object.yAxes - 1],
@@ -165,4 +166,7 @@ function getAllNeighbors(object) {
     ];
     return allItsNeighbors;
 }
+var first = generateNextGeneration();
+var second = generateNextGeneration(first);
+var third = generateNextGeneration(second);
 module.exports = { generateNextGeneration, getAllNeighbors, recursiveGenerationGenerator }

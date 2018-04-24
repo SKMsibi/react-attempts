@@ -5,6 +5,16 @@ button {
     border-color: #337ab7;
 }
 
+#pauseOrPlay {
+    height: 3em;
+    width: 4em;
+}
+
+#gameDetails {
+    display: grid;
+    grid-template-columns: 70px 70px 70px 70px;
+}
+
 button:hover {
     background-color: #EEEEEE;
 }
