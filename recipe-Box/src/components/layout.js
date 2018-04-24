@@ -19,14 +19,18 @@ export default class Layout extends React.Component {
         this.setState({ recipeIngredients: e.target.value })
     }
     addRecipeToList() {
-        if (this.state.recipeName === undefined) {
+        var existingRecipe = this.state.allRecipes.find(element => { return element.recipeName === this.state.recipeName })
+        if (this.state.recipeName === undefined || this.state.recipeName === "") {
             alert("unable to add empty product")
+        } else if (existingRecipe) {
+            alert("recipe name already exist")
         } else {
             var listWithNewRecipe = this.state.allRecipes;
             listWithNewRecipe.push({ recipeName: this.state.recipeName, recipeIngredients: this.state.recipeIngredients.split(",") })
             this.setState({ allRecipes: listWithNewRecipe, recipeName: "", recipeIngredients: "" })
             localStorage.setItem("valuedRecipes", JSON.stringify(this.state.allRecipes));
         }
+        window.location.reload(true)
     }
     deleteItem(recipeTitle) {
         this.state.allRecipes.forEach(element => {
@@ -38,15 +42,14 @@ export default class Layout extends React.Component {
             }
         })
     }
-    editList(recipeList, recipeTitle) {
-        var newRecipeIngredients = prompt("You can change you Item", recipeList);
+    editList(recipeTitle, recipeList, oldRecipeName) {
         this.state.allRecipes.forEach(element => {
-            if (element.recipeName === recipeTitle) {
+            if (element.recipeName === oldRecipeName) {
                 try {
                     var positionOfRecipe = this.state.allRecipes.indexOf(element);
                     this.state.allRecipes.splice(positionOfRecipe, positionOfRecipe + 1);
                     var newListWithUpdatedIngredients = this.state.allRecipes;
-                    newListWithUpdatedIngredients.splice(positionOfRecipe, positionOfRecipe, { "recipeName": recipeTitle, recipeIngredients: newRecipeIngredients.split(",") });
+                    newListWithUpdatedIngredients.splice(positionOfRecipe, positionOfRecipe, { "recipeName": recipeTitle, recipeIngredients: recipeList.split(",") });
                     this.setState({ allRecipes: newListWithUpdatedIngredients });
                     localStorage.setItem("valuedRecipes", JSON.stringify(this.state.allRecipes));
                 } catch (error) {
@@ -68,8 +71,8 @@ export default class Layout extends React.Component {
     render() {
         return (
             <div>
-                <h1>Recipe Box</h1>
-                <div>
+                <div className="container" id="inputDisplay">
+                    <h1>Recipe Box</h1>
                     <h4>Recipe name</h4>
                     <input type="text" id="inputText" placeholder="e.g chocolate Cake" onChange={this.recipeNameRetriever.bind(this)} /> <br /><br />
                     <h4>Recipe recipeIngredients</h4>
@@ -82,6 +85,7 @@ export default class Layout extends React.Component {
                             <Recipe key={this.state.allRecipes.indexOf(element)} name={element.recipeName} ingredients={element.recipeIngredients} deleteButton={this.deleteItem.bind(this)} editButton={this.editList.bind(this)} />
                         </div>
                     })}
+
                 </div>
             </div >
         )

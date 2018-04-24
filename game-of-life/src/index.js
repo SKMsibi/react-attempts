@@ -22,18 +22,20 @@ class Cell extends React.Component {
         this.setState({ grid: this.state.grid })
     }
 
-    recursiveGenerationGenerator() {
-        var generationNumber = 1;
-        var workedOnGeneration = [];
+    recursiveGenerationGenerator(genNumber = 1, generation = this.state.grid, gameStatus = "On") {
+        var generationNumber = genNumber;
+        var workedOnGeneration = generation;
+        this.setState({ gameStatus: gameStatus })
         var generatorLoop = setInterval(() => {
             generationNumber++;
             workedOnGeneration = generateNextGeneration(this.state.grid);
             this.setState({ grid: workedOnGeneration, generationNumber: generationNumber })
             var existenceOfAliveCell = this.state.grid.find(element => { return element.status === true });
+            console.log("gameStatus", this.state.gameStatus)
             if (this.state.gameStatus === "paused") {
                 clearInterval(generatorLoop);
             }
-            if (generationNumber === 10) {
+            if (generationNumber === 20) {
                 clearInterval(generatorLoop);
                 this.setState({ gameStatus: "Over" });
             } else if (existenceOfAliveCell === undefined) {
@@ -46,7 +48,7 @@ class Cell extends React.Component {
         return (
             <div className="container">
                 <div id="gameDetails">
-                    <button className='btn btn-primary' id="pauseOrPlay" onClick={() => this.recursiveGenerationGenerator()}>Start</button>
+                    <button className='btn btn-primary' id="pauseOrPlay" onClick={() => this.recursiveGenerationGenerator(this.state.generationNumber)}>Start</button>
                     <span>{this.state.generationNumber}</span>
                     <span>Game: {this.state.gameStatus}</span>
                     <button className='btn btn-warning' id="pauseOrPlay" onClick={() => { return this.setState({ gameStatus: "paused" }) }}>Pause</button>
