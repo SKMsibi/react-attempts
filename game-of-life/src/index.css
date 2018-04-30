@@ -1,6 +1,6 @@
 button {
-    height: 3em;
-    width: 3em;
+    height: 2em;
+    width: 2em;
     background-color: black;
     border-color: #337ab7;
 }
@@ -12,7 +12,7 @@ button {
 
 #gameDetails {
     display: grid;
-    grid-template-columns: 7k0px 70px 70px 70px 70px 70px;
+    grid-template-columns: 80px 80px 80px 80px 80px 80px 80px;
 }
 
 button:hover {
@@ -25,5 +25,5 @@ button:hover {
 
 #grid {
     display: grid;
-    grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+    grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
 }

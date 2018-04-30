@@ -1,70 +1,68 @@
 import React from "react";
 import ReactDom from 'react-dom';
 import './index.css';
-import { generateNextGeneration } from './next-generation-generator';
+import { generateNextGeneration } from "./generation-generator";
 
 class Cell extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { grid: [], generationNumber: 0, gameStatus: "On" }
-        this.recursiveGenerationGenerator = this.recursiveGenerationGenerator.bind(this);
+        this.state = { grid: [], aliveCells: [], generationNumber: 0, gameStatus: "On" }
     }
     componentDidMount() {
-        this.setState({ grid: generateNextGeneration().slice(0, 100), generationNumber: 1, gameStatus: "On" })
+        var results = generateNextGeneration();
+        this.setState({ grid: results.gridDisplay, aliveCells: results.aliveCells, generationNumber: 1, gameStatus: "Off" })
+    }
+    recursiveGenerationGenerator() {
+        var count = 1;
+        this.setState({ gameStatus: "On" })
+        var generationLoop = setInterval(() => {
+            var nextGeneration = generateNextGeneration(this.state.aliveCells);
+            this.setState({ grid: nextGeneration.gridDisplay, aliveCells: nextGeneration.aliveCells, generationNumber: count })
+            if (this.state.aliveCells.length === 0) {
+                this.setState({ gameStatus: "Over" })
+                clearInterval(generationLoop)
+            } else if (this.state.gameStatus === "paused") {
+                clearInterval(generationLoop)
+            }
+            count += 1;
+        }, 1000);
+
     }
     bringToLifeOrTakeAwayLIfe(cell) {
         var positionOfCell = this.state.grid.indexOf(cell);
         if (cell.status) {
             this.state.grid[positionOfCell].status = false;
+            var positionInAlive = this.state.aliveCells.indexOf(this.state.aliveCells.find(element => element.xAxis === cell.xAxis && element.yAxis === cell.yAxis));
+
+            this.state.aliveCells.splice(positionInAlive, positionInAlive + 1)
+            console.log("removing items", cell, this.state.aliveCells, positionInAlive)
         } else {
             this.state.grid[positionOfCell].status = true;
+            this.state.aliveCells.push(this.state.grid[positionOfCell]);
         }
-        this.setState({ grid: this.state.grid })
+        this.setState({ grid: this.state.grid, aliveCells: this.state.aliveCells })
     }
 
-    recursiveGenerationGenerator(genNumber = 1, generation = this.state.grid, gameStatus = "On") {
-        var generationNumber = genNumber;
-        var workedOnGeneration = generation;
-        this.setState({ gameStatus: gameStatus })
-        var generatorLoop = setInterval(() => {
-            generationNumber++;
-            workedOnGeneration = generateNextGeneration(this.state.grid);
-            this.setState({ grid: workedOnGeneration, generationNumber: generationNumber })
-            var existenceOfAliveCell = this.state.grid.find(element => { return element.status === true });
-            console.log("gameStatus", this.state.gameStatus)
-            if (this.state.gameStatus === "paused") {
-                clearInterval(generatorLoop);
-            }
-            if (generationNumber === 20) {
-                clearInterval(generatorLoop);
-                this.setState({ gameStatus: "Over" });
-            } else if (existenceOfAliveCell === undefined) {
-                clearInterval(generatorLoop);
-                this.setState({ gameStatus: "Over" });
-            }
-        }, 1000);
-    }
     clearGrid() {
         this.state.grid.forEach(element => {
             if (element.status === true) {
                 element.status = false;
             }
-            this.setState({ grid: this.state.grid }
+            this.setState({ grid: this.state.grid, aliveCells: [] }
             )
         })
     }
-    componentWillUpdates() {
-        this.setState({ grid: this.state.grid.slice(0, 100) })
-    }
     render() {
+        console.log(this.state.aliveCells)
         return (
             <div className="container">
                 <div id="gameDetails">
                     <button className='btn btn-primary' id="pauseOrPlay" onClick={() => this.recursiveGenerationGenerator(this.state.generationNumber)}>Start</button>
-                    <span>{this.state.generationNumber}</span>
-                    <span>Game: {this.state.gameStatus}</span>
+                    <span>Generation Number: {this.state.generationNumber}</span>
                     <button className='btn btn-warning' id="pauseOrPlay" onClick={() => { return this.setState({ gameStatus: "paused" }) }}>Pause</button>
+                    <span>Alive cells: {this.state.aliveCells.length}</span>
                     <button className='btn btn-danger' id="pauseOrPlay" onClick={this.clearGrid.bind(this)}>Clear</button>
+                    <span>Game: {this.state.gameStatus}</span>
                 </div>
                 <div id="grid">
                     {this.state.grid.map(gridCell => {
