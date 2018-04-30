@@ -23,6 +23,13 @@ body {
 
 #inputDisplay {
     padding-left: 24em;
+    opacity: 1;
+}
+
+#listContainer {
+    background-color: white;
+    color: black;
+    font-family: cursive;
 }
 
 textarea {

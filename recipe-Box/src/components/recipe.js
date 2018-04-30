@@ -11,13 +11,13 @@ export default class Recipe extends React.Component {
         if (this.hideOrShow) {
             try {
                 this.setState({ recipe: this.props.name, ingredients: this.props.ingredients, list: this.props.ingredients.map(element => { return <li key={this.props.ingredients.indexOf(element)}>{element}</li> }), del: <button id="deleteButton" onClick={() => this.deleteItem()}>Delete {this.props.name}</button>, edit: <button id="editButton" onClick={() => this.editItem()}>Edit {this.props.name}</button> });
-                this.hideOrShow = false;
             } catch (error) {
                 this.setState({ list: "this list is empty", del: <button id="deleteButton" onClick={() => this.deleteItem()}>Delete</button>, edit: <button id="editButton" onClick={() => this.editItem()}>Edit {this.props.name}</button> });
             }
+            this.hideOrShow = false;
         } else {
             this.hideOrShow = true;
-            this.setState({ list: <div></div>, del: <div></div>, edit: <div></div> });
+            this.setState({ list: null, del: null, edit: null });
         }
     }
     editRecipeName(e) {
@@ -48,7 +48,7 @@ export default class Recipe extends React.Component {
         return (
             <div>
                 <button className="btn btn-primary" onClick={this.showAndHide.bind(this)} id="ItemButton">{this.props.name}</button>
-                <div className="container">
+                <div className="container" id="listContainer">
                     <ul>
                         {this.state.list}
                     </ul>

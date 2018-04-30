@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDom from 'react-dom';
 import './index.css';
-import { generateNextGeneration, getAllNeighbors } from './next-generation-generator';
+import { generateNextGeneration } from './next-generation-generator';
 
 class Cell extends React.Component {
     constructor(props) {
@@ -10,7 +10,7 @@ class Cell extends React.Component {
         this.recursiveGenerationGenerator = this.recursiveGenerationGenerator.bind(this);
     }
     componentDidMount() {
-        this.setState({ grid: generateNextGeneration(), generationNumber: 1, gameStatus: "On" })
+        this.setState({ grid: generateNextGeneration().slice(0, 100), generationNumber: 1, gameStatus: "On" })
     }
     bringToLifeOrTakeAwayLIfe(cell) {
         var positionOfCell = this.state.grid.indexOf(cell);
@@ -44,6 +44,18 @@ class Cell extends React.Component {
             }
         }, 1000);
     }
+    clearGrid() {
+        this.state.grid.forEach(element => {
+            if (element.status === true) {
+                element.status = false;
+            }
+            this.setState({ grid: this.state.grid }
+            )
+        })
+    }
+    componentWillUpdates() {
+        this.setState({ grid: this.state.grid.slice(0, 100) })
+    }
     render() {
         return (
             <div className="container">
@@ -52,6 +64,7 @@ class Cell extends React.Component {
                     <span>{this.state.generationNumber}</span>
                     <span>Game: {this.state.gameStatus}</span>
                     <button className='btn btn-warning' id="pauseOrPlay" onClick={() => { return this.setState({ gameStatus: "paused" }) }}>Pause</button>
+                    <button className='btn btn-danger' id="pauseOrPlay" onClick={this.clearGrid.bind(this)}>Clear</button>
                 </div>
                 <div id="grid">
                     {this.state.grid.map(gridCell => {

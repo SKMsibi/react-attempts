@@ -12,7 +12,7 @@ button {
 
 #gameDetails {
     display: grid;
-    grid-template-columns: 7k0px 70px 70px 70px;
+    grid-template-columns: 7k0px 70px 70px 70px 70px 70px;
 }
 
 button:hover {

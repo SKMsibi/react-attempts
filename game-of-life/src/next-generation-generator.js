@@ -121,6 +121,12 @@ function generateNextGeneration(currentGeneration) {
         })
         if (element.status === false && aliveNeighbors.length === 3) {
             changedElement.status = true;
+            var itemNeighbors = getAllNeighbors(changedElement);
+            itemNeighbors.forEach(neighbor => {
+                if (newGeneration.indexOf({ xAxes: neighbor[0], yAxes: neighbor[1], status: false }) < 0) {
+                    newGeneration.push({ xAxes: neighbor[0], yAxes: neighbor[1], status: false })
+                }
+            })
             newGeneration.push(changedElement);
         }
         else if (element.status === true && aliveNeighbors.length < 2) {
@@ -163,10 +169,11 @@ function getAllNeighbors(object) {
         [object.xAxes + 1, object.yAxes + 1],
         [object.xAxes, object.yAxes - 1],
         [object.xAxes, object.yAxes + 1],
+        
     ];
     return allItsNeighbors;
 }
-var first = generateNextGeneration();
-var second = generateNextGeneration(first);
-var third = generateNextGeneration(second);
+// var first = generateNextGeneration();
+// var second = generateNextGeneration(first);
+// var third = generateNextGeneration(second);
 module.exports = { generateNextGeneration, getAllNeighbors, recursiveGenerationGenerator }
