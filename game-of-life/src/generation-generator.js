@@ -77,4 +77,5 @@ function createGridToDisplay(aliveCells) {
     });
     return gridToDisplay;
 }
+console.log(generateNextGeneration())
 module.exports = { generateNextGeneration, getAllNeighbors, getLowestAndHighest }
