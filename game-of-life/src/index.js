@@ -6,14 +6,15 @@ import { generateNextGeneration } from "./generation-generator";
 class Cell extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { grid: [], aliveCells: [], generationNumber: 0, gameStatus: "On" }
+        this.state = { grid: [], aliveCells: [], generationNumber: 1, gameStatus: "On", speed: 1000 }
     }
     componentDidMount() {
         var results = generateNextGeneration();
         this.setState({ grid: results.gridDisplay, aliveCells: results.aliveCells, generationNumber: 1, gameStatus: "Off" })
     }
     recursiveGenerationGenerator() {
-        var count = 1;
+        var count = this.state.generationNumber;
+        var currentSpeed = this.state.speed;
         this.setState({ gameStatus: "On" })
         var generationLoop = setInterval(() => {
             var nextGeneration = generateNextGeneration(this.state.aliveCells);
@@ -23,10 +24,13 @@ class Cell extends React.Component {
                 clearInterval(generationLoop)
             } else if (this.state.gameStatus === "paused") {
                 clearInterval(generationLoop)
+            } else if (currentSpeed !== this.state.speed) {
+                console.log("currentSpeed", currentSpeed)
+                console.log("speed", this.state.speed)
+                clearInterval(generationLoop)
             }
             count += 1;
-        }, 1000);
-
+        }, this.state.speed);
     }
     bringToLifeOrTakeAwayLIfe(cell) {
         var positionOfCell = this.state.grid.indexOf(cell);
@@ -42,7 +46,12 @@ class Cell extends React.Component {
         }
         this.setState({ grid: this.state.grid, aliveCells: this.state.aliveCells })
     }
-
+    changeSpeed(time) {
+        this.setState({ speed: time });
+        setTimeout(() => {
+            this.recursiveGenerationGenerator();
+        }, 1000);
+    }
     clearGrid() {
         this.state.grid.forEach(element => {
             if (element.status === true) {
@@ -69,6 +78,9 @@ class Cell extends React.Component {
                         return <button key={this.state.grid.indexOf(gridCell)} id={`${gridCell.status}`} onClick={() => this.bringToLifeOrTakeAwayLIfe(gridCell)}></button>
                     })}
                 </div>
+                <button id="speedChange" onClick={() => { this.changeSpeed(2000) }}>Slow</button>
+                <button id="speedChange" onClick={() => { this.changeSpeed(1000) }}>Normal</button>
+                <button id="speedChange" onClick={() => { this.changeSpeed(500) }}>Fast</button>
             </div>
         )
     }

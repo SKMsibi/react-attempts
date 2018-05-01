@@ -10,6 +10,13 @@ button {
     width: 4em;
 }
 
+#speedChange {
+    background-color: #337ab7;
+    color: black;
+    height: 3em;
+    width: 4em;
+}
+
 #gameDetails {
     display: grid;
     grid-template-columns: 80px 80px 80px 80px 80px 80px 80px;
