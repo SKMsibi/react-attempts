@@ -1,4 +1,3 @@
-
 function generateNextGeneration(currentGeneration) {
     var grid = [];
     var newGeneration = [];

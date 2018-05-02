@@ -25,8 +25,6 @@ class Cell extends React.Component {
             } else if (this.state.gameStatus === "paused") {
                 clearInterval(generationLoop)
             } else if (currentSpeed !== this.state.speed) {
-                console.log("currentSpeed", currentSpeed)
-                console.log("speed", this.state.speed)
                 clearInterval(generationLoop)
             }
             count += 1;
@@ -39,7 +37,6 @@ class Cell extends React.Component {
             var positionInAlive = this.state.aliveCells.indexOf(this.state.aliveCells.find(element => element.xAxis === cell.xAxis && element.yAxis === cell.yAxis));
 
             this.state.aliveCells.splice(positionInAlive, positionInAlive + 1)
-            console.log("removing items", cell, this.state.aliveCells, positionInAlive)
         } else {
             this.state.grid[positionOfCell].status = true;
             this.state.aliveCells.push(this.state.grid[positionOfCell]);
@@ -62,7 +59,6 @@ class Cell extends React.Component {
         })
     }
     render() {
-        console.log(this.state.grid.length)
         return (
             <div className="container">
                 <div id="gameDetails">
