@@ -20,7 +20,7 @@ class Cell extends React.Component {
             var nextGeneration = generateNextGeneration(this.state.aliveCells);
             this.setState({ grid: nextGeneration.gridDisplay, aliveCells: nextGeneration.aliveCells, generationNumber: count })
             if (this.state.aliveCells.length === 0) {
-                this.setState({ gameStatus: "Over" })
+                this.setState({ gameStatus: "Over", generationNumber: 0 })
                 clearInterval(generationLoop)
             } else if (this.state.gameStatus === "paused") {
                 clearInterval(generationLoop)
@@ -62,7 +62,7 @@ class Cell extends React.Component {
         })
     }
     render() {
-        console.log(this.state.aliveCells)
+        console.log(this.state.grid.length)
         return (
             <div className="container">
                 <div id="gameDetails">
@@ -80,7 +80,7 @@ class Cell extends React.Component {
                 </div>
                 <button id="speedChange" onClick={() => { this.changeSpeed(2000) }}>Slow</button>
                 <button id="speedChange" onClick={() => { this.changeSpeed(1000) }}>Normal</button>
-                <button id="speedChange" onClick={() => { this.changeSpeed(500) }}>Fast</button>
+                <button id="speedChange" onClick={() => { this.changeSpeed(200) }}>Fast</button>
             </div>
         )
     }

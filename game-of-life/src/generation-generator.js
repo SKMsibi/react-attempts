@@ -1,8 +1,17 @@
+
 function generateNextGeneration(currentGeneration) {
     var grid = [];
     var newGeneration = [];
     if (currentGeneration === undefined) {
-        currentGeneration = [{ xAxis: 2, yAxis: 3, status: true }, { xAxis: 3, yAxis: 3, status: true }, { xAxis: 4, yAxis: 3, status: true }, { xAxis: 7, yAxis: 1, status: true }, { xAxis: 7, yAxis: 2, status: true }, { xAxis: 8, yAxis: 1, status: true }];
+        currentGeneration = [];
+        for (let secondIndex = 3; secondIndex < 19; secondIndex++) {
+            for (let index = 3; index < 19; index++) {
+                let newItem = { xAxis: Math.floor(Math.random() * secondIndex), yAxis: Math.floor(Math.random() * index), status: true };
+                if (currentGeneration.indexOf(newItem) === -1) {
+                    currentGeneration.push(newItem);
+                }
+            }
+        }
     }
     var lowestAndHighest = getLowestAndHighest(currentGeneration)
     for (let xAxisCounter = lowestAndHighest.lowestX - 2; xAxisCounter <= lowestAndHighest.highestX + 2; xAxisCounter++) {

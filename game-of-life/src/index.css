@@ -1,6 +1,6 @@
 button {
-    height: 2em;
-    width: 2em;
+    height: 1.5em;
+    width: 1.5em;
     background-color: black;
     border-color: #337ab7;
 }
@@ -32,5 +32,5 @@ button:hover {
 
 #grid {
     display: grid;
-    grid-template-columns: 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px 30px;
+    grid-template-columns: 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px 23px;
 }
