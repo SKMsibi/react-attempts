@@ -4,9 +4,9 @@ function generateNextGeneration(currentGeneration) {
     var newGeneration = [];
     if (currentGeneration === undefined) {
         currentGeneration = [];
-        for (let secondIndex = 3; secondIndex < 19; secondIndex++) {
-            for (let index = 3; index < 19; index++) {
-                let newItem = { xAxis: Math.floor(Math.random() * secondIndex), yAxis: Math.floor(Math.random() * index), status: true };
+        for (let secondIndex = 5; secondIndex < 19; secondIndex++) {
+            for (let index = 5; index < 19; index++) {
+                let newItem = { xAxis: Math.floor(Math.random() * 19), yAxis: Math.floor(Math.random() * 19), status: true };
                 if (currentGeneration.indexOf(newItem) === -1) {
                     currentGeneration.push(newItem);
                 }
