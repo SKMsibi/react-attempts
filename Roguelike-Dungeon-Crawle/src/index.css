@@ -1,0 +1,21 @@
+body {
+  font-family: sans-serif;
+}
+
+.App {
+  display: grid;
+  grid-template-columns: 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px;
+  grid-template-rows: 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px;
+}
+
+#true {
+  background-color: white;
+}
+
+#false {
+  background-color: black;
+}
+
+span {
+  border-radius: 5px;
+}
