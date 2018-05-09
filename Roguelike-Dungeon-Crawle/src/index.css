@@ -4,8 +4,8 @@ body {
 
 .App {
   display: grid;
-  grid-template-columns: 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px;
-  grid-template-rows: 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px;
+  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+  grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
 }
 
 #true {
@@ -17,5 +17,7 @@ body {
 }
 
 span {
+  height: 40px;
+  width: 40px;
   border-radius: 5px;
 }
