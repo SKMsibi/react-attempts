@@ -7,6 +7,7 @@ class App extends Component {
     super(props)
     this.state = {
       grid: [],
+      weapons: [{ xAxis: 1, yAxis: 2 }, { xAxis: 5, yAxis: 4 }, { xAxis: 6, yAxis: 6 }],
       enemies: [{ xAxis: 2, yAxis: 3 }, { xAxis: 6, yAxis: 7 }, { xAxis: 9, yAxis: 1 }],
       playerPosition: { xAxis: 6, yAxis: 3 },
       pathWaysToMove:
@@ -61,8 +62,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    var grid = changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, this.state.enemies)
-    this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: generateGameLayout(grid.newGrid, this.state.enemies), enemies: grid.newEnemies });
+    var grid = changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, this.state.enemies, this.state.weapons)
+    this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons), enemies: grid.newEnemies, weapons: grid.leftWeapons });
     document.onkeydown = this.checkKey;
   }
   checkKey = (event) => {
@@ -76,17 +77,20 @@ class App extends Component {
     } else if (event.key === "ArrowRight") {
       keyPresses = { xAxis: keyPresses.xAxis, yAxis: keyPresses.yAxis + 1 }
     }
-    var newGrid = changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, keyPresses, this.state.enemies)
-    this.setState({ pathWaysToMove: newGrid.newGrid, playerPosition: newGrid.newPosition, grid: generateGameLayout(newGrid.newGrid, this.state.enemies), enemies: newGrid.newEnemies });
+    var newGrid = changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, keyPresses, this.state.enemies, this.state.weapons)
+    this.setState({ pathWaysToMove: newGrid.newGrid, playerPosition: newGrid.newPosition, grid: generateGameLayout(newGrid.newGrid, this.state.enemies, this.state.weapons), enemies: newGrid.newEnemies, weapons: newGrid.leftWeapons });
   }
   render() {
+    console.log("weaponFound", this.state)
     return (
       <div className="App">
         {this.state.grid.map(element => {
           if (element.occupied === "User") {
-            element.occupied = <p>&#x25A9;</p>
+            element.occupied = <p>&#x25A9;</p>;
           } else if (element.occupied === "Enemy") {
-            element.occupied = <p>&#x25B6;</p>
+            element.occupied = <p>&#x25B6;</p>;
+          } else if (element.occupied === "Weapon") {
+            element.occupied = <p>&#9672;</p>;
           }
           return <span key={this.state.grid.indexOf(element)} id={`${element.pathWay}`}><p>{element.occupied}</p></span>
         })}
@@ -94,5 +98,4 @@ class App extends Component {
     );
   }
 }
-
 export default App;
