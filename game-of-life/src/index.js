@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDom from 'react-dom';
 import './index.css';
+import SpeedButtons from './speed-buttons';
 import { generateNextGeneration } from "./generation-generator";
 
 class Cell extends React.Component {
@@ -11,9 +12,10 @@ class Cell extends React.Component {
     componentDidMount() {
         var results = generateNextGeneration();
         this.setState({ grid: results.gridDisplay, aliveCells: results.aliveCells, generationNumber: 1, gameStatus: "Off" })
+        this.recursiveGenerationGenerator(this.state.generationNumber);
     }
     recursiveGenerationGenerator() {
-        var count = this.state.generationNumber;
+        var count = this.state.generationNumber < 1 && this.state.aliveCells.length > 0 ? 1 : this.state.generationNumber;
         var currentSpeed = this.state.speed;
         this.setState({ gameStatus: "On" })
         var generationLoop = setInterval(() => {
@@ -62,22 +64,24 @@ class Cell extends React.Component {
         return (
             <div className="container">
                 <div id="gameDetails">
-                    <button className='btn btn-primary' id="pauseOrPlay" onClick={() => this.recursiveGenerationGenerator(this.state.generationNumber)}>Start</button>
+                    <button className='btn btn-primary' id="pauseOrPlay" onClick={() => this.recursiveGenerationGenerator()}>Start</button>
                     <span>Generation Number: {this.state.generationNumber}</span>
-                    <button className='btn btn-warning' id="pauseOrPlay" onClick={() => { return this.setState({ gameStatus: "paused" }) }}>Pause</button>
+                    <button className='btn btn-warning' id="pauseOrPlay" onClick={() => this.setState({ gameStatus: "paused" })}>Pause</button>
                     <span>Alive cells: {this.state.aliveCells.length}</span>
-                    <button className='btn btn-danger' id="pauseOrPlay" onClick={this.clearGrid.bind(this)}>Clear</button>
+                    <button className='btn btn-danger' id="pauseOrPlay" onClick={() => this.clearGrid()}>Clear</button>
                     <span>Game: {this.state.gameStatus}</span>
                 </div>
-                <div id="grid">
-                    {this.state.grid.map(gridCell => {
-                        return <button key={this.state.grid.indexOf(gridCell)} id={`${gridCell.status}`} onClick={() => this.bringToLifeOrTakeAwayLIfe(gridCell)}></button>
-                    })}
+                <div className="row">
+                    <div className="col-md-8" id="grid">
+                        {this.state.grid.map(gridCell => {
+                            return <button key={this.state.grid.indexOf(gridCell)} id={`${gridCell.status}`} onClick={() => this.bringToLifeOrTakeAwayLIfe(gridCell)}></button>
+                        })}
+                    </div>
+                    <div className="col-md-4">
+                        <SpeedButtons speedFunc={this.changeSpeed.bind(this)} />
+                    </div>
                 </div>
-                <button id="speedChange" onClick={() => { this.changeSpeed(2000) }}>Slow</button>
-                <button id="speedChange" onClick={() => { this.changeSpeed(1000) }}>Normal</button>
-                <button id="speedChange" onClick={() => { this.changeSpeed(200) }}>Fast</button>
-            </div>
+            </div >
         )
     }
 }

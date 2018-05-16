@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import * as user from '../actions/actions';
 import '../App.css';
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {
+                                                                                                                                                                                                                                                                                                                                                                                      this.state = {
       grid: [],
       weapons: [{ xAxis: 1, yAxis: 2 }, { xAxis: 5, yAxis: 4 }, { xAxis: 6, yAxis: 6 }],
       enemies: [{ xAxis: 2, yAxis: 3 }, { xAxis: 6, yAxis: 7 }, { xAxis: 9, yAxis: 1 }],
@@ -66,10 +66,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+
     var grid = changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, this.state.enemies, this.state.weapons, this.state.health);
     var girdToDisplay = generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons, this.state.health)
     this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft });
     document.onkeydown = this.checkKey;
+
   }
   checkKey = (event) => {
     var keyPresses = this.state.playerPosition;
@@ -88,9 +90,9 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
-        <div className="App">
-          {this.state.grid.map(element => {
+      <div className="container">
+        <div className="col-md-6">
+          <div className="App">{this.state.grid.map(element => {
             if (element.occupied === "User") {
               element.occupied = <p id="user">&#x25A9;</p>;
             } else if (element.occupied === "Enemy") {
@@ -102,10 +104,17 @@ class App extends Component {
             }
             return <span key={this.state.grid.indexOf(element)} id={`${element.pathWay}`}><p>{element.occupied}</p></span>
           })}
+          </div>
         </div>
-        <DisplayDetails weapons={this.state.weapons} health={this.state.health} enemies={this.state.enemies} />
+        <div className="col-md-6">
+          <DisplayDetails weapons={this.state.weapons} health={this.state.health} enemies={this.state.enemies} />
+        </div>
       </div>
     );
   }
 }
-export default App;
+
+function mapStateToProps(state) {
+  return { containerData: state.appData };
+}
+export default connect(mapStateToProps)(App);

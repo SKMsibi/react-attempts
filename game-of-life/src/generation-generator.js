@@ -1,4 +1,5 @@
 function generateNextGeneration(currentGeneration) {
+
     var grid = [];
     var newGeneration = [];
     if (currentGeneration === undefined) {
