@@ -1,4 +1,4 @@
-export default function personInfo(state = { name: "Sabelo", gender: "Male", age: 20 }, action) {
+export default function personInfo(state = { ...state, name: "Sabelo", gender: "Male", age: 20 }, action) {
     switch (action.type) {
         case "CHANGE_AGE":
             state = { ...state, age: action.newValue };
@@ -13,5 +13,4 @@ export default function personInfo(state = { name: "Sabelo", gender: "Male", age
             break;
     }
     return state;
-
 }
