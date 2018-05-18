@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import personInfo from './personInfo';
-import changeComment from './change-comment';
+import gameProperties from './game-properties';
+import userInformation from './user-information';
 
 export default combineReducers({
-    personInfo,
-    changeComment
+    gameProperties,
+    userInformation
 })
