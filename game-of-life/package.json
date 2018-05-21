@@ -1,6 +1,6 @@
 {
-  "homepage": "https://github.com/SKMsibi/skmsibi.github.io/my-app",
-  "name": "my-app",
+  "homepage": "https://github.com/SKMsibi/skmsibi.github.io/game-of-life",
+  "name": "game-of-life",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
