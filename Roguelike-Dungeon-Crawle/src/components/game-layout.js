@@ -58,4 +58,15 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
     }
     return { newGrid: gridOfPathWays, newPosition: { xAxis: newLocation.xAxis, yAxis: newLocation.yAxis }, newEnemies: setEnemies, leftWeapons: availableWeapons, healthLeft: healthAvailable };
 }
-module.exports = { generateGameLayout, changeUserLocation };
+function placeAtRandom(pathWays) {
+    var usedLocations = [];
+    while (usedLocations.length < 7) {
+        var randomNum = Math.floor(Math.random() * pathWays.length);
+        if (pathWays[randomNum].occupied !== "User" && usedLocations.indexOf(pathWays[randomNum]) === -1) {
+            usedLocations.push(pathWays[randomNum])
+        }
+    }
+    var results = { enemies: usedLocations.slice(0, 3), health: usedLocations.slice(3, 6), weapon: usedLocations.slice(6, 7) };
+    return results;
+}
+module.exports = { generateGameLayout, changeUserLocation, placeAtRandom };

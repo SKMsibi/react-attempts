@@ -1,8 +1,8 @@
 export default function userInformation(state = {
-    ...state, userLocation: {},
-    currentLifeRemaining: {},
-    currentGamePoints: {},
-    currentWeapon: {}
+    userLocation: { xAxis: 6, yAxis: 3 },
+    currentLifeRemaining: { life: 200 },
+    currentGamePoints: { point: 0 },
+    currentWeapon: { weaponName: "Fist" }
 }, action) {
     var newState = state;
     switch (action) {
@@ -20,6 +20,9 @@ export default function userInformation(state = {
             break;
         case action.type === "CHANGE_CURRENT_WEAPON":
             newState = { ...state, currentWeapon: action.newValue }
+            break;
+        default:
+            newState = { ...state }
             break;
     }
     return newState;

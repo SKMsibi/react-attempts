@@ -1,24 +1,24 @@
-export const changeUserName = (name) => {
+export const changeUserWeapon = (weaponName) => {
     return {
-        type: "CHANGE_NAME",
-        newValue: name
+        type: "CHANGE_CURRENT_USED_WEAPON",
+        newValue: weaponName
     }
 }
-export const changeGender = (gender) => {
+export const changeUserPosition = (obj) => {
     return {
-        type: "CHANGE_GENDER",
-        newValue: gender
+        type: "CHANGE_USER_POSITION",
+        newValue: obj
     }
 }
-export const changeAge = (age) => {
+export const changeStage = (stageNum) => {
     return {
-        type: "CHANGE_AGE",
-        newValue: age
+        type: "CHANGE_STAGE",
+        newValue: stageNum
     }
 }
-export const changeComment = (comment) => {
+export const changeExistingEnemies = (comment) => {
     return {
-        type: "CHANGE_COMMENT",
+        type: "CHANGE_ENEMIES",
         newValue: comment
     }
 }

@@ -1,10 +1,12 @@
+import * as stage from '../components/game-stage';
 export default function gameProperties(state = {
-    ...state, grid: [],
-    pathWays: [],
+    grid: [],
+    pathWays: stage.stageOne,
     enemies: [],
     health: [],
-    allAvailableWeapons: [],
-    stage: 1
+    accessibleWeapon: [],
+    allAvailableWeapons: ["Fists", "Nunjucks", "Dagger", "Samurai sword"],
+    stage: 0
 }, action) {
     var newState = { ...state }
     switch (action.type) {
@@ -31,6 +33,9 @@ export default function gameProperties(state = {
             break;
         case "RESET_HEALTH":
             newState = { ...newState, health: action.newValue }
+            break;
+        default:
+            newState = { ...state }
             break;
     }
     return newState;
