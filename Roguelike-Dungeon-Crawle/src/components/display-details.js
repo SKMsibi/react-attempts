@@ -3,28 +3,25 @@ class DisplayDetails extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            health: props.health,
-            weapons: props.weapons,
-            enemies: props.enemies
+            health: this.props.allInfo.health,
+            weapon: "",
+            enemies: this.props.allInfo.enemies
         }
     }
-
     render() {
         return (
             <div className="container">
-                <div className="col-md-6">User</div>
-                <div className="col-md-6"><span id="user">&#x25A9;</span></div>
-
-
-                <div className="col-md-6">Enemies</div>
-                <div className="col-md-6"><span id="enemy">&#x26C7;</span></div>
-
-                <div className="col-md-6">Weapon</div>
-                <div className="col-md-6"><span id="weapon">&#9874;</span></div>
-
-                <div className="col-md-6">Health</div>
-                <div className="col-md-6"><span id="health">&#9749;</span></div>
-
+                <div>User</div>
+                <div><span id="user">&#x25A9;</span></div>
+                <div>DoorWay</div>
+                <div><span id="doorway">&#9961;</span></div>
+                <div>Enemies</div>
+                <div><span id="enemy">&#x26C7;</span>: {this.props.allInfo.enemies.length}</div>
+                <div>Weapon</div>
+                <div><span id="weapon">&#9874;</span>: {this.props.allInfo.weapons.length === 0 ? this.props.allInfo.currentWeapon.title : ""}</div>
+                <div>Health</div>
+                <div><span id="health">&#9749;</span>: {this.props.allInfo.health.length}</div>
+                <div>Life : {this.props.allInfo.currentLifeRemaining}</div>
             </div>
         )
     }

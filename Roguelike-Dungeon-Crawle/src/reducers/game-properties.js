@@ -5,7 +5,7 @@ export default function gameProperties(state = {
     enemies: [],
     health: [],
     accessibleWeapon: [],
-    allAvailableWeapons: ["Fists", "Nunjucks", "Dagger", "Samurai sword"],
+    allAvailableWeapons: [{ title: "Fists claws", impact: 25 }, { title: "Nunjucks", impact: 40 }, { title: "Dagger", impact: 50 }, { title: "Samurai sword", impact: 65 }],
     stage: 0
 }, action) {
     var newState = { ...state }

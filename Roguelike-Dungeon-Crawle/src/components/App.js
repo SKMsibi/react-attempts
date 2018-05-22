@@ -10,6 +10,7 @@ export class App extends Component {
     super(props)
     this.state = {
       grid: [],
+      currentLifeRemaining: this.props.containerData.userInformation.currentLifeRemaining,
       weapons: this.props.containerData.gameProperties.accessibleWeapon,
       enemies: this.props.containerData.gameProperties.enemies,
       health: this.props.containerData.gameProperties.health,
@@ -22,9 +23,9 @@ export class App extends Component {
 
   componentDidMount() {
     var randomItems = func.placeAtRandom(this.state.pathWaysToMove);
-    var grid = func.changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, randomItems.enemies, randomItems.weapon, randomItems.health);
-    var girdToDisplay = func.generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons, this.state.health)
-    this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft });
+    var grid = func.changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, randomItems.enemies, randomItems.weapon, randomItems.health, this.state.currentLifeRemaining, this.state.currentWeapon);
+    var girdToDisplay = func.generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons, this.state.health, randomItems.doorWay)
+    this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus });
     document.onkeydown = this.checkKey;
   }
   checkKey = (event) => {
@@ -38,9 +39,10 @@ export class App extends Component {
     } else if (event.key === "ArrowRight") {
       keyPresses = { xAxis: keyPresses.xAxis, yAxis: keyPresses.yAxis + 1 }
     }
-    var newGrid = func.changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, keyPresses, this.state.enemies, this.state.weapons, this.state.health);
-    var ToDisplayGrid = func.generateGameLayout(newGrid.newGrid, this.state.enemies, this.state.weapons, this.state.health);
-    this.setState({ pathWaysToMove: newGrid.newGrid, playerPosition: newGrid.newPosition, grid: ToDisplayGrid, enemies: newGrid.newEnemies, weapons: newGrid.leftWeapons, health: newGrid.healthLeft });
+    var path = this.state.grid.filter(element => element.pathWay === true)
+    var newGrid = func.changeUserLocation(path, this.state.playerPosition, keyPresses, this.state.enemies, this.state.weapons, this.state.health, this.state.currentLifeRemaining, this.state.currentWeapon);
+    var ToDisplayGrid = func.generateGameLayout(newGrid.newGrid, newGrid.newEnemies, newGrid.leftWeapons, newGrid.healthLeft);
+    this.setState({ pathWaysToMove: newGrid.newGrid, playerPosition: newGrid.newPosition, grid: ToDisplayGrid, enemies: newGrid.newEnemies, weapons: newGrid.leftWeapons, health: newGrid.healthLeft, currentLifeRemaining: newGrid.newLifeStatus });
   }
   render() {
     return (
@@ -49,20 +51,22 @@ export class App extends Component {
           <div className="col-md-6">
             <div className="App">{this.state.grid.map(element => {
               if (element.occupied === "User") {
-                element.occupied = <span id="user">&#x25A9;</span>;
+                element.displayPart = <span id="user"><i className="em em-male-detective"></i></span>;
               } else if (element.occupied === "Enemy") {
-                element.occupied = <span id="enemy">&#x26C7;</span>;
+                element.displayPart = <span id="enemy"><i className="em em-japanese_ogre"></i></span>;
               } else if (element.occupied === "Weapon") {
-                element.occupied = <span id="weapon">&#9874;</span>;
+                element.displayPart = <span id="weapon"><i className="em em-dagger_knife"></i></span>;
               } else if (element.occupied === "Health") {
-                element.occupied = <span id="health">&#9749;</span>;
+                element.displayPart = <span id="health"><i className="em em-avocado"></i></span>;
+              } else if (element.occupied === "DoorWay") {
+                element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
               }
-              return <span key={this.state.grid.indexOf(element)} id={`${element.pathWay}`}><p>{element.occupied}</p></span>
+              return <span key={this.state.grid.indexOf(element)} id={`${element.pathWay}`}><p>{element.displayPart}</p></span>
             })}
             </div>
           </div>
           <div className="col-md-6">
-            <DisplayDetails weapons={this.state.weapons} health={this.state.health} enemies={this.state.enemies} />
+            <DisplayDetails allInfo={this.state} />
           </div>
         </div>
       </div>

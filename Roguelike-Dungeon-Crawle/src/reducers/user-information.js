@@ -1,6 +1,6 @@
 export default function userInformation(state = {
     userLocation: { xAxis: 6, yAxis: 3 },
-    currentLifeRemaining: { life: 200 },
+    currentLifeRemaining: 100,
     currentGamePoints: { point: 0 },
     currentWeapon: { weaponName: "Fist" }
 }, action) {
