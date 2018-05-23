@@ -325,4 +325,4 @@ const stageFour = [
     { xAxis: 10, yAxis: 8, pathWay: true, occupied: null },
 ]
 
-module.exports = { stageOne }
+module.exports = { stageOne, stageTwo, stageThree, stageFour }

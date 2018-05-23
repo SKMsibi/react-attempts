@@ -38,10 +38,11 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay) {
     }
     return gridTemp;
 }
-function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, weapons, health, lifeRemaining, weapon) {
+function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, weapons, health, lifeRemaining, weapon, door) {
     var gridOfPathWays = pathWays;
     var lifeLeft = lifeRemaining;
     var setEnemies = enemies;
+    console.log("doorWay", door)
     var availableWeapons = weapons;
     var currentWeapon = availableWeapons.length < 1 ? weapon.impact : 0;
     var healthAvailable = health;
@@ -56,19 +57,20 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
         } else if (healthFound !== undefined) {
             healthAvailable = healthAvailable.filter(singleHealth => { return singleHealth !== healthFound });
             lifeLeft += 50;
+        } else if (door.xAxis === newLocation.xAxis && door.yAxis === newLocation.yAxis){
+            
         }
-        if (enemyAttack !== undefined) {
-            gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
-            console.log("lifeLeft", lifeLeft, gridOfPathWays[gridOfPathWays.indexOf(newLocation)])
-            lifeLeft <= 0 ? alert("You where killed by a demon") : lifeLeft -= 25;
-            lifeLeft = lifeLeft - gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life;
-            gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = "User";
-            gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "Enemy";
-            newLocation = oldLocation
-        } else {
-            gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;
-            gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "User";
-        }
+            if (enemyAttack !== undefined) {
+                gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
+                lifeLeft <= 0 ? alert("You where killed by a demon") : lifeLeft -= 25;
+                lifeLeft = lifeLeft - gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life;
+                gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = "User";
+                gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "Enemy";
+                newLocation = oldLocation
+            } else {
+                gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;
+                gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "User";
+            }
     } else {
         newLocation = oldLocation
     }
