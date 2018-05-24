@@ -18,10 +18,11 @@ class DisplayDetails extends Component {
                 <div>Enemies</div>
                 <div><span id="enemy">&#x26C7;</span>: {this.props.allInfo.enemies.length}</div>
                 <div>Weapon</div>
-                <div><span id="weapon">&#9874;</span>: {this.props.allInfo.weapons.length === 0 ? this.props.allInfo.currentWeapon.title : ""}</div>
+                <div><span id="weapon">&#9874;</span>: {this.props.allInfo.weapons.length === 0 ? this.props.allInfo.currentAvailableWeapon.title : ""}</div>
                 <div>Health</div>
                 <div><span id="health">&#9749;</span>: {this.props.allInfo.health.length}</div>
                 <div>Life : {this.props.allInfo.currentLifeRemaining}</div>
+                <div>Stage: {this.props.allInfo.stage}</div>
             </div>
         )
     }

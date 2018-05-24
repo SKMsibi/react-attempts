@@ -2,7 +2,7 @@ import * as func from './game-layout';
 import React, { Component } from 'react';
 import DisplayDetails from './display-details';
 import { connect } from 'react-redux';
-import * as user from '../actions/actions';
+import * as actions from '../actions/actions';
 import '../App.css';
 
 export class App extends Component {
@@ -11,22 +11,26 @@ export class App extends Component {
     this.state = {
       grid: [],
       currentLifeRemaining: this.props.containerData.userInformation.currentLifeRemaining,
-      weapons: this.props.containerData.gameProperties.accessibleWeapon,
-      enemies: this.props.containerData.gameProperties.enemies,
-      health: this.props.containerData.gameProperties.health,
+      weapons: [],
+      enemies: [],
+      health: [],
+      doorway: {},
       playerPosition: this.props.containerData.userInformation.userLocation,
       pathWaysToMove: this.props.containerData.gameProperties.pathWays,
-      stage: this.props.containerData.gameProperties.stage,
-      currentWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.props.containerData.gameProperties.stage]
+      stage: this.props.containerData.gameProperties.stage + 1,
+      currentAvailableWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.props.containerData.gameProperties.stage],
     }
   }
 
   componentDidMount() {
-    var randomItems = func.placeAtRandom(this.state.pathWaysToMove);
-    var grid = func.changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, randomItems.enemies, randomItems.weapon, randomItems.health, this.state.currentLifeRemaining, this.state.currentWeapon, randomItems.doorWay);
-    var girdToDisplay = func.generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons, this.state.health, randomItems.doorWay)
-    this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus });
+    this.loadGrid();
     document.onkeydown = this.checkKey;
+  }
+  loadGrid() {
+    var randomItems = func.placeAtRandom(this.state.pathWaysToMove);
+    var grid = func.changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, randomItems.enemies, randomItems.weapon, randomItems.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, randomItems.doorWay);
+    var girdToDisplay = func.generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons, this.state.health, randomItems.doorWay)
+    this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus, doorway: grid.doorWay });
   }
   checkKey = (event) => {
     var keyPresses = this.state.playerPosition;
@@ -40,9 +44,15 @@ export class App extends Component {
       keyPresses = { xAxis: keyPresses.xAxis, yAxis: keyPresses.yAxis + 1 }
     }
     var path = this.state.grid.filter(element => element.pathWay === true)
-    var newGrid = func.changeUserLocation(path, this.state.playerPosition, keyPresses, this.state.enemies, this.state.weapons, this.state.health, this.state.currentLifeRemaining, this.state.currentWeapon);
-    var ToDisplayGrid = func.generateGameLayout(newGrid.newGrid, newGrid.newEnemies, newGrid.leftWeapons, newGrid.healthLeft);
-    this.setState({ pathWaysToMove: newGrid.newGrid, playerPosition: newGrid.newPosition, grid: ToDisplayGrid, enemies: newGrid.newEnemies, weapons: newGrid.leftWeapons, health: newGrid.healthLeft, currentLifeRemaining: newGrid.newLifeStatus });
+    var newGrid = func.changeUserLocation(path, this.state.playerPosition, keyPresses, this.state.enemies, this.state.weapons, this.state.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, this.state.doorway);
+    var ToDisplayGrid = func.generateGameLayout(newGrid.newGrid, newGrid.newEnemies, newGrid.leftWeapons, newGrid.healthLeft, newGrid.doorWay);
+    this.setState({ pathWaysToMove: newGrid.newGrid, playerPosition: newGrid.newPosition, grid: ToDisplayGrid, enemies: newGrid.newEnemies, weapons: newGrid.leftWeapons, health: newGrid.healthLeft, currentLifeRemaining: newGrid.newLifeStatus, doorway: newGrid.doorWay });
+    if (newGrid.doorWay.usedOrNot) {
+      this.props.nextStage(this.props.containerData.gameProperties.stage, this.props.containerData.gameProperties.allStages)
+      this.props.passUserDetailsToNextStage(this.state.currentLifeRemaining);
+      // this.setState({ pathWaysToMove: this.props.containerData.gameProperties.pathWays,  })
+      this.loadGrid();
+    }
   }
   render() {
     return (
@@ -77,4 +87,9 @@ export class App extends Component {
 function mapStateToProps(state) {
   return { containerData: state };
 }
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => ({
+  nextStage: (newStageNumber, stages) => dispatch(actions.changeStage(newStageNumber, stages)),
+  passUserDetailsToNextStage: (life) => dispatch(actions.changeLifeLeft(life)),
+  changecurrentAvailableWeapon: (weapon) => dispatch(actions.changeUserWeapon(weapon))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(App);

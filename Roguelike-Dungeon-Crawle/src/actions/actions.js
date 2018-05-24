@@ -1,25 +1,28 @@
-export const changeUserWeapon = (weaponName) => {
+const changeUserWeapon = (weaponName) => {
     return {
         type: "CHANGE_CURRENT_USED_WEAPON",
         newValue: weaponName
     }
 }
-export const changeUserPosition = (obj) => {
+const changeUserPosition = (obj) => {
     return {
         type: "CHANGE_USER_POSITION",
         newValue: obj
     }
 }
-export const changeStage = (stageNum) => {
+const changeStage = (stageNum, stages) => {
     return {
         type: "CHANGE_STAGE",
-        newValue: stageNum
+        newValue: stages[stageNum + 1]
     }
 }
-export const changeExistingEnemies = (comment) => {
+const changeLifeLeft = (lifeAmount) => {
     return {
-        type: "CHANGE_ENEMIES",
-        newValue: comment
+        type: "CHANGE_REMAINING_LIFE",
+        newValue: lifeAmount
     }
 }
 
+module.exports = {
+    changeStage, changeLifeLeft, changeUserPosition, changeUserWeapon
+}
