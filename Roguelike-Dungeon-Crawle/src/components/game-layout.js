@@ -17,24 +17,32 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay) {
         var healthFound = gridTemp.find(element => {
             return element.xAxis === currentItem.xAxis && element.yAxis === currentItem.yAxis
         })
-        gridTemp[gridTemp.indexOf(healthFound)].occupied = "Health"
+        if (gridTemp[gridTemp.indexOf(healthFound)] !== undefined) {
+            gridTemp[gridTemp.indexOf(healthFound)].occupied = "Health"
+        }
     });
     enemies.forEach(currentItem => {
         var enemyFound = gridTemp.find(element => {
             return element.xAxis === currentItem.xAxis && element.yAxis === currentItem.yAxis
         })
-        gridTemp[gridTemp.indexOf(enemyFound)].occupied = "Enemy";
-        gridTemp[gridTemp.indexOf(enemyFound)].life = 50
+        if (gridTemp[gridTemp.indexOf(enemyFound)] !== undefined) {
+            gridTemp[gridTemp.indexOf(enemyFound)].occupied = "Enemy";
+            gridTemp[gridTemp.indexOf(enemyFound)].life = 50
+        }
     });
     weapons.forEach(currentItem => {
         var weaponFound = gridTemp.find(element => {
             return element.xAxis === currentItem.xAxis && element.yAxis === currentItem.yAxis
         })
-        gridTemp[gridTemp.indexOf(weaponFound)].occupied = "Weapon";
+        if (gridTemp[gridTemp.indexOf(weaponFound)] !== undefined) {
+            gridTemp[gridTemp.indexOf(weaponFound)].occupied = "Weapon";
+        }
     });
     if (doorWay) {
         var doorLocation = gridTemp.find(currentItem => doorWay.xAxis === currentItem.xAxis && doorWay.yAxis === currentItem.yAxis);
-        gridTemp[gridTemp.indexOf(doorLocation)].occupied = "DoorWay"
+        if (gridTemp[gridTemp.indexOf(doorLocation)] !== undefined) {
+            gridTemp[gridTemp.indexOf(doorLocation)].occupied = "DoorWay"
+        }
     }
     return gridTemp;
 }
@@ -60,7 +68,6 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
         } else if (doorWay.xAxis === newLocation.xAxis && doorWay.yAxis === newLocation.yAxis) {
             doorWay.usedOrNot = true;
         }
-
         if (enemyAttack !== undefined) {
             gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
             lifeLeft <= 0 ? alert("You where killed by a demon") : lifeLeft -= 25;

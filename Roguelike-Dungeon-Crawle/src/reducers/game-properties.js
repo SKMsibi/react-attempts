@@ -1,5 +1,4 @@
 import * as stage from '../components/game-stage';
-import { changePathways } from '../actions/actions';
 export default function gameProperties(state = {
     grid: [],
     allStages: [stage.stageOne, stage.stageTwo, stage.stageThree, stage.stageFour],

@@ -50,7 +50,7 @@ export class App extends Component {
     if (newGrid.doorWay.usedOrNot) {
       this.props.nextStage(this.props.containerData.gameProperties.stage, this.props.containerData.gameProperties.allStages)
       this.props.passUserDetailsToNextStage(this.state.currentLifeRemaining);
-      // this.setState({ pathWaysToMove: this.props.containerData.gameProperties.pathWays,  })
+      this.setState({ pathWaysToMove: this.props.containerData.gameProperties.pathWays, playerPosition: { xAxis: 6, yAxis: 3 } })
       this.loadGrid();
     }
   }
@@ -61,15 +61,15 @@ export class App extends Component {
           <div className="col-md-6">
             <div className="App">{this.state.grid.map(element => {
               if (element.occupied === "User") {
-                element.displayPart = <span id="user"><i className="em em-male-detective"></i></span>;
+                element.displayPart = <span id="user">&#x25A9;</span>;
               } else if (element.occupied === "Enemy") {
-                element.displayPart = <span id="enemy"><i className="em em-japanese_ogre"></i></span>;
+                element.displayPart = <span id="enemy">&#x26C7;</span>;
               } else if (element.occupied === "Weapon") {
-                element.displayPart = <span id="weapon"><i className="em em-dagger_knife"></i></span>;
+                element.displayPart = <span id="weapon">&#9874;</span>;
               } else if (element.occupied === "Health") {
-                element.displayPart = <span id="health"><i className="em em-avocado"></i></span>;
+                element.displayPart = <span id="health">&#9749;</span>;
               } else if (element.occupied === "DoorWay") {
-                element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
+                element.displayPart = <span id="doorway">&#9961;</span>;
               }
               return <span key={this.state.grid.indexOf(element)} id={`${element.pathWay}`}><p>{element.displayPart}</p></span>
             })}
@@ -90,6 +90,5 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   nextStage: (newStageNumber, stages) => dispatch(actions.changeStage(newStageNumber, stages)),
   passUserDetailsToNextStage: (life) => dispatch(actions.changeLifeLeft(life)),
-  changecurrentAvailableWeapon: (weapon) => dispatch(actions.changeUserWeapon(weapon))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(App);

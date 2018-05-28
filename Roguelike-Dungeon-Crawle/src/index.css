@@ -1,7 +1,6 @@
 body {
   font-family: sans-serif;
 }
-
 .App {
   display: grid;
   grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
@@ -9,7 +8,7 @@ body {
 }
 
 #true {
-  background-color: white;
+  background-color: rgb(184, 204, 212);
 }
 
 #false {
