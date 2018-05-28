@@ -42,6 +42,7 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = 
     if (stage === 4) {
         var bossNewLocation = gridTemp.find(element => element.xAxis === boss.xAxis && element.yAxis === boss.yAxis);
         bossNewLocation ? gridTemp[gridTemp.indexOf(bossNewLocation)].occupied = "Boss" : null
+        gridTemp[gridTemp.indexOf(bossNewLocation)].life = 200;
     }
     if (doorWay) {
         var doorLocation = gridTemp.find(currentItem => doorWay.xAxis === currentItem.xAxis && doorWay.yAxis === currentItem.yAxis);
@@ -65,6 +66,7 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
         var enemyAttack = enemies.find(item => item.xAxis === newLocation.xAxis && item.yAxis === newLocation.yAxis);
         var weaponFound = weapons.find(item => item.xAxis === newLocation.xAxis && item.yAxis === newLocation.yAxis);
         var healthFound = health.find(item => item.xAxis === newLocation.xAxis && item.yAxis === newLocation.yAxis);
+
         if (weaponFound !== undefined) {
             availableWeapons = availableWeapons.filter(singleWeapon => { return singleWeapon !== weaponFound })
         } else if (healthFound !== undefined) {
@@ -72,10 +74,20 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
             lifeLeft += 50;
         } else if (doorWay.xAxis === newLocation.xAxis && doorWay.yAxis === newLocation.yAxis) {
             doorWay.usedOrNot = true;
+        } else if (boss && boss.xAxis === newLocation.xAxis && boss.yAxis === newLocation.yAxis) {
+            gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
+            lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 45;
+            if (gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life > 0) {
+                gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = "User";
+                gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "Boss";
+                newLocation = oldLocation
+            } else {
+                gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;
+                gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "User";
+            }
         }
         if (enemyAttack) {
             gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
-            console.log("testing", gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life, currentWeapon)
             lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 25;
             if (gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life > 0) {
                 gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = "User";
