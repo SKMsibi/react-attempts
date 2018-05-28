@@ -28,7 +28,7 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = 
         })
         if (gridTemp[gridTemp.indexOf(enemyFound)]) {
             gridTemp[gridTemp.indexOf(enemyFound)].occupied = "Enemy";
-            !gridTemp[gridTemp.indexOf(enemyFound)].life ? gridTemp[gridTemp.indexOf(enemyFound)].life = 50 : gridTemp[gridTemp.indexOf(enemyFound)].life
+            !gridTemp[gridTemp.indexOf(enemyFound)].life ? gridTemp[gridTemp.indexOf(enemyFound)].life = 50 : gridTemp[gridTemp.indexOf(enemyFound)].life;
         }
     });
     weapons.forEach(currentItem => {
@@ -39,23 +39,26 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = 
             gridTemp[gridTemp.indexOf(weaponFound)].occupied = "Weapon";
         }
     });
-    if (stage === 4) {
-        var bossNewLocation = gridTemp.find(element => element.xAxis === boss.xAxis && element.yAxis === boss.yAxis);
-        bossNewLocation ? gridTemp[gridTemp.indexOf(bossNewLocation)].occupied = "Boss" : null
-        gridTemp[gridTemp.indexOf(bossNewLocation)].life = 200;
-    }
     if (doorWay) {
         var doorLocation = gridTemp.find(currentItem => doorWay.xAxis === currentItem.xAxis && doorWay.yAxis === currentItem.yAxis);
         if (gridTemp[gridTemp.indexOf(doorLocation)]) {
             gridTemp[gridTemp.indexOf(doorLocation)].occupied = "DoorWay"
         }
     }
+    if (stage === 4) {
+        var bossNewLocation = gridTemp.find(element => element.xAxis === boss.xAxis && element.yAxis === boss.yAxis);
+        var door = gridTemp.find(element => element.xAxis === doorWay.xAxis && element.yAxis === doorWay.yAxis);
+        bossNewLocation ? gridTemp[gridTemp.indexOf(bossNewLocation)].occupied = "Boss" : null;
+        !gridTemp[gridTemp.indexOf(bossNewLocation)].life ? gridTemp[gridTemp.indexOf(bossNewLocation)].life = 200 : gridTemp[gridTemp.indexOf(bossNewLocation)].life;
+    }
     return gridTemp;
 }
-function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, weapons, health, lifeRemaining, weapon, door, boss) {
+function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, weapons, health, lifeRemaining, weapon, door, boss, gamePoints) {
     var gridOfPathWays = pathWays;
     var lifeLeft = lifeRemaining;
+    var points = gamePoints;
     var doorWay = door;
+    var Boss = boss;
     var setEnemies = enemies;
     var availableWeapons = weapons;
     var currentWeapon = availableWeapons.length < 1 ? weapon.impact : 0;
@@ -66,7 +69,6 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
         var enemyAttack = enemies.find(item => item.xAxis === newLocation.xAxis && item.yAxis === newLocation.yAxis);
         var weaponFound = weapons.find(item => item.xAxis === newLocation.xAxis && item.yAxis === newLocation.yAxis);
         var healthFound = health.find(item => item.xAxis === newLocation.xAxis && item.yAxis === newLocation.yAxis);
-
         if (weaponFound !== undefined) {
             availableWeapons = availableWeapons.filter(singleWeapon => { return singleWeapon !== weaponFound })
         } else if (healthFound !== undefined) {
@@ -74,9 +76,9 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
             lifeLeft += 50;
         } else if (doorWay.xAxis === newLocation.xAxis && doorWay.yAxis === newLocation.yAxis) {
             doorWay.usedOrNot = true;
-        } else if (boss && boss.xAxis === newLocation.xAxis && boss.yAxis === newLocation.yAxis) {
+        } else if (Boss && Boss.xAxis === newLocation.xAxis && Boss.yAxis === newLocation.yAxis) {
             gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
-            lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 45;
+            lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 50;
             if (gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life > 0) {
                 gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = "User";
                 gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "Boss";
@@ -84,6 +86,7 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
             } else {
                 gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;
                 gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "User";
+                points += 90;
             }
         }
         if (enemyAttack) {
@@ -97,6 +100,7 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
                 setEnemies = setEnemies.filter(singleEnemy => { return singleEnemy !== enemyAttack })
                 gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;
                 gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "User";
+                points += 30;
             }
         } else {
             gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;
@@ -105,7 +109,7 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
     } else {
         newLocation = oldLocation
     }
-    return { newGrid: gridOfPathWays, newPosition: { xAxis: newLocation.xAxis, yAxis: newLocation.yAxis }, newEnemies: setEnemies, leftWeapons: availableWeapons, healthLeft: healthAvailable, newLifeStatus: lifeLeft, doorWay: doorWay };
+    return { newGrid: gridOfPathWays, newPosition: { xAxis: newLocation.xAxis, yAxis: newLocation.yAxis }, newEnemies: setEnemies, leftWeapons: availableWeapons, healthLeft: healthAvailable, newLifeStatus: lifeLeft, doorWay: doorWay, boss: Boss, gamePoints: points };
 }
 function placeAtRandom(pathWays) {
     var usedLocations = [];

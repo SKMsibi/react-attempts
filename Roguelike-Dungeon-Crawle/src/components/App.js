@@ -10,6 +10,7 @@ export class App extends Component {
     super(props)
     this.state = {
       grid: [],
+      currentGamePoints: this.props.containerData.userInformation.currentGamePoints,
       currentLifeRemaining: this.props.containerData.userInformation.currentLifeRemaining,
       weapons: [],
       enemies: [],
@@ -38,6 +39,7 @@ export class App extends Component {
     this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus, doorway: grid.doorWay, stage: this.props.containerData.gameProperties.stage + 1 });
   }
   checkKey = (event) => {
+    console.log(this.props)
     var keyPresses = this.state.playerPosition;
     if (event.key === "ArrowUp") {
       keyPresses = { xAxis: keyPresses.xAxis - 1, yAxis: keyPresses.yAxis }
@@ -49,12 +51,13 @@ export class App extends Component {
       keyPresses = { xAxis: keyPresses.xAxis, yAxis: keyPresses.yAxis + 1 }
     }
     var path = this.state.grid.filter(element => element.pathWay === true)
-    var newGrid = func.changeUserLocation(path, this.state.playerPosition, keyPresses, this.state.enemies, this.state.weapons, this.state.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, this.state.doorway);
-    var ToDisplayGrid = func.generateGameLayout(newGrid.newGrid, newGrid.newEnemies, newGrid.leftWeapons, newGrid.healthLeft, newGrid.doorWay);
-    this.setState({ pathWaysToMove: newGrid.newGrid, playerPosition: newGrid.newPosition, grid: ToDisplayGrid, enemies: newGrid.newEnemies, weapons: newGrid.leftWeapons, health: newGrid.healthLeft, currentLifeRemaining: newGrid.newLifeStatus, doorway: newGrid.doorWay });
+    var newGrid = func.changeUserLocation(path, this.state.playerPosition, keyPresses, this.state.enemies, this.state.weapons, this.state.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, this.state.doorway, this.state.boss, this.state.currentGamePoints);
+    var ToDisplayGrid = func.generateGameLayout(newGrid.newGrid, newGrid.newEnemies, newGrid.leftWeapons, newGrid.healthLeft, newGrid.doorWay, newGrid.boss);
+    this.setState({ pathWaysToMove: newGrid.newGrid, playerPosition: newGrid.newPosition, grid: ToDisplayGrid, enemies: newGrid.newEnemies, weapons: newGrid.leftWeapons, health: newGrid.healthLeft, currentLifeRemaining: newGrid.newLifeStatus, doorway: newGrid.doorWay, currentGamePoints: newGrid.gamePoints });
     if (newGrid.doorWay.usedOrNot) {
-      this.props.nextStage(this.props.containerData.gameProperties.stage, this.props.containerData.gameProperties.allStages)
+      this.props.nextStage(this.props.containerData.gameProperties.stage, this.props.containerData.gameProperties.allStages);
       this.props.passUserDetailsToNextStage(this.state.currentLifeRemaining);
+      this.props.updateGamePoints(this.state.currentGamePoints)
       this.setState({ currentAvailableWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.state.stage], pathWaysToMove: this.props.containerData.gameProperties.pathWays, playerPosition: { xAxis: 6, yAxis: 3 } })
       this.loadGrid();
     }
@@ -96,5 +99,6 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   nextStage: (newStageNumber, stages) => dispatch(actions.changeStage(newStageNumber, stages)),
   passUserDetailsToNextStage: (life) => dispatch(actions.changeLifeLeft(life)),
+  updateGamePoints: (points) => dispatch(actions.changeCurrentPoints(points))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(App);

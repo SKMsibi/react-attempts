@@ -8,14 +8,8 @@ export default function gameProperties(state = {
 }, action) {
     var newState = { ...state }
     switch (action.type) {
-        case "CHANGE_AVAILABLE_WEAPONS":
-            newState = { ...newState, allAvailableWeapons: action.newValue };
-            break;
         case "CHANGE_PATHWAYS":
             newState = { ...newState, pathWays: newState.allStages[newState.stage] };
-            break;
-        case "CHANGE_GRID":
-            newState = { ...newState, grid: action.newValue }
             break;
         case "CHANGE_STAGE":
             newState = { ...newState, stage: newState.stage + 1, pathWays: action.newValue };

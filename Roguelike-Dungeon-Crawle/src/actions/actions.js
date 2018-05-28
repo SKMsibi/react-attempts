@@ -4,10 +4,10 @@ const changeUserWeapon = (weaponName) => {
         newValue: weaponName
     }
 }
-const changeUserPosition = (obj) => {
+const changeCurrentPoints = (num) => {
     return {
-        type: "CHANGE_USER_POSITION",
-        newValue: obj
+        type: "CHANGE_USER_POINTS",
+        newValue: num
     }
 }
 const changeStage = (stageNum, stages) => {
@@ -24,5 +24,5 @@ const changeLifeLeft = (lifeAmount) => {
 }
 
 module.exports = {
-    changeStage, changeLifeLeft, changeUserPosition, changeUserWeapon
+    changeStage, changeLifeLeft, changeCurrentPoints, changeUserWeapon
 }
