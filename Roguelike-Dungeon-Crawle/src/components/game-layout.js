@@ -1,4 +1,4 @@
-function generateGameLayout(pathWays, enemies, weapons, health, doorWay) {
+function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = { xAxis: 3, yAxis: 3 }, stage) {
     var gridTemp = [];
     var pathWaysToMove = pathWays
     for (let index = 0; index <= 10; index++) {
@@ -38,6 +38,12 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay) {
             gridTemp[gridTemp.indexOf(weaponFound)].occupied = "Weapon";
         }
     });
+    if (stage === 4) {
+        var bossNewLocation = gridTemp.find(element => element.xAxis === boss.xAxis && element.yAxis === boss.yAxis);
+        if (bossNewLocation) {
+            gridTemp[gridTemp.indexOf(bossNewLocation)].occupied = "Boss";
+        }
+    }
     if (doorWay) {
         var doorLocation = gridTemp.find(currentItem => doorWay.xAxis === currentItem.xAxis && doorWay.yAxis === currentItem.yAxis);
         if (gridTemp[gridTemp.indexOf(doorLocation)] !== undefined) {
@@ -46,7 +52,7 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay) {
     }
     return gridTemp;
 }
-function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, weapons, health, lifeRemaining, weapon, door) {
+function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, weapons, health, lifeRemaining, weapon, door, boss) {
     var gridOfPathWays = pathWays;
     var lifeLeft = lifeRemaining;
     var doorWay = door;
@@ -97,4 +103,11 @@ function placeAtRandom(pathWays) {
     var results = { enemies: usedLocations.slice(0, 3), health: usedLocations.slice(3, 6), weapon: usedLocations.slice(6, 7), doorWay: usedLocations.slice(7, 8)[0] };
     return results;
 }
-module.exports = { generateGameLayout, changeUserLocation, placeAtRandom };
+function createTheBoss(setOfEnemies) {
+    var enemies = setOfEnemies;
+    var bossLocation = setOfEnemies[setOfEnemies.length - 1];
+    enemies.splice(enemies.indexOf(bossLocation), 1);
+    return { boss: bossLocation, newEnemies: enemies }
+}
+
+module.exports = { generateGameLayout, changeUserLocation, placeAtRandom, createTheBoss };

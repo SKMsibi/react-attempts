@@ -14,7 +14,7 @@ export class App extends Component {
       weapons: [],
       enemies: [],
       health: [],
-      boss: {},
+      boss: "",
       doorway: {},
       playerPosition: this.props.containerData.userInformation.userLocation,
       pathWaysToMove: this.props.containerData.gameProperties.pathWays,
@@ -29,17 +29,14 @@ export class App extends Component {
   }
   loadGrid() {
     var randomItems = func.placeAtRandom(this.state.pathWaysToMove);
-    var grid = func.changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, randomItems.enemies, randomItems.weapon, randomItems.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, randomItems.doorWay);
-    var girdToDisplay = func.generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons, this.state.health, randomItems.doorWay)
-    this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus, doorway: grid.doorWay, stage: this.props.containerData.gameProperties.stage + 1 });
-    if (this.state.stage === 4) {
-      this.createTheBoss();
+    if (this.props.containerData.gameProperties.stage + 1 === 4) {
+      var newBoss = func.createTheBoss(randomItems.enemies);
+      randomItems.enemies = newBoss.newEnemies
+      this.setState({ boss: newBoss.boss })
     }
-  }
-  createTheBoss() {
-    var bossLocation = this.state.enemies[0];
-
-    console.log("yeah", this.state.enemies)
+    var grid = func.changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, randomItems.enemies, randomItems.weapon, randomItems.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, randomItems.doorWay);
+    var girdToDisplay = func.generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons, this.state.health, randomItems.doorWay, this.state.boss, this.props.containerData.gameProperties.stage + 1)
+    this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus, doorway: grid.doorWay, stage: this.props.containerData.gameProperties.stage + 1 });
   }
   checkKey = (event) => {
     var keyPresses = this.state.playerPosition;
@@ -59,7 +56,7 @@ export class App extends Component {
     if (newGrid.doorWay.usedOrNot) {
       this.props.nextStage(this.props.containerData.gameProperties.stage, this.props.containerData.gameProperties.allStages)
       this.props.passUserDetailsToNextStage(this.state.currentLifeRemaining);
-      this.setState({ pathWaysToMove: this.props.containerData.gameProperties.pathWays, playerPosition: { xAxis: 6, yAxis: 3 } })
+      this.setState({ currentAvailableWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.state.stage], pathWaysToMove: this.props.containerData.gameProperties.pathWays, playerPosition: { xAxis: 6, yAxis: 3 } })
       this.loadGrid();
     }
   }
@@ -79,6 +76,8 @@ export class App extends Component {
                 element.displayPart = <span id="health">&#9749;</span>;
               } else if (element.occupied === "DoorWay") {
                 element.displayPart = <span id="doorway">&#9961;</span>;
+              } else if (element.occupied === "Boss") {
+                element.displayPart = <span id="boss">B</span>
               }
               return <span key={this.state.grid.indexOf(element)} id={`${element.pathWay}`}><p>{element.displayPart}</p></span>
             })}
