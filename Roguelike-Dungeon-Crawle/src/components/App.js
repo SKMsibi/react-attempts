@@ -22,7 +22,6 @@ export class App extends Component {
       currentAvailableWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.props.containerData.gameProperties.stage],
     }
   }
-
   componentDidMount() {
     this.loadGrid();
     document.onkeydown = this.checkKey;
@@ -77,7 +76,7 @@ export class App extends Component {
               } else if (element.occupied === "DoorWay") {
                 element.displayPart = <span id="doorway">&#9961;</span>;
               } else if (element.occupied === "Boss") {
-                element.displayPart = <span id="boss">B</span>
+                element.displayPart = <span>B</span>
               }
               return <span key={this.state.grid.indexOf(element)} id={`${element.pathWay}`}><p>{element.displayPart}</p></span>
             })}
@@ -91,7 +90,6 @@ export class App extends Component {
     );
   }
 }
-
 function mapStateToProps(state) {
   return { containerData: state };
 }

@@ -10,14 +10,15 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = 
         var itemFound = gridTemp.find(item => item.xAxis === element.xAxis && item.yAxis === element.yAxis);
         if (itemFound) {
             gridTemp[gridTemp.indexOf(itemFound)].pathWay = true;
-            gridTemp[gridTemp.indexOf(itemFound)].occupied = element.occupied
+            gridTemp[gridTemp.indexOf(itemFound)].occupied = element.occupied;
+            element.life ? gridTemp[gridTemp.indexOf(itemFound)].life = element.life : null
         }
     })
     health.forEach(currentItem => {
         var healthFound = gridTemp.find(element => {
             return element.xAxis === currentItem.xAxis && element.yAxis === currentItem.yAxis
         })
-        if (gridTemp[gridTemp.indexOf(healthFound)] !== undefined) {
+        if (gridTemp[gridTemp.indexOf(healthFound)]) {
             gridTemp[gridTemp.indexOf(healthFound)].occupied = "Health"
         }
     });
@@ -25,28 +26,26 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = 
         var enemyFound = gridTemp.find(element => {
             return element.xAxis === currentItem.xAxis && element.yAxis === currentItem.yAxis
         })
-        if (gridTemp[gridTemp.indexOf(enemyFound)] !== undefined) {
+        if (gridTemp[gridTemp.indexOf(enemyFound)]) {
             gridTemp[gridTemp.indexOf(enemyFound)].occupied = "Enemy";
-            gridTemp[gridTemp.indexOf(enemyFound)].life = 50
+            !gridTemp[gridTemp.indexOf(enemyFound)].life ? gridTemp[gridTemp.indexOf(enemyFound)].life = 50 : gridTemp[gridTemp.indexOf(enemyFound)].life
         }
     });
     weapons.forEach(currentItem => {
         var weaponFound = gridTemp.find(element => {
             return element.xAxis === currentItem.xAxis && element.yAxis === currentItem.yAxis
         })
-        if (gridTemp[gridTemp.indexOf(weaponFound)] !== undefined) {
+        if (gridTemp[gridTemp.indexOf(weaponFound)]) {
             gridTemp[gridTemp.indexOf(weaponFound)].occupied = "Weapon";
         }
     });
     if (stage === 4) {
         var bossNewLocation = gridTemp.find(element => element.xAxis === boss.xAxis && element.yAxis === boss.yAxis);
-        if (bossNewLocation) {
-            gridTemp[gridTemp.indexOf(bossNewLocation)].occupied = "Boss";
-        }
+        bossNewLocation ? gridTemp[gridTemp.indexOf(bossNewLocation)].occupied = "Boss" : null
     }
     if (doorWay) {
         var doorLocation = gridTemp.find(currentItem => doorWay.xAxis === currentItem.xAxis && doorWay.yAxis === currentItem.yAxis);
-        if (gridTemp[gridTemp.indexOf(doorLocation)] !== undefined) {
+        if (gridTemp[gridTemp.indexOf(doorLocation)]) {
             gridTemp[gridTemp.indexOf(doorLocation)].occupied = "DoorWay"
         }
     }
@@ -74,13 +73,19 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
         } else if (doorWay.xAxis === newLocation.xAxis && doorWay.yAxis === newLocation.yAxis) {
             doorWay.usedOrNot = true;
         }
-        if (enemyAttack !== undefined) {
+        if (enemyAttack) {
             gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
-            lifeLeft <= 0 ? alert("You where killed by a demon") : lifeLeft -= 25;
-            lifeLeft = lifeLeft - gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life;
-            gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = "User";
-            gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "Enemy";
-            newLocation = oldLocation
+            console.log("testing", gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life, currentWeapon)
+            lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 25;
+            if (gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life > 0) {
+                gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = "User";
+                gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "Enemy";
+                newLocation = oldLocation
+            } else {
+                setEnemies = setEnemies.filter(singleEnemy => { return singleEnemy !== enemyAttack })
+                gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;
+                gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "User";
+            }
         } else {
             gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;
             gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "User";
@@ -109,5 +114,4 @@ function createTheBoss(setOfEnemies) {
     enemies.splice(enemies.indexOf(bossLocation), 1);
     return { boss: bossLocation, newEnemies: enemies }
 }
-
 module.exports = { generateGameLayout, changeUserLocation, placeAtRandom, createTheBoss };
