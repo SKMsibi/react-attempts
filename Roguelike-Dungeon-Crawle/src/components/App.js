@@ -14,6 +14,7 @@ export class App extends Component {
       weapons: [],
       enemies: [],
       health: [],
+      boss: {},
       doorway: {},
       playerPosition: this.props.containerData.userInformation.userLocation,
       pathWaysToMove: this.props.containerData.gameProperties.pathWays,
@@ -30,7 +31,15 @@ export class App extends Component {
     var randomItems = func.placeAtRandom(this.state.pathWaysToMove);
     var grid = func.changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, randomItems.enemies, randomItems.weapon, randomItems.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, randomItems.doorWay);
     var girdToDisplay = func.generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons, this.state.health, randomItems.doorWay)
-    this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus, doorway: grid.doorWay });
+    this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus, doorway: grid.doorWay, stage: this.props.containerData.gameProperties.stage + 1 });
+    if (this.state.stage === 4) {
+      this.createTheBoss();
+    }
+  }
+  createTheBoss() {
+    var bossLocation = this.state.enemies[0];
+
+    console.log("yeah", this.state.enemies)
   }
   checkKey = (event) => {
     var keyPresses = this.state.playerPosition;
