@@ -130,4 +130,46 @@ function createTheBoss(setOfEnemies) {
     enemies.splice(enemies.indexOf(bossLocation), 1);
     return { boss: bossLocation, newEnemies: enemies }
 }
-module.exports = { generateGameLayout, changeUserLocation, placeAtRandom, createTheBoss };
+function showSmallGrid(playerLocation, entireGrid) {
+    var validClearAreas = [];
+    var validBlurryAreas = [];
+    const clearAreas = [
+        [playerLocation.xAxis + 1, playerLocation.yAxis - 1],
+        [playerLocation.xAxis + 1, playerLocation.yAxis],
+        [playerLocation.xAxis + 1, playerLocation.yAxis + 1],
+        [playerLocation.xAxis, playerLocation.yAxis - 1],
+        [playerLocation.xAxis, playerLocation.yAxis + 1],
+        [playerLocation.xAxis - 1, playerLocation.yAxis - 1],
+        [playerLocation.xAxis - 1, playerLocation.yAxis],
+        [playerLocation.xAxis + 1, playerLocation.yAxis + 1],
+    ]
+    const blurryAreas = [
+        [playerLocation.xAxis + 2, playerLocation.yAxis - 2],
+        [playerLocation.xAxis + 2, playerLocation.yAxis - 1],
+        [playerLocation.xAxis + 2, playerLocation.yAxis],
+        [playerLocation.xAxis + 2, playerLocation.yAxis + 1],
+        [playerLocation.xAxis + 2, playerLocation.yAxis + 2],
+        [playerLocation.xAxis + 1, playerLocation.yAxis - 2],
+        [playerLocation.xAxis + 1, playerLocation.yAxis + 2],
+        [playerLocation.xAxis, playerLocation.yAxis - 2],
+        [playerLocation.xAxis, playerLocation.yAxis + 1],
+        [playerLocation.xAxis - 1, playerLocation.yAxis - 2],
+        [playerLocation.xAxis - 1, playerLocation.yAxis + 2],
+        [playerLocation.xAxis - 2, playerLocation.yAxis - 2],
+        [playerLocation.xAxis - 2, playerLocation.yAxis - 1],
+        [playerLocation.xAxis - 2, playerLocation.yAxis],
+        [playerLocation.xAxis - 2, playerLocation.yAxis + 1],
+        [playerLocation.x - 2, playerLocation.yAxis + 2],
+    ]
+    console.log("entireGrid", entireGrid)
+    // clearAreas.forEach(element => {
+    //     var cellFound = entireGrid.find(item => element[0] === entireGrid.xAxis && element[1] === element.yAxis);
+    //     validClearAreas.push(cellFound);
+    // });
+    // blurryAreas.forEach(element => {
+    //     var cellFound = entireGrid.find(element => element[0] === entireGrid.xAxis && element[1] === element.yAxis);
+    //     validBlurryAreas.push(cellFound);
+    // });
+    // console.log(validBlurryAreas, validClearAreas)
+}
+module.exports = { generateGameLayout, changeUserLocation, placeAtRandom, createTheBoss, showSmallGrid };

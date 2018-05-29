@@ -21,6 +21,7 @@ export class App extends Component {
       pathWaysToMove: this.props.containerData.gameProperties.pathWays,
       stage: this.props.containerData.gameProperties.stage + 1,
       currentAvailableWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.props.containerData.gameProperties.stage],
+      hideGrid: false,
     }
   }
   componentDidMount() {
@@ -37,9 +38,9 @@ export class App extends Component {
     var grid = func.changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, randomItems.enemies, randomItems.weapon, randomItems.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, randomItems.doorWay);
     var girdToDisplay = func.generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons, this.state.health, randomItems.doorWay, this.state.boss, this.props.containerData.gameProperties.stage + 1)
     this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus, doorway: grid.doorWay, stage: this.props.containerData.gameProperties.stage + 1 });
+    func.showSmallGrid(this.state.playerPosition, grid)
   }
   checkKey = (event) => {
-    console.log(this.state)
     var keyPresses = this.state.playerPosition;
     if (event.key === "ArrowUp") {
       keyPresses = { xAxis: keyPresses.xAxis - 1, yAxis: keyPresses.yAxis }
@@ -69,17 +70,17 @@ export class App extends Component {
           <div className="col-md-6">
             <div className="App">{this.state.grid.map(element => {
               if (element.occupied === "User") {
-                element.displayPart = <span id="user">&#x25A9;</span>;
+                element.displayPart = <span id="user"><i className="em em-male-detective"></i></span>;
               } else if (element.occupied === "Enemy") {
-                element.displayPart = <span id="enemy">&#x26C7;</span>;
+                element.displayPart = <span id="enemy"><i class="em em-alien"></i></span>;
               } else if (element.occupied === "Weapon") {
-                element.displayPart = <span id="weapon">&#9874;</span>;
+                element.displayPart = <span id="weapon"><i className="em em-dagger_knife"></i></span>;
               } else if (element.occupied === "Health") {
-                element.displayPart = <span id="health">&#9749;</span>;
+                element.displayPart = <span id="health"><i className="em em-avocado"></i></span>;
               } else if (element.occupied === "DoorWay") {
-                element.displayPart = <span id="doorway">&#9961;</span>;
+                element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
               } else if (element.occupied === "Boss") {
-                element.displayPart = <span>B</span>
+                element.displayPart = <span><i className="em em-japanese_ogre"></i> </span>
               }
               return <span key={this.state.grid.indexOf(element)} id={`${element.pathWay}`}><p>{element.displayPart}</p></span>
             })}
@@ -102,3 +103,6 @@ const mapDispatchToProps = dispatch => ({
   updateGamePoints: (points) => dispatch(actions.changeCurrentPoints(points))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+{/* <i class="em em-crossed_swords"></i> */ }
+{/* <i class="em em-left-facing_fist"></i> */ }
+{/* <i class="em em-bow_and_arrow"></i> */ }
