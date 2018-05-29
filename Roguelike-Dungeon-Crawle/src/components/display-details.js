@@ -11,18 +11,14 @@ class DisplayDetails extends Component {
     render() {
         return (
             <div className="container">
-                <div>User</div>
-                <div><span id="user">&#x25A9;</span></div>
-                <div>DoorWay</div>
-                <div><span id="doorway">&#9961;</span></div>
-                <div>Enemies</div>
-                <div><span id="enemy">&#x26C7;</span>: {this.props.allInfo.enemies.length}</div>
-                <div>Weapon</div>
-                <div><span id="weapon">&#9874;</span>: {this.props.allInfo.weapons.length === 0 ? this.props.allInfo.currentAvailableWeapon.title : ""}</div>
-                <div>Health</div>
-                <div><span id="health">&#9749;</span>: {this.props.allInfo.health.length}</div>
+                <div>User : <span id="user">&#x25A9;</span></div>
                 <div>Life : {this.props.allInfo.currentLifeRemaining}</div>
-                <div>Stage: {this.props.allInfo.stage}</div>
+                <div>Game points : {this.props.allInfo.currentGamePoints}xp</div>
+                <div>Stage : {this.props.allInfo.stage}</div>
+                <div>Enemies : <span id="enemy">&#x26C7;</span> {this.props.allInfo.enemies.length}</div>
+                <div>Weapon : <span id="weapon">&#9874;</span> {this.props.allInfo.weapons.length === 0 ? this.props.allInfo.currentAvailableWeapon.title : ""}</div>
+                <div>Health : <span id="health">&#9749;</span> {this.props.allInfo.health.length}</div>
+                <div>DoorWay : <span id="doorway">&#9961;</span></div>
             </div>
         )
     }

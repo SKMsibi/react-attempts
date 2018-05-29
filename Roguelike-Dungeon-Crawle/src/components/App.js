@@ -39,7 +39,7 @@ export class App extends Component {
     this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus, doorway: grid.doorWay, stage: this.props.containerData.gameProperties.stage + 1 });
   }
   checkKey = (event) => {
-    console.log(this.props)
+    console.log(this.state)
     var keyPresses = this.state.playerPosition;
     if (event.key === "ArrowUp") {
       keyPresses = { xAxis: keyPresses.xAxis - 1, yAxis: keyPresses.yAxis }
