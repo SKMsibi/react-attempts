@@ -1,4 +1,4 @@
-export default function userInformation(state = {
+    export default function userInformation(state = {
     userLocation: { xAxis: 6, yAxis: 3 },
     currentLifeRemaining: 100,
     currentGamePoints: 0,

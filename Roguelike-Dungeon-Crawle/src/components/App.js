@@ -1,6 +1,7 @@
 import * as func from './game-layout';
 import React, { Component } from 'react';
 import DisplayDetails from './display-details';
+import HideRestOfGrid from './hide-rest-of-gird';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import '../App.css';
@@ -22,6 +23,7 @@ export class App extends Component {
       stage: this.props.containerData.gameProperties.stage + 1,
       currentAvailableWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.props.containerData.gameProperties.stage],
       hideGrid: false,
+      smallGrid: []
     }
   }
   componentDidMount() {
@@ -38,7 +40,6 @@ export class App extends Component {
     var grid = func.changeUserLocation(this.state.pathWaysToMove, this.state.playerPosition, this.state.playerPosition, randomItems.enemies, randomItems.weapon, randomItems.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, randomItems.doorWay);
     var girdToDisplay = func.generateGameLayout(grid.newGrid, this.state.enemies, this.state.weapons, this.state.health, randomItems.doorWay, this.state.boss, this.props.containerData.gameProperties.stage + 1)
     this.setState({ pathWaysToMove: grid.newGrid, playerPosition: grid.newPosition, grid: girdToDisplay, enemies: grid.newEnemies, weapons: grid.leftWeapons, health: grid.healthLeft, currentLifeRemaining: grid.newLifeStatus, doorway: grid.doorWay, stage: this.props.containerData.gameProperties.stage + 1 });
-    func.showSmallGrid(this.state.playerPosition, grid)
   }
   checkKey = (event) => {
     var keyPresses = this.state.playerPosition;
@@ -54,7 +55,8 @@ export class App extends Component {
     var path = this.state.grid.filter(element => element.pathWay === true)
     var newGrid = func.changeUserLocation(path, this.state.playerPosition, keyPresses, this.state.enemies, this.state.weapons, this.state.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, this.state.doorway, this.state.boss, this.state.currentGamePoints);
     var ToDisplayGrid = func.generateGameLayout(newGrid.newGrid, newGrid.newEnemies, newGrid.leftWeapons, newGrid.healthLeft, newGrid.doorWay, newGrid.boss);
-    this.setState({ pathWaysToMove: newGrid.newGrid, playerPosition: newGrid.newPosition, grid: ToDisplayGrid, enemies: newGrid.newEnemies, weapons: newGrid.leftWeapons, health: newGrid.healthLeft, currentLifeRemaining: newGrid.newLifeStatus, doorway: newGrid.doorWay, currentGamePoints: newGrid.gamePoints });
+    var smallG = func.showSmallGrid(newGrid.newPosition, ToDisplayGrid)
+    this.setState({ pathWaysToMove: newGrid.newGrid, smallGrid: smallG, playerPosition: newGrid.newPosition, grid: ToDisplayGrid, enemies: newGrid.newEnemies, weapons: newGrid.leftWeapons, health: newGrid.healthLeft, currentLifeRemaining: newGrid.newLifeStatus, doorway: newGrid.doorWay, currentGamePoints: newGrid.gamePoints });
     if (newGrid.doorWay.usedOrNot) {
       this.props.nextStage(this.props.containerData.gameProperties.stage, this.props.containerData.gameProperties.allStages);
       this.props.passUserDetailsToNextStage(this.state.currentLifeRemaining);
@@ -67,27 +69,29 @@ export class App extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-6">
-            <div className="App">{this.state.grid.map(element => {
-              if (element.occupied === "User") {
-                element.displayPart = <span id="user"><i className="em em-male-detective"></i></span>;
-              } else if (element.occupied === "Enemy") {
-                element.displayPart = <span id="enemy"><i class="em em-skull"></i></span>;
-              } else if (element.occupied === "Weapon") {
-                element.displayPart = <span id="weapon"><i className={this.state.currentAvailableWeapon.emoji}></i></span>;
-              } else if (element.occupied === "Health") {
-                element.displayPart = <span id="health"><i class="em em-green_apple"></i></span>;
-              } else if (element.occupied === "DoorWay") {
-                element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
-              } else if (element.occupied === "Boss") {
-                element.displayPart = <span><i className="em em-japanese_ogre"></i> </span>
-              }
-              return <span key={this.state.grid.indexOf(element)} id={`${element.pathWay}`}><p>{element.displayPart}</p></span>
-            })}
-            </div>
-          </div>
+          {!this.state.hideGrid ?
+            <div className="col-md-6">
+              <div className="firstGrid">{this.state.grid.map(element => {
+                if (element.occupied === "User") {
+                  element.displayPart = <span id="user"><i className="em em-male-detective"></i></span>;
+                } else if (element.occupied === "Enemy") {
+                  element.displayPart = <span id="enemy"><i className="em em-skull"></i></span>;
+                } else if (element.occupied === "Weapon") {
+                  element.displayPart = <span id="weapon"><i className={this.state.currentAvailableWeapon.emoji}></i></span>;
+                } else if (element.occupied === "Health") {
+                  element.displayPart = <span id="health"><i className="em em-green_apple"></i></span>;
+                } else if (element.occupied === "DoorWay") {
+                  element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
+                } else if (element.occupied === "Boss") {
+                  element.displayPart = <span><i className="em em-japanese_ogre"></i> </span>
+                }
+                return <span key={this.state.grid.indexOf(element)} id={`${element.pathWay}`}><p>{element.displayPart}</p></span>
+              })}
+              </div>
+            </div> : <HideRestOfGrid grid={this.state.smallGrid} weapon={this.state.currentAvailableWeapon.emoji} />}
           <div className="col-md-6">
             <DisplayDetails allInfo={this.state} />
+            <button onClick={() => this.state.hideGrid ? this.setState({ hideGrid: false }) : this.setState({ hideGrid: true })}>Hide main Grid</button>
           </div>
         </div>
       </div>
