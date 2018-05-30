@@ -45,12 +45,16 @@ export class App extends Component {
     var keyPresses = this.state.playerPosition;
     if (event.key === "ArrowUp") {
       keyPresses = { xAxis: keyPresses.xAxis - 1, yAxis: keyPresses.yAxis }
+      this.setState({ hideGrid: true })
     } else if (event.key === "ArrowDown") {
       keyPresses = { xAxis: keyPresses.xAxis + 1, yAxis: keyPresses.yAxis }
+      this.setState({ hideGrid: true })
     } else if (event.key === "ArrowLeft") {
       keyPresses = { xAxis: keyPresses.xAxis, yAxis: keyPresses.yAxis - 1 }
+      this.setState({ hideGrid: true })
     } else if (event.key === "ArrowRight") {
       keyPresses = { xAxis: keyPresses.xAxis, yAxis: keyPresses.yAxis + 1 }
+      this.setState({ hideGrid: true })
     }
     var path = this.state.grid.filter(element => element.pathWay === true)
     var newGrid = func.changeUserLocation(path, this.state.playerPosition, keyPresses, this.state.enemies, this.state.weapons, this.state.health, this.state.currentLifeRemaining, this.state.currentAvailableWeapon, this.state.doorway, this.state.boss, this.state.currentGamePoints, this.state.stage);

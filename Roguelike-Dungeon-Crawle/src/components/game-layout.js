@@ -1,8 +1,8 @@
 function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = { xAxis: 3, yAxis: 3 }, stage) {
     var gridTemp = [];
     var pathWaysToMove = pathWays
-    for (let index = 0; index <= 10; index++) {
-        for (let secondIndex = 0; secondIndex <= 9; secondIndex++) {
+    for (let index = 0; index < 10; index++) {
+        for (let secondIndex = 0; secondIndex < 10; secondIndex++) {
             gridTemp.push({ xAxis: index, yAxis: secondIndex, pathWay: false, occupied: null });
         }
     }
