@@ -14,6 +14,7 @@ class DisplayDetails extends Component {
                 <div>User : <span id="user"><i className="em em-male-detective"></i></span></div>
                 <div>Life : {this.props.allInfo.currentLifeRemaining}</div>
                 <div>Game points : {this.props.allInfo.currentGamePoints}xp</div>
+                <div>level : {this.props.allInfo.level}</div>
                 <div>Stage : {this.props.allInfo.stage}</div>
                 <div>Enemies : <span id="enemy"><i className="em em-skull"></i></span> {this.props.allInfo.enemies.length}</div>
                 <div>Weapon : <span id="weapon"><i className={this.props.allInfo.weapons.length === 0 ? this.props.weapon : null}></i></span> {this.props.allInfo.weapons.length === 0 ? this.props.allInfo.currentAvailableWeapon.title : ""}</div>

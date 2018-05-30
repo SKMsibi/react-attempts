@@ -10,6 +10,12 @@ const changeCurrentPoints = (num) => {
         newValue: num
     }
 }
+const changeLevel = (num) => {
+    return {
+        type: "CHANGE_LEVEL",
+        newValue: num + 1
+    }
+}
 const changeStage = (stageNum, stages) => {
     return {
         type: "CHANGE_STAGE",
@@ -23,5 +29,5 @@ const changeLifeLeft = (lifeAmount) => {
     }
 }
 module.exports = {
-    changeStage, changeLifeLeft, changeCurrentPoints, changeUserWeapon
+    changeStage, changeLifeLeft, changeCurrentPoints, changeUserWeapon, changeLevel
 }

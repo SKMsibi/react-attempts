@@ -23,7 +23,8 @@ export class App extends Component {
       stage: this.props.containerData.gameProperties.stage + 1,
       currentAvailableWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.props.containerData.gameProperties.stage],
       hideGrid: false,
-      smallGrid: []
+      smallGrid: [],
+      level: this.props.containerData.userInformation.level
     }
   }
   componentDidMount() {
@@ -62,10 +63,14 @@ export class App extends Component {
     var smallG = func.showSmallGrid(newGrid.newPosition, ToDisplayGrid)
     this.setState({ pathWaysToMove: newGrid.newGrid, smallGrid: smallG, playerPosition: newGrid.newPosition, grid: ToDisplayGrid, enemies: newGrid.newEnemies, weapons: newGrid.leftWeapons, health: newGrid.healthLeft, currentLifeRemaining: newGrid.newLifeStatus, doorway: newGrid.doorWay, currentGamePoints: newGrid.gamePoints });
     if (newGrid.doorWay && newGrid.doorWay.usedOrNot) {
+      if (this.state.currentGamePoints === 80 || this.state.currentGamePoints === 180 || this.state.currentGamePoints === 280) {
+        this.props.updateGameLevel(this.state.level);
+        this.setState({ level: this.props.containerData.userInformation.level })
+      }
       this.props.nextStage(this.props.containerData.gameProperties.stage, this.props.containerData.gameProperties.allStages);
       this.props.passUserDetailsToNextStage(this.state.currentLifeRemaining);
       this.props.updateGamePoints(this.state.currentGamePoints)
-      this.setState({ currentAvailableWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.state.stage], pathWaysToMove: this.props.containerData.gameProperties.pathWays, playerPosition: { xAxis: 6, yAxis: 3 } })
+      this.setState({ currentAvailableWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.state.stage], pathWaysToMove: this.props.containerData.gameProperties.pathWays, playerPosition: { xAxis: 6, yAxis: 3 }, hideGrid: false })
       this.loadGrid();
     }
   }
@@ -108,6 +113,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   nextStage: (newStageNumber, stages) => dispatch(actions.changeStage(newStageNumber, stages)),
   passUserDetailsToNextStage: (life) => dispatch(actions.changeLifeLeft(life)),
-  updateGamePoints: (points) => dispatch(actions.changeCurrentPoints(points))
+  updateGamePoints: (points) => dispatch(actions.changeCurrentPoints(points)),
+  updateGameLevel: (level) => dispatch(actions.changeLevel(level))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -75,7 +75,6 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
             healthAvailable = healthAvailable.filter(singleHealth => { return singleHealth !== healthFound });
             lifeLeft += 50;
         } else if (doorWay.xAxis === newLocation.xAxis && doorWay.yAxis === newLocation.yAxis) {
-            console.log("testing", doorWay, stage)
             if (stage === 4) {
                 doorWay.usedOrNot = false;
             } else {
@@ -103,7 +102,7 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
         }
         if (enemyAttack) {
             gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
-            lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 15;
+            lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 15 + stage;
             if (lifeLeft <= 0) {
                 alert("You where killed by a demon...");
                 window.location.reload(true)
