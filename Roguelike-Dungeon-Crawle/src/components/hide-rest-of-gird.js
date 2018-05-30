@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 export default class HideRestOfGrid extends Component {
     render() {
-        console.log(this.props.grid)
         return (
             <div className="col-md-6">
                 <div className="secondGrid">{this.props.grid.map(element => {
@@ -12,7 +11,7 @@ export default class HideRestOfGrid extends Component {
                     } else if (element.occupied === "Weapon") {
                         element.displayPart = <span id="weapon"><i className={this.props.weapon}></i></span>;
                     } else if (element.occupied === "Health") {
-                        element.displayPart = <span id="health"><i className="em em-green_apple"></i></span>;
+                        element.displayPart = <span id="health"><i class="em em-ambulance"></i></span>;
                     } else if (element.occupied === "DoorWay") {
                         element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
                     } else if (element.occupied === "Boss") {

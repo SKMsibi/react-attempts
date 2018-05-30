@@ -10,15 +10,16 @@ class DisplayDetails extends Component {
     }
     render() {
         return (
-            <div className="container">
-                <div>User : <span id="user">&#x25A9;</span></div>
+            <div className="container" id="GameDetails">
+                <div>User : <span id="user"><i className="em em-male-detective"></i></span></div>
                 <div>Life : {this.props.allInfo.currentLifeRemaining}</div>
                 <div>Game points : {this.props.allInfo.currentGamePoints}xp</div>
                 <div>Stage : {this.props.allInfo.stage}</div>
-                <div>Enemies : <span id="enemy">&#x26C7;</span> {this.props.allInfo.enemies.length}</div>
-                <div>Weapon : <span id="weapon">&#9874;</span> {this.props.allInfo.weapons.length === 0 ? this.props.allInfo.currentAvailableWeapon.title : ""}</div>
-                <div>Health : <span id="health">&#9749;</span> {this.props.allInfo.health.length}</div>
-                <div>DoorWay : <span id="doorway">&#9961;</span></div>
+                <div>Enemies : <span id="enemy"><i className="em em-skull"></i></span> {this.props.allInfo.enemies.length}</div>
+                <div>Weapon : <span id="weapon"><i className={this.props.allInfo.weapons.length === 0 ? this.props.weapon : null}></i></span> {this.props.allInfo.weapons.length === 0 ? this.props.allInfo.currentAvailableWeapon.title : ""}</div>
+                <div>Health : <span id="health"><i class="em em-hamburger"></i></span> {this.props.allInfo.health.length}</div>
+                <div>DoorWay : <span id="doorway"><i className="em em-door"></i></span></div>
+                <div>Boss(stage 4) : <span id="doorway"><i className="em em-japanese_ogre"></i></span></div>
             </div>
         )
     }

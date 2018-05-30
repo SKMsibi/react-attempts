@@ -89,9 +89,14 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
                 points += 20;
             }
         }
+        // Boss ? doorWay = null : doorWay = door;
         if (enemyAttack) {
             gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
             lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 15;
+            if (lifeLeft <= 0) {
+                alert("You where killed by a demon...");
+                window.location.reload(true)
+            }
             if (gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life > 0) {
                 gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = "User";
                 gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "Enemy";
@@ -162,6 +167,7 @@ function showSmallGrid(playerLocation, entireGrid) {
     ]
     clearAreas.forEach(element => {
         var cellFound = entireGrid.find(item => element[0] === item.xAxis && element[1] === item.yAxis);
+        !cellFound ? cellFound = { xAxis: element[0], yAxis: element[1], pathWay: false, occupied: null } : cellFound;
         var changedCell = { ...cellFound, view: "clear" }
         toBeDisplayed.push(changedCell)
     });
@@ -176,7 +182,6 @@ function showSmallGrid(playerLocation, entireGrid) {
     return toBeDisplayed.sort((a, b) => {
         if (a.xAxis > b.xAxis) return 1;
         if (a.xAxis < b.xAxis) return -1;
-
         if (a.yAxis > b.yAxis) return 1;
         if (a.yAxis < b.yAxis) return -1;
     })
