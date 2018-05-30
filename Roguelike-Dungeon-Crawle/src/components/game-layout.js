@@ -53,7 +53,7 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = 
     }
     return gridTemp;
 }
-function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, weapons, health, lifeRemaining, weapon, door, boss, gamePoints) {
+function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, weapons, health, lifeRemaining, weapon, door, boss, gamePoints, stage) {
     var gridOfPathWays = pathWays;
     var lifeLeft = lifeRemaining;
     var points = gamePoints;
@@ -75,10 +75,22 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
             healthAvailable = healthAvailable.filter(singleHealth => { return singleHealth !== healthFound });
             lifeLeft += 50;
         } else if (doorWay.xAxis === newLocation.xAxis && doorWay.yAxis === newLocation.yAxis) {
-            doorWay.usedOrNot = true;
+            console.log("testing", doorWay, stage)
+            if (stage === 4) {
+                doorWay.usedOrNot = false;
+            } else {
+                doorWay.usedOrNot = true;
+            }
         } else if (Boss && Boss.xAxis === newLocation.xAxis && Boss.yAxis === newLocation.yAxis) {
             gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
             lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 50;
+            if (gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life <= 0) {
+                alert("you win...");
+                window.location.reload(true);
+            } else if (lifeLeft <= 0) {
+                alert("you where killed by the demon god");
+                window.location.reload(true);
+            }
             if (gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life > 0) {
                 gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = "User";
                 gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "Boss";
@@ -89,7 +101,6 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
                 points += 20;
             }
         }
-        // Boss ? doorWay = null : doorWay = door;
         if (enemyAttack) {
             gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
             lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 15;

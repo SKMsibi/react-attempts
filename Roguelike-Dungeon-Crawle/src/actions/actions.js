@@ -22,7 +22,6 @@ const changeLifeLeft = (lifeAmount) => {
         newValue: lifeAmount
     }
 }
-
 module.exports = {
     changeStage, changeLifeLeft, changeCurrentPoints, changeUserWeapon
 }
