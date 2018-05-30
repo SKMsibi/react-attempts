@@ -86,12 +86,12 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
             } else {
                 gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;
                 gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "User";
-                points += 90;
+                points += 20;
             }
         }
         if (enemyAttack) {
             gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life = gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life - currentWeapon;
-            lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 25;
+            lifeLeft = lifeLeft <= 0 ? 0 : lifeLeft -= 15;
             if (gridOfPathWays[gridOfPathWays.indexOf(newLocation)].life > 0) {
                 gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = "User";
                 gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "Enemy";
@@ -100,7 +100,7 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
                 setEnemies = setEnemies.filter(singleEnemy => { return singleEnemy !== enemyAttack })
                 gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;
                 gridOfPathWays[gridOfPathWays.indexOf(newLocation)].occupied = "User";
-                points += 30;
+                points += 20;
             }
         } else {
             gridOfPathWays[gridOfPathWays.indexOf(oldLocation)].occupied = null;

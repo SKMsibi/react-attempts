@@ -72,11 +72,11 @@ export class App extends Component {
               if (element.occupied === "User") {
                 element.displayPart = <span id="user"><i className="em em-male-detective"></i></span>;
               } else if (element.occupied === "Enemy") {
-                element.displayPart = <span id="enemy"><i class="em em-alien"></i></span>;
+                element.displayPart = <span id="enemy"><i class="em em-skull"></i></span>;
               } else if (element.occupied === "Weapon") {
-                element.displayPart = <span id="weapon"><i className="em em-dagger_knife"></i></span>;
+                element.displayPart = <span id="weapon"><i className={this.state.currentAvailableWeapon.emoji}></i></span>;
               } else if (element.occupied === "Health") {
-                element.displayPart = <span id="health"><i className="em em-avocado"></i></span>;
+                element.displayPart = <span id="health"><i class="em em-green_apple"></i></span>;
               } else if (element.occupied === "DoorWay") {
                 element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
               } else if (element.occupied === "Boss") {
@@ -103,6 +103,3 @@ const mapDispatchToProps = dispatch => ({
   updateGamePoints: (points) => dispatch(actions.changeCurrentPoints(points))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-{/* <i class="em em-crossed_swords"></i> */ }
-{/* <i class="em em-left-facing_fist"></i> */ }
-{/* <i class="em em-bow_and_arrow"></i> */ }

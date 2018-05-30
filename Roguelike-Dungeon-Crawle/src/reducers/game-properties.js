@@ -3,7 +3,7 @@ export default function gameProperties(state = {
     grid: [],
     allStages: [stage.stageOne, stage.stageTwo, stage.stageThree, stage.stageFour],
     pathWays: stage.stageOne,
-    allAvailableWeapons: [{ title: "Fists claws", impact: 25 }, { title: "Nunjucks", impact: 40 }, { title: "Dagger", impact: 50 }, { title: "Samurai sword", impact: 65 }],
+    allAvailableWeapons: [{ title: "Dagger", impact: 15, emoji: "em em-dagger_knife" }, { title: "Samurai Sword", impact: 25, emoji: "em em-crossed_swords" }, { title: "Gun", impact: 40, emoji: "em em-gun" }, { title: "Bomb", impact: 65, emoji: "em em-bomb" }],
     stage: 0
 }, action) {
     var newState = { ...state }
