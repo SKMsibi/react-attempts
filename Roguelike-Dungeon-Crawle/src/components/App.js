@@ -107,6 +107,7 @@ export class App extends Component {
     );
   }
 }
+
 function mapStateToProps(state) {
   return { containerData: state };
 }

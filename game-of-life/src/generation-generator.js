@@ -1,5 +1,4 @@
 function generateNextGeneration(currentGeneration) {
-
     var grid = [];
     var newGeneration = [];
     if (currentGeneration === undefined) {
@@ -27,7 +26,6 @@ function generateNextGeneration(currentGeneration) {
     grid.forEach(currentItem => {
         var aliveNeighbors = [];
         var currentItemsNeighbors = getAllNeighbors(currentItem);
-
         currentItemsNeighbors.forEach(singleNeighbor => {
             var neighborMatch = grid.find(element => element.xAxis === singleNeighbor[0] && element.yAxis === singleNeighbor[1]);
             if (neighborMatch !== undefined && neighborMatch.status === true) {

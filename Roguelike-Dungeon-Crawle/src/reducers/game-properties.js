@@ -1,4 +1,5 @@
 import * as stage from '../components/game-stage';
+
 export default function gameProperties(state = {
     grid: [],
     allStages: [stage.stageOne, stage.stageTwo, stage.stageThree, stage.stageFour],
