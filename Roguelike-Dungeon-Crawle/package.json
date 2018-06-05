@@ -1,6 +1,6 @@
 {
   "homepage": "https://skmsibi.github.io/Roguelike-dungeon-crawle",
-  "name": "my-app",
+  "name": "Roguelike-dungeon-crawle",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
