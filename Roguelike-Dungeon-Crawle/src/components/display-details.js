@@ -18,7 +18,7 @@ class DisplayDetails extends Component {
                 <div>Stage : {this.props.allInfo.stage}</div>
                 <div>Enemies : <span id="enemy"><i className="em em-skull"></i></span> {this.props.allInfo.enemies.length}</div>
                 <div>Weapon : <span id="weapon"><i className={this.props.allInfo.weapons.length === 0 ? this.props.weapon : null}></i></span> {this.props.allInfo.weapons.length === 0 ? this.props.allInfo.currentAvailableWeapon.title : ""}</div>
-                <div>Health : <span id="health"><i class="em em-hamburger"></i></span> {this.props.allInfo.health.length}</div>
+                <div>Health : <span id="health"><i className="em em-hamburger"></i></span> {this.props.allInfo.health.length}</div>
                 <div>DoorWay : <span id="doorway"><i className="em em-door"></i></span></div>
                 <div>Boss(stage 4) : <span id="doorway"><i className="em em-japanese_ogre"></i></span></div>
             </div>

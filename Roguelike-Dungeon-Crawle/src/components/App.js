@@ -88,7 +88,7 @@ export class App extends Component {
                 } else if (element.occupied === "Weapon") {
                   element.displayPart = <span id="weapon"><i className={this.state.currentAvailableWeapon.emoji}></i></span>;
                 } else if (element.occupied === "Health") {
-                  element.displayPart = <span id="health"><i class="em em-hamburger"></i></span>;
+                  element.displayPart = <span id="health"><i className="em em-hamburger"></i></span>;
                 } else if (element.occupied === "DoorWay") {
                   element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
                 } else if (element.occupied === "Boss") {
@@ -100,7 +100,7 @@ export class App extends Component {
             </div> : <HideRestOfGrid grid={this.state.smallGrid} weapon={this.state.currentAvailableWeapon.emoji} />}
           <div className="col-md-6">
             <DisplayDetails allInfo={this.state} weapon={this.state.currentAvailableWeapon.emoji} />
-            <button class="btn btn-default" onClick={() => this.state.hideGrid ? this.setState({ hideGrid: false }) : this.setState({ hideGrid: true })}>{this.state.hideGrid ? "show parts of grid" : "hide parts of grid"}</button>
+            <button className="btn btn-default" onClick={() => this.state.hideGrid ? this.setState({ hideGrid: false }) : this.setState({ hideGrid: true })}>{this.state.hideGrid ? "show parts of grid" : "hide parts of grid"}</button>
           </div>
         </div>
       </div>

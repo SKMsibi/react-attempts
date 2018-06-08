@@ -1,8 +1,8 @@
 function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = { xAxis: 3, yAxis: 3 }, stage) {
     var gridTemp = [];
     var pathWaysToMove = pathWays
-    for (let index = 0; index < 10; index++) {
-        for (let secondIndex = 0; secondIndex < 10; secondIndex++) {
+    for (let index = 0; index <= 9; index++) {
+        for (let secondIndex = 0; secondIndex <= 9; secondIndex++) {
             gridTemp.push({ xAxis: index, yAxis: secondIndex, pathWay: false, occupied: null });
         }
     }
@@ -11,7 +11,7 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = 
         if (itemFound) {
             gridTemp[gridTemp.indexOf(itemFound)].pathWay = true;
             gridTemp[gridTemp.indexOf(itemFound)].occupied = element.occupied;
-            element.life ? gridTemp[gridTemp.indexOf(itemFound)].life = element.life : null
+            gridTemp[gridTemp.indexOf(itemFound)].life = element.life ? element.life : null
         }
     })
     health.forEach(currentItem => {
@@ -28,7 +28,7 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = 
         })
         if (gridTemp[gridTemp.indexOf(enemyFound)]) {
             gridTemp[gridTemp.indexOf(enemyFound)].occupied = "Enemy";
-            !gridTemp[gridTemp.indexOf(enemyFound)].life ? gridTemp[gridTemp.indexOf(enemyFound)].life = 50 : gridTemp[gridTemp.indexOf(enemyFound)].life;
+            gridTemp[gridTemp.indexOf(enemyFound)].life = !gridTemp[gridTemp.indexOf(enemyFound)].life ? 50 : gridTemp[gridTemp.indexOf(enemyFound)].life;
         }
     });
     weapons.forEach(currentItem => {
@@ -48,8 +48,9 @@ function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = 
     if (stage === 4) {
         var bossNewLocation = gridTemp.find(element => element.xAxis === boss.xAxis && element.yAxis === boss.yAxis);
         var door = gridTemp.find(element => element.xAxis === doorWay.xAxis && element.yAxis === doorWay.yAxis);
-        bossNewLocation ? gridTemp[gridTemp.indexOf(bossNewLocation)].occupied = "Boss" : null;
-        !gridTemp[gridTemp.indexOf(bossNewLocation)].life ? gridTemp[gridTemp.indexOf(bossNewLocation)].life = 200 : gridTemp[gridTemp.indexOf(bossNewLocation)].life;
+        gridTemp[gridTemp.indexOf(door)].occupied = null
+        gridTemp[gridTemp.indexOf(bossNewLocation)].occupied = bossNewLocation ? "Boss" : null;
+        gridTemp[gridTemp.indexOf(bossNewLocation)].life = !gridTemp[gridTemp.indexOf(bossNewLocation)].life ? 200 : gridTemp[gridTemp.indexOf(bossNewLocation)].life;
     }
     return gridTemp;
 }
@@ -131,7 +132,7 @@ function placeAtRandom(pathWays) {
     while (usedLocations.length < 8) {
         var randomNum = Math.floor(Math.random() * pathWays.length);
         if (pathWays[randomNum].occupied !== "User" && usedLocations.indexOf(pathWays[randomNum]) === -1) {
-            if (pathWays[randomNum].xAxis !== 6 && pathWays[randomNum].yAxis !== 3) {
+            if ((pathWays[randomNum].xAxis !== 6 && pathWays[randomNum].xAxis !== 10) && (pathWays[randomNum].yAxis !== 3 && pathWays[randomNum].yAxis !== 10)) {
                 usedLocations.push(pathWays[randomNum])
             }
         }
@@ -177,23 +178,24 @@ function showSmallGrid(playerLocation, entireGrid) {
     ]
     clearAreas.forEach(element => {
         var cellFound = entireGrid.find(item => element[0] === item.xAxis && element[1] === item.yAxis);
-        !cellFound ? cellFound = { xAxis: element[0], yAxis: element[1], pathWay: false, occupied: null } : cellFound;
+        cellFound = !cellFound ? { xAxis: element[0], yAxis: element[1], pathWay: false, occupied: null } : cellFound;
         var changedCell = { ...cellFound, view: "clear" }
         toBeDisplayed.push(changedCell)
     });
     blurryAreas.forEach(element => {
         var cellFound = entireGrid.find(item => element[0] === item.xAxis && element[1] === item.yAxis);
-        !cellFound ? cellFound = { xAxis: element[0], yAxis: element[1], pathWay: false, occupied: null } : cellFound;
+        cellFound = !cellFound ? { xAxis: element[0], yAxis: element[1], pathWay: false, occupied: null } : cellFound;
         var changedCell = { ...cellFound, view: "blurry" }
         toBeDisplayed.push(changedCell)
     });
     var userBox = entireGrid.find(item => playerLocation.xAxis === item.xAxis && playerLocation.yAxis === item.yAxis)
-    toBeDisplayed.push(userBox)
-    return toBeDisplayed.sort((a, b) => {
+    toBeDisplayed.push(userBox);
+    toBeDisplayed = toBeDisplayed.sort((a, b) => {
         if (a.xAxis > b.xAxis) return 1;
         if (a.xAxis < b.xAxis) return -1;
         if (a.yAxis > b.yAxis) return 1;
         if (a.yAxis < b.yAxis) return -1;
     })
+    return toBeDisplayed;
 }
 module.exports = { generateGameLayout, changeUserLocation, placeAtRandom, createTheBoss, showSmallGrid };

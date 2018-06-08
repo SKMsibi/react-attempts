@@ -11,7 +11,7 @@ export default class HideRestOfGrid extends Component {
                     } else if (element.occupied === "Weapon") {
                         element.displayPart = <span id="weapon"><i className={this.props.weapon}></i></span>;
                     } else if (element.occupied === "Health") {
-                        element.displayPart = <span id="health"><i class="em em-hamburger"></i></span>;
+                        element.displayPart = <span id="health"><i className="em em-hamburger"></i></span>;
                     } else if (element.occupied === "DoorWay") {
                         element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
                     } else if (element.occupied === "Boss") {
