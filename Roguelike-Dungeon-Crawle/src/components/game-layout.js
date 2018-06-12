@@ -125,6 +125,10 @@ function changeUserLocation(pathWays, currentPosition, nextPosition, enemies, we
     } else {
         newLocation = oldLocation
     }
+    if (stage === 4) {
+        doorWay = { xAxis: 0, yAxis: 10 };
+
+    }
     return { newGrid: gridOfPathWays, newPosition: { xAxis: newLocation.xAxis, yAxis: newLocation.yAxis }, newEnemies: setEnemies, leftWeapons: availableWeapons, healthLeft: healthAvailable, newLifeStatus: lifeLeft, doorWay: doorWay, boss: Boss, gamePoints: points };
 }
 function placeAtRandom(pathWays) {
