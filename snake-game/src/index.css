@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+span {
+  height: 50px;
+  width: 50px;
+  border-radius: 5px;
+}
+
+#cell {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+}
