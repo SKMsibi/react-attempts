@@ -4,14 +4,18 @@ body {
   font-family: sans-serif;
 }
 
-span {
-  height: 50px;
-  width: 50px;
-  border-radius: 5px;
+#grid {
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px
 }
 
-#cell {
+#point {
+  background-color: green;
+}
+
+span {
   height: 100%;
   width: 100%;
+  border-radius: 0px;
   background-color: black;
 }

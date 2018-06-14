@@ -5,7 +5,7 @@ export default class DisplayGrid extends Component {
         return (
             <div id="grid">
                 {this.props.grid.map(element => {
-                    return <span key={this.props.grid.indexOf(element)} id="cell"></span>
+                    return <span key={this.props.grid.indexOf(element)} id={element.occupied}>""</span>
                 })}
             </div>
         )
