@@ -4,6 +4,7 @@ const UPDATE_SNAKE = "UPDATE_SNAKE";
 const INCREASE_LEVEL = "INCREASE_LEVEL";
 const INCREASE_POINTS = "INCREASE_POINTS";
 const UPDATE_GRID = "UPDATE_GRID";
+const CHANGE_DIRECTION = "CHANGE_DIRECTION";
 function changePointLocation(location) {
     return { type: CHANGE_POINT_LOCATION, newValue: location }
 }
@@ -16,10 +17,14 @@ function updateSnake(newArray) {
 function increaseLevel() {
     return { type: INCREASE_LEVEL }
 }
+function changeMovementDirection(newDirection, currentDirection) {
+    console.log("inRedux",newDirection, currentDirection)
+    return { type: "CHANGE_DIRECTION", newValue: newDirection }
+}
 function increaseUserPoints() {
     return { type: INCREASE_POINTS }
 }
 function updateGrid(newGrid) {
     return { type: UPDATE_GRID, newValue: newGrid }
 }
-module.exports = { changePointLocation, changeSnakeLength, updateSnake, increaseLevel, increaseUserPoints, updateGrid }
+module.exports = { changePointLocation, changeSnakeLength, updateSnake, increaseLevel, increaseUserPoints, updateGrid, changeMovementDirection }

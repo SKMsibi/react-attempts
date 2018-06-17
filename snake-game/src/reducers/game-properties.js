@@ -1,5 +1,5 @@
 import { createEmptyGrid } from '../snake-game-functions/game-functions';
-export default function gameProperties(state = { grid: createEmptyGrid(), pointLocation: {}, level: 0 }, action) {
+export default function gameProperties(state = { grid: createEmptyGrid(), pointLocation: {}, level: 0, direction: "right" }, action) {
     var newState = { ...state }
     switch (action.type) {
         case "CHANGE_POINT_LOCATION":
@@ -10,6 +10,9 @@ export default function gameProperties(state = { grid: createEmptyGrid(), pointL
             break;
         case "UPDATE_GRID":
             newState = { ...newState, grid: action.newValue };
+            break;
+        case "CHANGE_DIRECTION":
+            newState = { ...newState, direction: action.newValue };
             break;
         default:
             newState = { ...state }
