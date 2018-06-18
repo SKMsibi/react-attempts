@@ -43,6 +43,7 @@ function moveSnake(directionMovement, snake) {
     var snakeMoved = snake;
     var newHead = {};
     var oldHead = snake.find(element => element.part === "snakeHead");
+
     if (directionMovement === "right") {
         newHead = { xAxis: oldHead.xAxis, yAxis: oldHead.yAxis + 1 };
     } else if (directionMovement === "left") {

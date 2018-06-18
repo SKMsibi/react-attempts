@@ -39,9 +39,6 @@ class App extends Component {
     growSnake(this.state.movingDirection, this.state.snake)
     moveSnake(this.state.movingDirection, this.state.snake);
   };
-  snakeMoving(event) {
-    console.log("event", event)
-  }
   render() {
     return (
       <div className="App">
@@ -58,6 +55,6 @@ const mapDispatchToProps = dispatch => ({
   updatePointLocation: (newLocation) => dispatch(actions.changePointLocation(newLocation)),
   updateSnakeStructure: (newSnakeStructure) => dispatch(actions.updateSnake(newSnakeStructure)),
   changeGridLayout: (newGrid) => dispatch(actions.updateGrid(newGrid)),
-  changeDirection: (newDirection, currentDirection) => dispatch(actions.changeMovementDirection(newDirection, currentDirection))
+  changeDirection: (newDirection) => dispatch(actions.changeMovementDirection(newDirection))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);

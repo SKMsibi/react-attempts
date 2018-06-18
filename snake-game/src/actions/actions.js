@@ -17,8 +17,7 @@ function updateSnake(newArray) {
 function increaseLevel() {
     return { type: INCREASE_LEVEL }
 }
-function changeMovementDirection(newDirection, currentDirection) {
-    console.log("inRedux",newDirection, currentDirection)
+function changeMovementDirection(newDirection) {
     return { type: "CHANGE_DIRECTION", newValue: newDirection }
 }
 function increaseUserPoints() {
