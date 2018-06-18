@@ -11,7 +11,7 @@ function createRandomPointPosition(grid) {
     var toDisplayOnGrid = grid;
     toDisplayOnGrid = toDisplayOnGrid.filter(element => element.occupied === "none");
     var randomNUmber = Math.floor(Math.random() * toDisplayOnGrid.length);
-    return toDisplayOnGrid[randomNUmber]
+    return toDisplayOnGrid[randomNUmber];
 }
 function updateGrid(pointLocation, snake, grid) {
     var NewGrid = grid;
