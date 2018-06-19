@@ -16,10 +16,13 @@ class App extends Component {
     };
   };
   componentWillReceiveProps() {
+    console.log("styling", this.props.containerData.gameProperties.direction);
+
     this.setState({
       grid: this.props.containerData.gameProperties.grid,
       pointLocation: this.props.containerData.gameProperties.pointLocation,
-      snake: this.props.containerData.playerInformation.currentSnakeStructure
+      snake: this.props.containerData.playerInformation.currentSnakeStructure,
+      movingDirection: this.props.containerData.gameProperties.direction
     })
   }
   componentDidMount() {
@@ -28,16 +31,41 @@ class App extends Component {
     this.props.updatePointLocation(pointL);
     this.props.changeGridLayout(updatedGrid);
     this.setState({ grid: updatedGrid, pointLocation: pointL, snake: updatedGrid.filter(item => item.occupied === "snakeBody" || item.occupied === "snakeHead") });
-    document.onkeydown = this.props.changeDirection;
+    document.onkeydown = this.changeDirection;
+  }
+  changeDirection(e) {
+    var newDirection = this.state.movingDirection;
+    switch (e.key) {
+      case "ArrowUP":
+        newDirection = "up";
+        break;
+      case "ArrowDown":
+        newDirection = "down";
+        break;
+      case "ArrowRight":
+        newDirection = "right";
+        break;
+      case "ArrowLeft":
+        newDirection = "left"
+        break;
+      default:
+        console.log("e", this.state.movingDirection)
+        newDirection = this.state.movingDirection;
+        break;
+    };
+    // this.props.changeDirection(newDirection)
   }
   showPoint() {
-    var pointL = createRandomPointPosition(this.state.grid);
-    var updatedGrid = updateGrid(pointL, this.state.snake, createEmptyGrid());
     this.props.updatePointLocation(pointL);
-    this.props.changeGridLayout(updatedGrid);
-    this.props.updateSnakeStructure(this.state.snake);
+    var pointL = createRandomPointPosition(this.state.grid);
+    var snakeMoving = setInterval(() => {
+      var snakeMoved = moveSnake(this.state.movingDirection, this.state.snake);
+      var updatedGrid = updateGrid(pointL, snakeMoved, createEmptyGrid());
+      updatedGrid = updateGrid(pointL, snakeMoved, updatedGrid)
+      this.props.updateSnakeStructure(snakeMoved);
+      this.props.changeGridLayout(updatedGrid);
+    }, 1000);
     growSnake(this.state.movingDirection, this.state.snake)
-    moveSnake(this.state.movingDirection, this.state.snake);
   };
   render() {
     return (

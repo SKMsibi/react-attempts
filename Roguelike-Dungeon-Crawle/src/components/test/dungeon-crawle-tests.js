@@ -50,6 +50,9 @@ describe("testing the dungeon crawler game functions", function () {
         { xAxis: 10, yAxis: 4, pathWay: true, occupied: null },
         { xAxis: 10, yAxis: 5, pathWay: true, occupied: null },
         { xAxis: 10, yAxis: 6, pathWay: true, occupied: null },
-        { xAxis: 10, yAxis: 7, pathWay: true, occupied: null }],currentPosition, nextPosition, enemies, weapons, health)).to.be.eql()
+        { xAxis: 10, yAxis: 7, pathWay: true, occupied: null }], currentPosition, nextPosition, enemies, weapons, health)).to.be.eql()
+    })
+    it("should return true if the browser is a mobile browser", function () {
+        expect(crawler.detectMob()).to.be.eql(false)
     })
 })

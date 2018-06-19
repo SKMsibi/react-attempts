@@ -2,6 +2,7 @@ import * as func from './game-layout';
 import React, { Component } from 'react';
 import DisplayDetails from './display-details';
 import HideRestOfGrid from './hide-rest-of-gird';
+import Mobile from './mobileButtons';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import '../App.css';
@@ -24,7 +25,8 @@ export class App extends Component {
       currentAvailableWeapon: this.props.containerData.gameProperties.allAvailableWeapons[this.props.containerData.gameProperties.stage],
       hideGrid: false,
       smallGrid: [],
-      level: this.props.containerData.userInformation.level
+      level: this.props.containerData.userInformation.level,
+      mobile: func.detectMob()
     }
   }
   componentDidMount() {
@@ -101,6 +103,11 @@ export class App extends Component {
           <div className="col-md-6">
             <DisplayDetails allInfo={this.state} weapon={this.state.currentAvailableWeapon.emoji} />
             <button className="btn btn-default" onClick={() => this.state.hideGrid ? this.setState({ hideGrid: false }) : this.setState({ hideGrid: true })}>{this.state.hideGrid ? "show parts of grid" : "hide parts of grid"}</button>
+          </div>
+          <div>
+            {
+              this.state.mobile ? <Mobile /> : null
+            }
           </div>
         </div>
       </div>
