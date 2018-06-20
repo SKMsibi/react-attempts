@@ -26,7 +26,6 @@ export class App extends Component {
       hideGrid: false,
       smallGrid: [],
       level: this.props.containerData.userInformation.level,
-      mobile: func.detectMob()
     }
   }
   componentDidMount() {
