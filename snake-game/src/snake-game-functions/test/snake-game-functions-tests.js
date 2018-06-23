@@ -14,7 +14,7 @@ describe("testing the grow snake feature", function () {
 });
 describe("testing the move snake feature", function () {
     it("should return the snake at a new location", function () {
-        expect(snake.moveSnake("right", [{ xAxis: 3, yAxis: 0, part: "snakeBody" }, { xAxis: 3, yAxis: 1, part: "snakeHead" }])).to.be.eql([{ xAxis: 3, yAxis: 1, part: "snakeBody" }, { xAxis: 3, yAxis: 2, part: "snakeHead" }])
+        expect(snake.moveSnake("right", [{ xAxis: 3, yAxis: 0, part: "snakeBody" }, { xAxis: 3, yAxis: 1, part: "snakeHead" }], snake.createEmptyGrid())).to.be.eql([{ xAxis: 3, yAxis: 1, part: "snakeBody" }, { xAxis: 3, yAxis: 2, part: "snakeHead" }])
     });
 })
 describe("testing the random function for the point", function () {
