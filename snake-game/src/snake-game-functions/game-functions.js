@@ -39,7 +39,8 @@ function growSnake(directionMovement, snake) {
     newSnake.push(newSnakeHead)
     return newSnake;
 }
-function moveSnake(directionMovement, snake, grid) {
+function moveSnake(directionMovement, snake, grid, points) {
+    var updatedPoints = points;
     var snakeMoved = snake;
     var newHead = {};
     var oldHead = snakeMoved.find(element => element.part === "snakeHead");
@@ -55,6 +56,7 @@ function moveSnake(directionMovement, snake, grid) {
     var nextLocation = grid.find(cell => cell.xAxis === newHead.xAxis && cell.yAxis === newHead.yAxis);
     if (nextLocation.occupied === "point") {
         snakeMoved = growSnake(directionMovement, snake);
+        updatedPoints += 2;
     } else if (nextLocation.occupied === "snakeBody") {
         alert("you are dead");
         window.location.reload(true)
@@ -68,6 +70,6 @@ function moveSnake(directionMovement, snake, grid) {
             return element;
         })
     }
-    return snakeMoved;
+    return { snake: snakeMoved, newPoints: updatedPoints };
 }
 module.exports = { createEmptyGrid, createRandomPointPosition, updateGrid, growSnake, moveSnake }
