@@ -90,7 +90,7 @@ export class App extends Component {
                   element.displayPart = <span id="weapon"><i className={this.state.currentAvailableWeapon.emoji}></i></span>;
                 } else if (element.occupied === "Health") {
                   element.displayPart = <span id="health"><i className="em em-hamburger"></i></span>;
-                } else if (element.occupied === "DoorWay") {
+                } else if (element.occupied === "DoorWay") {e
                   element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
                 } else if (element.occupied === "Boss") {
                   element.displayPart = <span><i className="em em-japanese_ogre"></i> </span>

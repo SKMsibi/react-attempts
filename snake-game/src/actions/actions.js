@@ -18,6 +18,7 @@ function increaseLevel() {
     return { type: INCREASE_LEVEL }
 }
 function changeMovementDirection(newDirection) {
+    console.log("newDirection", newDirection);
     return { type: "CHANGE_DIRECTION", newValue: newDirection }
 }
 function increaseUserPoints() {

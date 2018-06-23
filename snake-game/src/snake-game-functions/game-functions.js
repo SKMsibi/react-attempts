@@ -39,11 +39,10 @@ function growSnake(directionMovement, snake) {
     newSnake.push(newSnakeHead)
     return newSnake;
 }
-function moveSnake(directionMovement, snake) {
+function moveSnake(directionMovement, snake, grid) {
     var snakeMoved = snake;
     var newHead = {};
-    var oldHead = snake.find(element => element.part === "snakeHead");
-
+    var oldHead = snakeMoved.find(element => element.part === "snakeHead");
     if (directionMovement === "right") {
         newHead = { xAxis: oldHead.xAxis, yAxis: oldHead.yAxis + 1 };
     } else if (directionMovement === "left") {
@@ -53,14 +52,22 @@ function moveSnake(directionMovement, snake) {
     } else if (directionMovement === "down") {
         newHead = { xAxis: oldHead.xAxis + 1, yAxis: oldHead.yAxis };
     }
-    snakeMoved = snakeMoved.map(element => {
-        if (element.part === "snakeHead") {
-            element = { ...newHead, part: "snakeHead" }
-        } else {
-            element = { ...snakeMoved[snakeMoved.indexOf(element) + 1], part: "snakeBody" }
-        }
-        return element;
-    })
+    var nextLocation = grid.find(cell => cell.xAxis === newHead.xAxis && cell.yAxis === newHead.yAxis);
+    if (nextLocation.occupied === "point") {
+        snakeMoved = growSnake(directionMovement, snake);
+    } else if (nextLocation.occupied === "snakeBody") {
+        alert("you are dead");
+        window.location.reload(true)
+    } else {
+        snakeMoved = snakeMoved.map(element => {
+            if (element.part === "snakeHead") {
+                element = { ...newHead, part: "snakeHead" }
+            } else {
+                element = { ...snakeMoved[snakeMoved.indexOf(element) + 1], part: "snakeBody" }
+            }
+            return element;
+        })
+    }
     return snakeMoved;
 }
 module.exports = { createEmptyGrid, createRandomPointPosition, updateGrid, growSnake, moveSnake }

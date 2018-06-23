@@ -1,42 +1,41 @@
 import React, { Component } from 'react';
 import DisplayGrid from './components/display-grid';
-import { connect } from 'react-redux';
 import { createEmptyGrid, createRandomPointPosition, updateGrid, growSnake, moveSnake } from './snake-game-functions/game-functions';
-import * as actions from './actions/actions';
 import './App.css';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       grid: [],
       pointLocation: {},
-      snake: [],
+      snake: [{ xAxis: 3, yAxis: 0, part: "snakeBody" }, { xAxis: 3, yAxis: 1, part: "snakeHead" }],
       movingDirection: "right"
     };
+    this.changeDirection = this.changeDirection.bind(this);
   };
   componentWillReceiveProps() {
-    console.log("styling", this.props.containerData.gameProperties.direction);
-
-    this.setState({
-      grid: this.props.containerData.gameProperties.grid,
-      pointLocation: this.props.containerData.gameProperties.pointLocation,
-      snake: this.props.containerData.playerInformation.currentSnakeStructure,
-      movingDirection: this.props.containerData.gameProperties.direction
-    })
   }
   componentDidMount() {
-    var pointL = createRandomPointPosition(createEmptyGrid());
-    var updatedGrid = updateGrid(pointL, [{ xAxis: 3, yAxis: 0 }, { xAxis: 3, yAxis: 1 }], createEmptyGrid());
-    this.props.updatePointLocation(pointL);
-    this.props.changeGridLayout(updatedGrid);
-    this.setState({ grid: updatedGrid, pointLocation: pointL, snake: updatedGrid.filter(item => item.occupied === "snakeBody" || item.occupied === "snakeHead") });
     document.onkeydown = this.changeDirection;
+    var pointL = createRandomPointPosition(createEmptyGrid());
+    var updatedGrid = updateGrid(pointL, this.state.snake, createEmptyGrid());
+    this.setState({ grid: updatedGrid, pointLocation: pointL, snake: this.state.snake });
   }
   changeDirection(e) {
     var newDirection = this.state.movingDirection;
-    switch (e.key) {
-      case "ArrowUP":
+    var directionKey = e.key
+    if (newDirection === "right" && directionKey === "ArrowLeft") {
+      directionKey = "ArrowRight";
+    } else if (newDirection === "left" && directionKey === "ArrowRight") {
+      directionKey = "ArrowLeft";
+    } else if (newDirection === "up" && directionKey === "ArrowDown") {
+      directionKey = "ArrowUp";
+    } else if (newDirection === "down" && directionKey === "ArrowUp") {
+      directionKey = "ArrowDown";
+    }
+    switch (directionKey) {
+      case "ArrowUp":
         newDirection = "up";
         break;
       case "ArrowDown":
@@ -48,24 +47,20 @@ class App extends Component {
       case "ArrowLeft":
         newDirection = "left"
         break;
-      default:
-        console.log("e", this.state.movingDirection)
         newDirection = this.state.movingDirection;
         break;
     };
-    // this.props.changeDirection(newDirection)
+    this.setState({ movingDirection: newDirection })
   }
   showPoint() {
-    this.props.updatePointLocation(pointL);
-    var pointL = createRandomPointPosition(this.state.grid);
-    var snakeMoving = setInterval(() => {
-      var snakeMoved = moveSnake(this.state.movingDirection, this.state.snake);
+    var pointL = this.state.pointLocation;
+    var continuousSnakeMovement = setInterval(() => {
+      var snakeMoved = moveSnake(this.state.movingDirection, this.state.snake, this.state.grid);
+      pointL = snakeMoved.length > this.state.snake.length ? createRandomPointPosition(this.state.grid) : pointL;
+      console.log(snakeMoved, this.state.snake)
       var updatedGrid = updateGrid(pointL, snakeMoved, createEmptyGrid());
-      updatedGrid = updateGrid(pointL, snakeMoved, updatedGrid)
-      this.props.updateSnakeStructure(snakeMoved);
-      this.props.changeGridLayout(updatedGrid);
+      this.setState({ pointLocation: pointL, snake: snakeMoved, grid: updatedGrid })
     }, 1000);
-    growSnake(this.state.movingDirection, this.state.snake)
   };
   render() {
     return (
@@ -76,13 +71,3 @@ class App extends Component {
     );
   };
 };
-function mapStateToProps(state) {
-  return { containerData: state };
-};
-const mapDispatchToProps = dispatch => ({
-  updatePointLocation: (newLocation) => dispatch(actions.changePointLocation(newLocation)),
-  updateSnakeStructure: (newSnakeStructure) => dispatch(actions.updateSnake(newSnakeStructure)),
-  changeGridLayout: (newGrid) => dispatch(actions.updateGrid(newGrid)),
-  changeDirection: (newDirection) => dispatch(actions.changeMovementDirection(newDirection))
-});
-export default connect(mapStateToProps, mapDispatchToProps)(App);
