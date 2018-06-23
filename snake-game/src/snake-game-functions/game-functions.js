@@ -54,12 +54,12 @@ function moveSnake(directionMovement, snake, grid, points) {
         newHead = { xAxis: oldHead.xAxis + 1, yAxis: oldHead.yAxis };
     }
     var nextLocation = grid.find(cell => cell.xAxis === newHead.xAxis && cell.yAxis === newHead.yAxis);
-    if (nextLocation.occupied === "point") {
-        snakeMoved = growSnake(directionMovement, snake);
-        updatedPoints += 2;
-    } else if (nextLocation.occupied === "snakeBody") {
+    if (!nextLocation || nextLocation.occupied === "snakeBody") {
         alert("you are dead");
         window.location.reload(true)
+    } else if (nextLocation.occupied === "point") {
+        snakeMoved = growSnake(directionMovement, snake);
+        updatedPoints += 2;
     } else {
         snakeMoved = snakeMoved.map(element => {
             if (element.part === "snakeHead") {

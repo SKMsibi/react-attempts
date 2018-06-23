@@ -17,8 +17,6 @@ export default class App extends Component {
     };
     this.changeDirection = this.changeDirection.bind(this);
   };
-  componentWillReceiveProps() {
-  }
   componentDidMount() {
     document.onkeydown = this.changeDirection;
     var pointL = createRandomPointPosition(createEmptyGrid());
