@@ -2,7 +2,6 @@ import * as func from './game-layout';
 import React, { Component } from 'react';
 import DisplayDetails from './display-details';
 import HideRestOfGrid from './hide-rest-of-gird';
-import Mobile from './mobileButtons';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import '../App.css';
@@ -90,7 +89,7 @@ export class App extends Component {
                   element.displayPart = <span id="weapon"><i className={this.state.currentAvailableWeapon.emoji}></i></span>;
                 } else if (element.occupied === "Health") {
                   element.displayPart = <span id="health"><i className="em em-hamburger"></i></span>;
-                } else if (element.occupied === "DoorWay") {e
+                } else if (element.occupied === "DoorWay") {
                   element.displayPart = <span id="doorway"><i className="em em-door"></i></span>;
                 } else if (element.occupied === "Boss") {
                   element.displayPart = <span><i className="em em-japanese_ogre"></i> </span>
@@ -101,12 +100,7 @@ export class App extends Component {
             </div> : <HideRestOfGrid grid={this.state.smallGrid} weapon={this.state.currentAvailableWeapon.emoji} />}
           <div className="col-md-6">
             <DisplayDetails allInfo={this.state} weapon={this.state.currentAvailableWeapon.emoji} />
-            <button className="btn btn-default" onClick={() => this.state.hideGrid ? this.setState({ hideGrid: false }) : this.setState({ hideGrid: true })}>{this.state.hideGrid ? "show parts of grid" : "hide parts of grid"}</button>
-          </div>
-          <div>
-            {
-              this.state.mobile ? <Mobile /> : null
-            }
+            <button className="btn btn-default" onClick={() => this.state.hideGrid ? this.setState({ hideGrid: false }) : this.setState({ hideGrid: true })}>{this.state.hideGrid ? "show rest of stage" : "hide rest of stage"}</button>
           </div>
         </div>
       </div>

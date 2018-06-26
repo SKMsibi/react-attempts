@@ -1,4 +1,5 @@
 function generateGameLayout(pathWays, enemies, weapons, health, doorWay, boss = { xAxis: 3, yAxis: 3 }, stage) {
+
     var gridTemp = [];
     var pathWaysToMove = pathWays
     for (let index = 0; index <= 9; index++) {
