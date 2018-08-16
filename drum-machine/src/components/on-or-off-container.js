@@ -1,19 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as action from '../actions/allActions';
 
-export default class OnOrOff extends Component {
+export class OnOrOff extends Component {
     constructor() {
         super()
         this.state = {
-            machineStatus: false
+            status: false
         }
     }
-
+    switchOnOrOff() {
+        var newStatus = this.state.status ? false : true;
+        this.setState({ status: newStatus })
+        this.props.changeAppStatus(newStatus)
+    }
     render() {
         return (
             <div className="container" id="on-or-off">
-                <button>On</button>
-                <button>Off</button>
+                <button className="btn btn-primary" onClick={() => this.switchOnOrOff()} >{`${this.state.status ? "On" : "Off"}`}</button>
             </div>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return { store: state.machineReducer.AppStatus };
+}
+const mapDispatchToProps = dispatch => ({
+    changeAppStatus: (status) => dispatch(action.switchAppOnOrOff(status))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(OnOrOff);
