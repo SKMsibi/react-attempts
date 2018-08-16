@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import OnOrOff from './components/on-or-off-container';
+import AllMachines from './components/all-machines';
+import MachineKeys from './components/machine-keys';
 class App extends Component {
   render() {
     return (
@@ -9,9 +10,11 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Welcome to the Drum Machine</h1>
         </header>
-        <p className="App-intro">
+        <div className="App-intro">
           <OnOrOff />
-        </p>
+          <AllMachines />
+          <MachineKeys />
+        </div>
       </div>
     );
   }
