@@ -2,33 +2,9 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-  font-family: New Century Schoolbook, TeX Gyre Schola, serif;
-  font-size: 30px;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#machine-keys {
+  display: grid;
+  grid-template-rows: 60px 60px 60px;
+  grid-template-columns: 60px 60px 60px;
+  grid-gap: 10px;
 }
