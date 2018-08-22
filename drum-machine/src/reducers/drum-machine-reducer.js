@@ -5,7 +5,8 @@ export default function machineReducer(state = {
         Guitar: ["strong bass", "weak bass", "normal guitar", "violin high", "violin low"]
     },
     currentMachineSounds: [],
-    currentMachineName: ""
+    currentMachineName: "",
+    lastSoundPlay: ""
 }, action) {
     var newState = state;
     switch (action.type) {
@@ -14,13 +15,16 @@ export default function machineReducer(state = {
             break;
         case "CHANGE_APP_STATUS":
             if (!action.newValue) {
-                newState = { ...newState, AppStatus: action.newValue, currentMachineName: "", currentMachineSounds: [] }
+                newState = { ...newState, AppStatus: action.newValue, currentMachineName: "", currentMachineSounds: [], lastSoundPlay: "" }
             } else {
                 newState = { ...newState, AppStatus: action.newValue, currentMachineName: "Drum", currentMachineSounds: state.allDrumMachines["Drum"] }
             }
             break;
         case "CHANGE_CURRENT_SOUNDS":
             newState = { ...state, currentMachineSounds: state.allDrumMachines[`${action.newValue}`] }
+            break;
+        case "CHANGE_LAST_PLAYED":
+            newState = { ...state, lastSoundPlay: action.newValue };
             break;
         default:
             newState = { ...newState }
