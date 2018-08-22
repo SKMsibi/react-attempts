@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to the Drum Machine</h1>
+          <h1 className="App-title">Welcome to the Sound Machine</h1>
         </header>
         <div className="App-intro">
           <OnOrOff />

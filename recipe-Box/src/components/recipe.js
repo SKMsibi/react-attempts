@@ -48,7 +48,7 @@ export default class Recipe extends React.Component {
         return (
             <div>
                 <button className="btn btn-primary" onClick={this.showAndHide.bind(this)} id="ItemButton">{this.props.name}</button>
-                <div className="container" id="listContainer">
+                <div   id="listContainer">
                     <ul>
                         {this.state.list}
                     </ul>

@@ -71,7 +71,7 @@ export default class Layout extends React.Component {
     render() {
         return (
             <div>
-                <div className="container" id="inputDisplay">
+                <div   id="inputDisplay">
                     <h1>Recipe Box</h1>
                     <h4>Recipe name</h4>
                     <input type="text" id="inputText" placeholder="e.g chocolate Cake" onChange={this.recipeNameRetriever.bind(this)} /> <br /><br />

@@ -22,11 +22,10 @@ export class AllMachines extends Component {
     }
     render() {
         return (
-            <div className="container" id="machine-container">
+            <div id="machine-container">
                 <button className={this.props.name === "Guitar" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Guitar")}>Guitar</button>
                 <button className={this.props.name === "Drum" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Drum")}>Drum</button>
                 <button className={this.props.name === "Piano" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Piano")}>Piano</button>
-                <h2>{this.props.name}</h2>
             </div>
         )
     }

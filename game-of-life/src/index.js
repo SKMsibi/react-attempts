@@ -62,7 +62,7 @@ class Cell extends React.Component {
     }
     render() {
         return (
-            <div className="container">
+            <div  >
                 <div id="gameDetails">
                     <button className='btn btn-primary' id="pauseOrPlay" onClick={() => this.recursiveGenerationGenerator()}>Start</button>
                     <span>Generation Number: {this.state.generationNumber}</span>

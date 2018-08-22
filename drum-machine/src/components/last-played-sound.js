@@ -3,8 +3,8 @@ import "../App.css";
 export default class LastPlayed extends Component {
     render() {
         return (
-            <div className="container" id="machine-last-played">
-                <h1>{this.props.soundName}</h1>
+            <div id="machine-last-played">
+                <h2>{this.props.soundName}</h2>
             </div>
         );
     }

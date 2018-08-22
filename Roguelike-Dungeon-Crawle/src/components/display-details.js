@@ -10,7 +10,7 @@ class DisplayDetails extends Component {
     }
     render() {
         return (
-            <div className="container" id="GameDetails">
+            <div   id="GameDetails">
                 <div>User : <span id="user"><i className="em em-male-detective"></i></span></div>
                 <div>Life : {this.props.allInfo.currentLifeRemaining}</div>
                 <div>Game points : {this.props.allInfo.currentGamePoints}xp</div>

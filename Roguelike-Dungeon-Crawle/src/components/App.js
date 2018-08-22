@@ -76,7 +76,7 @@ export class App extends Component {
   }
   render() {
     return (
-      <div className="container" id="mainPage">
+      <div   id="mainPage">
         <div className="row">
           {!this.state.hideGrid ?
             <div className="col-md-6">
