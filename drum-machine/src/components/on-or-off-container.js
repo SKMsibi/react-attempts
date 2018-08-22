@@ -17,7 +17,7 @@ export class OnOrOff extends Component {
     render() {
         return (
             <div className="container" id="on-or-off">
-                <button className="btn btn-primary" onClick={() => this.switchOnOrOff()} >{`${this.state.status ? "On" : "Off"}`}</button>
+                <button className="btn btn-primary" onClick={() => this.switchOnOrOff()} >{`${this.state.status ? "Off" : "On"}`}</button>
             </div>
         );
     }
