@@ -1,8 +1,9 @@
 export default function machineReducer(state = {
     AppStatus: false,
     allDrumMachines: {
-        Drum: ["drum bass", "floor tom", "snare drum", "hanging toms", "hi-hat", "crash cymbal", "ride cymbal", "splash cymbal", "china cymbal"],
-        Guitar: ["strong bass", "weak bass", "normal guitar", "violin high", "violin low"]
+        Drum: ["cajonBass", "hietom", "tabla", "hitom", "marimba", "marioCoin", "marioJump", "steel", "Unkown"],
+        Guitar: ["base", "countryChord", "fuzzyNote", "guitarPluck", "shortWarm"],
+        Piano: ["bluesPiano", "darkHouse", "dirtyHigh", "fugged", "organLow", "superCheez", "thickChord", "twoTone"]
     },
     currentMachineSounds: [],
     currentMachineName: "",
