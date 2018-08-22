@@ -16,5 +16,10 @@ const changeCurrentMachineSounds = (list) => {
         newValue: list
     }
 }
-
-module.exports = { switchAppOnOrOff, changeCurrentMachine, changeCurrentMachineSounds }
+const changeLastPlayedSound = (newLastPlayedSound) => {
+    return {
+        type: "CHANGE_LAST_PLAYED",
+        newValue: newLastPlayedSound
+    }
+}
+module.exports = { switchAppOnOrOff, changeLastPlayedSound, changeCurrentMachine, changeCurrentMachineSounds }
