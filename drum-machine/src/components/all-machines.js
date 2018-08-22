@@ -26,11 +26,12 @@ export class AllMachines extends Component {
                 <button className={this.props.name === "Guitar" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Guitar")}>Guitar</button>
                 <button className={this.props.name === "Drum" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Drum")}>Drum</button>
                 <button className={this.props.name === "Piano" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Piano")}>Piano</button>
+                <h2>{this.props.name}</h2>
             </div>
         )
     }
 }
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return { status: state.machineReducer.AppStatus, name: state.machineReducer.currentMachineName, sounds: state.machineReducer.currentMachineSounds };
 }
 const mapDispatchToProps = dispatch => ({
