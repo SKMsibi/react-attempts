@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import "../App.css";
 import * as actions from '../actions/allActions';
 import LastPlayed from './last-played-sound';
-import marimba1 from './sounds/marimba1.wav';
+// import marimba from '../sounds/drum/marimba.wav';
+import * as sounds from '../sounds/all-sounds';
 
 class MachineKeys extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class MachineKeys extends Component {
     }
     playSound(soundName) {
         this.props.changeLastPlayed(soundName);
-        var sound = new Audio(marimba1);
+        var sound = new Audio(sounds[`${soundName}`]);
         sound.play();
     }
     render() {
