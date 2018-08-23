@@ -13,11 +13,18 @@ class MachineKeys extends Component {
             buttons: ["Q", "W", "E", "A", "S", "D", "Z", "X", "C"],
         }
         this.playSound = this.playSound.bind(this);
+        this.checkKey = this.checkKey.bind(this);
     }
     playSound(soundName) {
         this.props.changeLastPlayed(soundName);
         var sound = new Audio(sounds[`${soundName}`]);
         sound.play();
+    }
+    componentDidMount() {
+        document.onkeydown = this.checkKey;
+    }
+    checkKey(event) {
+        this.playSound(this.props.machineSoundNames[this.state.buttons.indexOf(event.key.toUpperCase())])
     }
     render() {
         return (
