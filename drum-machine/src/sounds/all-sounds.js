@@ -22,8 +22,10 @@ var organLow = require("./piano/organ-low.mp3");
 var superCheez = require("./piano/super-cheez.mp3");
 var thickChord = require("./piano/thick-chord.mp3");
 var twoTone = require("./piano/two-tone.mp3");
+var accoor = require("./piano/accoor.wav");
 var Unknown = require("./Unknown.wav");
 module.exports = {
+    accoor,
     snr,
     crash,
     electricKick,
