@@ -13,6 +13,10 @@ var countryChord = require("./guitar/country-chord.mp3");
 var fuzzyNote = require("./guitar/fuzzy-note.mp3");
 var guitarPluck = require("./guitar/guitar-pluck.mp3");
 var shortWarm = require("./guitar/short-warm.mp3");
+var disco = require('./guitar/disco.mp3');
+var powerChord = require("./guitar/powerchord.mp3");
+var wah = require("./guitar/wah.mp3");
+var harmonics = require("./guitar/harmonics.mp3");
 
 var bluesPiano = require("./piano/blues-piano.mp3");
 var darkHouse = require("./piano/dark-house.mp3");
@@ -23,13 +27,15 @@ var superCheez = require("./piano/super-cheez.mp3");
 var thickChord = require("./piano/thick-chord.mp3");
 var twoTone = require("./piano/two-tone.mp3");
 var accoor = require("./piano/accoor.wav");
-var Unknown = require("./Unknown.wav");
 module.exports = {
+    disco,
+    powerChord,
+    wah,
+    harmonics,
     accoor,
     snr,
     crash,
     electricKick,
-    Unknown,
     marimba,
     tabla,
     cajonBass,
