@@ -3,7 +3,7 @@ export default function machineReducer(state = {
     allDrumMachines: {
         Drum: ["cajonBass", "hietom", "tabla", "hitom", "marimba", "crash", "electricKick", "steel", "snr"],
         Guitar: ["base", "countryChord", "fuzzyNote", "guitarPluck", "shortWarm", "Unknown", "Unknown", "Unknown", "Unknown"],
-        Piano: ["bluesPiano", "darkHouse", "dirtyHigh", "fugged", "organLow", "superCheez", "thickChord", "twoTone", "Unknown"]
+        Piano: ["bluesPiano", "darkHouse", "dirtyHigh", "fugged", "organLow", "superCheez", "thickChord", "twoTone", "accoor"]
     },
     currentMachineSounds: [],
     currentMachineName: "",
