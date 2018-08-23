@@ -1,9 +1,9 @@
 export default function machineReducer(state = {
     AppStatus: false,
     allDrumMachines: {
-        Drum: ["cajonBass", "hietom", "tabla", "hitom", "marimba", "marioCoin", "marioJump", "steel", "Unkown"],
-        Guitar: ["base", "countryChord", "fuzzyNote", "guitarPluck", "shortWarm"],
-        Piano: ["bluesPiano", "darkHouse", "dirtyHigh", "fugged", "organLow", "superCheez", "thickChord", "twoTone"]
+        Drum: ["cajonBass", "hietom", "tabla", "hitom", "marimba", "crash", "electricKick", "steel", "snr"],
+        Guitar: ["base", "countryChord", "fuzzyNote", "guitarPluck", "shortWarm", "Unknown", "Unknown", "Unknown", "Unknown"],
+        Piano: ["bluesPiano", "darkHouse", "dirtyHigh", "fugged", "organLow", "superCheez", "thickChord", "twoTone", "Unknown"]
     },
     currentMachineSounds: [],
     currentMachineName: "",
@@ -12,7 +12,7 @@ export default function machineReducer(state = {
     var newState = state;
     switch (action.type) {
         case "CHANGE_CURRENT_MACHINE":
-            newState = { ...newState, currentMachineName: action.newValue }
+            newState = { ...newState, currentMachineName: action.newValue, lastSoundPlay: "" }
             break;
         case "CHANGE_APP_STATUS":
             if (!action.newValue) {
