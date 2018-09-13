@@ -1,0 +1,117 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  text-align: center;
+  background-color: #007bff;
+  height: 150px;
+  color: white;
+  font-family: American Typewriter, serif;
+}
+
+.App-title {
+  padding: 3%;
+}
+
+.quote {
+  padding: 3%;
+  color: #007bff
+}
+
+#spell-btn {
+  width: 30%;
+  margin-bottom: 10%;
+}
+
+#write-btn {
+  width: 30%;
+  margin-bottom: 10%;
+}
+
+.App {
+  font-family: American Typewriter, serif;
+}
+
+#mic {
+  color: black;
+}
+
+.word {
+  margin-top: 5%;
+  padding-left: 30%;
+}
+
+#startBtn {
+  margin: 2%;
+  font-size: 1.5em;
+}
+
+#back-btn {
+  width: 30%;
+  margin-left: 30%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+#record-btn {
+  width: 30%;
+  margin-left: 30%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+#get-word-btn {
+  width: 30%;
+  margin-left: 30%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+#say-word-btn {
+  width: 30%;
+  margin-left: 30%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.spell-it {
+  display: grid;
+  grid-auto-columns: repeat(3);
+  font-family: American Typewriter, serif;
+}
+
+.grid-buttons {
+  padding-top: 5%;
+  display: grid;
+  grid-auto-columns: repeat(3, 2%);
+  grid-gap: 2%;
+  padding-left: 30%;
+}
+
+h2 {
+  color: rgb(17, 40, 175);
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.spelling-icons {
+  font-size: 3em;
+  padding: 2%;
+}
+
+@keyframes spelling-icons-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
