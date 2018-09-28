@@ -1,0 +1,4 @@
+//TODO: figure out how we can move this to a config folder and still use dotenv
+module.exports = {
+config: "database-config.js"
+}
