@@ -23,9 +23,9 @@ export class AllMachines extends Component {
     render() {
         return (
             <div id="machine-container">
-                <button className={this.props.name === "Guitar" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Guitar")}>Guitar</button>
-                <button className={this.props.name === "Drum" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Drum")}>Drum</button>
-                <button className={this.props.name === "Piano" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Piano")}>Piano</button>
+                <button id={this.props.name === "Guitar" ? "Picked" : "notPicked"} className={this.props.name === "Guitar" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Guitar")}>Guitar</button>
+                <button id={this.props.name === "Drum" ? "Picked" : "notPicked"} className={this.props.name === "Drum" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Drum")}>Drum</button>
+                <button id={this.props.name === "Piano" ? "Picked" : "notPicked"} className={this.props.name === "Piano" ? "btn btn-warning" : "btn btn-default"} onClick={() => this.changeCurrentMachine("Piano")}>Piano</button>
             </div>
         )
     }

@@ -6,6 +6,15 @@
   padding: 1%;
 }
 
+#Picked {
+  background-color: rgb(241, 185, 43);
+}
+#On{
+  background-color:rgb(230, 33, 33) ;
+}
+#Off{
+background-color:  rgb(72, 72, 194);
+}
 #machine-keys {
   display: grid;
   grid-template-rows: 60px 60px 60px;

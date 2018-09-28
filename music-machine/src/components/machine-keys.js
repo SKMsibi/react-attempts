@@ -29,7 +29,7 @@ class MachineKeys extends Component {
     render() {
         return (
             <div id="keys-info">
-                <div id="machine-keys">
+                <div id="machine-keys" className="machine-keys">
                     {
                         this.state.buttons.map(item => {
                             return <button key={this.state.buttons.indexOf(item)} id="single-key" className="btn btn-success" onClick={() => this.playSound(this.props.machineSoundNames[this.state.buttons.indexOf(item)])}>{item}</button>
