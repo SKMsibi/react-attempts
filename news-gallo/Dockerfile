@@ -12,6 +12,8 @@ RUN npm install --production
 
 ADD . .
 
+RUN mv .env.dev .env
+
 WORKDIR /var/src
 
 EXPOSE 3003

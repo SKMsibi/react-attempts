@@ -6,7 +6,7 @@ import '../App.css';
 
 export class Articles extends Component {
     componentDidMount() {
-        this.props.changeLocation("articles")
+        this.props.changeLocation("articles");
     }
     render() {
         return (

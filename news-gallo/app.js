@@ -16,6 +16,20 @@ var {
   domain,
   communicationChannelType,
 } = require('./database/models');
+const domainRoutes = require('./routes/domain');
+const contactRequestRoutes = require('./routes/contact-request');
+const adminUserRoutes = require('./routes/admin-user');
+const getOptions = require('./routes/options');
+const checkRequests = require('./database/check-requests');
+domainRoutes(app);
+contactRequestRoutes(app);
+adminUserRoutes(app);
+getOptions(app);
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).send();
+  } else { res.status(500).send() }
+});
 app.listen(port, () => {
   console.log("server running on localhost:3003 ");
 });
