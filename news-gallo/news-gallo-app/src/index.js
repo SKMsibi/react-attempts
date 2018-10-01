@@ -13,7 +13,7 @@ ReactDOM.render(
         <Router>
             <div>
                 <Route exact path="/" component={LandingPage} />
-                <Route exact path="/articles" component={Articles} />
+                <Route exact path="/articles/:requestData" component={Articles} />
             </div>
         </Router>
     </Provider>
