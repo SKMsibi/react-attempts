@@ -11,6 +11,5 @@ class App extends Component {
     );
   }
 }
-// https://newsapi.org/v2/everything?q=tranding&from=2018-08-25&sortBy=publishedAt&apiKey=2de6578fa2744b27a5fa386d65a496fd
 
 export default App;
