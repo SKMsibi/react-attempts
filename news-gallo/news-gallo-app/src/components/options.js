@@ -8,17 +8,19 @@ export class Options extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            redirect: false
+            redirect: false,
+            selectedCategory: "none"
         }
         this.categorySelection = this.categorySelection.bind(this);
     }
     categorySelection(selectedCategory) {
-        this.setState({ redirect: true });
+        this.setState({ redirect: true, selectedCategory: selectedCategory });
         this.props.changeCategory(selectedCategory);
     }
     render() {
         if (this.state.redirect) {
-            return <Redirect to="/employers" />
+            var location = `/articles/${this.state.selectedCategory}`
+            return <Redirect to={location} />
         }
         return (
             <div className="options">
