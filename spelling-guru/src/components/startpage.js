@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Header from './header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMicrophone, faKeyboard, faSignOutAlt, faQuestion } from '@fortawesome/free-solid-svg-icons'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { faMicrophone, faKeyboard, faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { BrowserRouter as Link } from "react-router-dom";
 
 class StartPage extends Component {
     render() {

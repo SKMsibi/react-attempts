@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './header';
 import SpeechToText from 'speech-to-text';
 import Loading from './loader';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMicrophone, faBullhorn, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
@@ -17,8 +17,8 @@ class SpellIt extends Component {
             loading: false,
             recording: false,
             language: "en-ZA"
-        },
-            this.sayWord = this.sayWord.bind(this)
+        };
+        this.sayWord = this.sayWord.bind(this)
     }
     sayWord() {
 
@@ -38,7 +38,7 @@ class SpellIt extends Component {
 
         this.setState({ recording: true })
         listener.startListening();
-        var stop = setTimeout(() => {
+        setTimeout(() => {
             listener.stopListening();
             this.setState({ recording: false })
         }, 2500);

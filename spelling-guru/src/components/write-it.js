@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import Header from './header';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSmile, faFrown, faBullhorn, faKeyboard, faSignOutAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
 import '../App.css';
@@ -27,8 +27,8 @@ class WriteIt extends Component {
             userWord: "",
             modalIsOpen: false,
             check: ""
-        },
-            this.setRandomWord = this.setRandomWord.bind(this);
+        };
+        this.setRandomWord = this.setRandomWord.bind(this);
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);

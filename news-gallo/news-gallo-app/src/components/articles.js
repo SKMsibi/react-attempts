@@ -22,7 +22,9 @@ export class Articles extends Component {
     async componentDidMount() {
         this.props.changeLocation("articles");
         var requestData = this.props.match.params.requestData;
-        const apiRes = await axios.get(`https://newsapi.org/v2/everything?q=${requestData}&from=2018-09-02&sortBy=relevancy&apiKey=2de6578fa2744b27a5fa386d65a496fd`);
+        const apiRes = await axios.get(`https://newsapi.org/v2/everything?q=${requestData}&from=2018-09-05&sortBy=relevancy&apiKey=2de6578fa2744b27a5fa386d65a496fd`);
+        console.log("apiRes", apiRes);
+
         this.setState({ allArticles: apiRes.data.articles })
     }
     setArticleContent(content) {
