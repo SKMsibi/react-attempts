@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import Header from './header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMicrophone, faKeyboard, faQuestion } from '@fortawesome/free-solid-svg-icons'
-import { BrowserRouter as Link } from "react-router-dom";
 
 class StartPage extends Component {
+    routingFunction(route) {
+        this.props.history.push(route);
+    }
     render() {
         return (
             <div>
                 <Header text={"Whats next "} icon={<FontAwesomeIcon icon={faQuestion} />} />
                 <div className="grid-buttons">
-                    <Link to="/spell"><button className="btn btn-info" id="spell-btn"> Spell It  <FontAwesomeIcon icon={faMicrophone} /></button></Link>
-                    <Link to="/write"><button className="btn btn-warning" id="write-btn">Write it <FontAwesomeIcon icon={faKeyboard} /></button></Link>
+                    <button onClick={() => this.routingFunction("/spell")} className="btn btn-info" id="spell-btn"> Spell It  <FontAwesomeIcon icon={faMicrophone} /></button>
+                    <button onClick={() => this.routingFunction("/write")} className="btn btn-warning" id="write-btn">Write it <FontAwesomeIcon icon={faKeyboard} /></button>
                 </div>
             </div>
         );
