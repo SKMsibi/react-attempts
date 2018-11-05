@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from './header';
 import SpeechToText from 'speech-to-text';
 import Loading from './loader';
-import { BrowserRouter as Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMicrophone, faBullhorn, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
@@ -55,7 +54,7 @@ class SpellIt extends Component {
                         <h3 className="word">your word is: <u>{this.state.word}</u></h3>
                     )}
                     <button className={this.state.recording ? "btn btn-success" : "btn btn-primary"} id="record-btn" onClick={this.sayWord}>{this.state.recording ? "Recording..." : "Record"} <FontAwesomeIcon icon={faMicrophone} /></button>
-                    <Link to="/startpage"><button className="btn btn-danger" id="back-btn">back <FontAwesomeIcon icon={faSignOutAlt} /></button></Link>
+                    <button onClick={() => this.routingFunction("/startpage")} className="btn btn-danger" id="back-btn">back<FontAwesomeIcon icon={faSignOutAlt} /></button>
                 </div>
             </div>
 
