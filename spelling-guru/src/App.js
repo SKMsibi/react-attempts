@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Link } from "react-router-dom";
 import Header from './components/header';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +6,10 @@ import { faMagic, faBook, faSmile } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 library.add(faMagic, faBook, faSmile)
 class App extends Component {
+  moveToStartPage() {
+    console.log("object")
+    this.props.history.push("/startpage");
+  }
   render() {
     return (
       <div className="App">
@@ -17,7 +20,7 @@ class App extends Component {
           <span className="spelling-icons"><FontAwesomeIcon icon={faBook} /></span>
           <span className="spelling-icons"><FontAwesomeIcon icon={faSmile} /></span>
         </div>
-        <Link to="/startpage"><button className="btn btn-primary" id="startBtn">Start</button></Link>
+        <button onClick={() => this.moveToStartPage()} className="btn btn-primary" id="startBtn">Start</button>
       </div>
 
     );
