@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import Header from './header';
-import { BrowserRouter as Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSmile, faFrown, faBullhorn, faKeyboard, faSignOutAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
 import '../App.css';
 import Speech from 'speak-tts'
-import randomWords from 'random-words';
+import { random } from "superb";
 
+
+if (Speech.browserSupport()) { // returns a boolean
+    console.log("speech synthesis supported")
+} else {
+    console.log("speech synthesis not supported")
+}
 const customStyles = {
     content: {
         top: '50%',
@@ -23,15 +28,20 @@ class WriteIt extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            gettingWord: false,
             word: "coding",
             userWord: "",
             modalIsOpen: false,
-            check: ""
+            check: "",
+            showWord: false
         };
         this.setRandomWord = this.setRandomWord.bind(this);
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+    }
+    routingFunction(route) {
+        this.props.history.push(route);
     }
 
     openModal() {
@@ -44,15 +54,16 @@ class WriteIt extends Component {
     closeModal() {
         this.setState({ modalIsOpen: false });
     }
-    setRandomWord() {
-        var newWord = randomWords();
+    async   setRandomWord() {
+        this.setState({ gettingWord: true, showWord: false })
+        var newWord = random();
         Speech.init();
-        Speech.setLanguage('en-US')
-        Speech.setVoice('Google UK English Female')
+        Speech.setLanguage('en-US');
+        Speech.setVoice('Google UK English Female');
         Speech.speak({
             text: newWord
-        })
-        this.setState({ word: newWord });
+        });
+        this.setState({ word: newWord, gettingWord: false });
     }
     repeatWord() {
         var word = this.state.word
@@ -80,11 +91,15 @@ class WriteIt extends Component {
             <div>
                 <Header text={"write your word "} icon={<FontAwesomeIcon icon={faKeyboard} />} />
                 <div className="spell-it">
-                    <button className="btn btn-primary" id="get-word-btn" onClick={this.setRandomWord}>Get new random word <FontAwesomeIcon icon={faSearch} /></button>
+                    <button className={this.state.gettingWord ? "btn btn-primary" : "btn btn-success"} id="get-word-btn" onClick={this.setRandomWord}>Get new random word <FontAwesomeIcon icon={faSearch} /></button>
                     <h3 className="word">your word   : <input type="text" ref="userWord" id="userWord" onClick={this.setWord.bind(this)} name="word" placeholder="Type your word here..." /></h3>
+                    {this.state.showWord && (
+                        <h3 className="word">The correct spelling is: <b>{this.state.word}</b></h3>
+                    )}
                     <button className="btn btn-primary" id="say-word-btn" onClick={this.repeatWord.bind(this)}>say word <FontAwesomeIcon icon={faBullhorn} /></button>
                     <button className="btn btn-primary" id="back-btn" onClick={this.checkWord.bind(this)} >Check word </button>
-                    <Link to="/startpage"><button className="btn btn-danger" id="back-btn">back<FontAwesomeIcon icon={faSignOutAlt} /></button></Link>
+                    <button className="btn btn-primary" id="back-btn" onClick={() => this.setState({ showWord: true })} >Reveal word</button>
+                    <button onClick={() => this.routingFunction("/startpage")} className="btn btn-danger" id="back-btn">back<FontAwesomeIcon icon={faSignOutAlt} /></button>
                 </div>
                 <Modal
                     isOpen={this.state.modalIsOpen}
